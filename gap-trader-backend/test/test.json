@@ -1,0 +1,4540 @@
+{
+    "binance": {
+      "exchange": "binance",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "okx": {
+      "exchange": "okx",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "bybit": {
+      "exchange": "bybit",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "gate": {
+      "exchange": "gate",
+      "spot": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "huobi": {
+      "exchange": "huobi",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC1S/USDT",
+        "id": "btc1susdt",
+        "base": "BTC1S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "NHBTC/USDT",
+        "id": "nhbtcusdt",
+        "base": "NHBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "kucoin": {
+      "exchange": "kucoin",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "coinbase": {
+      "exchange": "coinbase",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "kraken": {
+      "exchange": "kraken",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "XBTUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "TBTC/USD",
+        "id": "TBTCUSD",
+        "base": "TBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "TBTC/USD",
+        "id": "TBTCUSD",
+        "base": "TBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "TBTC/USD",
+        "id": "TBTCUSD",
+        "base": "TBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "TBTC/USD",
+        "id": "TBTCUSD",
+        "base": "TBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "TBTC/USD",
+        "id": "TBTCUSD",
+        "base": "TBTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "bitfinex": {
+      "exchange": "bitfinex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "tBTCUST",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USDQ",
+        "id": "tBTC:USDQ",
+        "base": "BTC",
+        "quote": "USDQ",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDQ",
+        "id": "tBTC:USDQ",
+        "base": "BTC",
+        "quote": "USDQ",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDQ",
+        "id": "tBTC:USDQ",
+        "base": "BTC",
+        "quote": "USDQ",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDQ",
+        "id": "tBTC:USDQ",
+        "base": "BTC",
+        "quote": "USDQ",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDQ",
+        "id": "tBTC:USDQ",
+        "base": "BTC",
+        "quote": "USDQ",
+        "type": "spot"
+      }
+    },
+    "cryptocom": {
+      "exchange": "cryptocom",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/PYUSD",
+        "id": "BTC_PYUSD",
+        "base": "BTC",
+        "quote": "PYUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/PYUSD",
+        "id": "BTC_PYUSD",
+        "base": "BTC",
+        "quote": "PYUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/PYUSD",
+        "id": "BTC_PYUSD",
+        "base": "BTC",
+        "quote": "PYUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/PYUSD",
+        "id": "BTC_PYUSD",
+        "base": "BTC",
+        "quote": "PYUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/PYUSD",
+        "id": "BTC_PYUSD",
+        "base": "BTC",
+        "quote": "PYUSD",
+        "type": "spot"
+      }
+    },
+    "alpaca": {
+      "exchange": "alpaca",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "error": "alpaca requires \"apiKey\" credential"
+    },
+    "apex": {
+      "exchange": "apex",
+      "spot": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      }
+    },
+    "ascendex": {
+      "exchange": "ascendex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC/USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "backpack": {
+      "exchange": "backpack",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "bequant": {
+      "exchange": "bequant",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTCUSDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "bigone": {
+      "exchange": "bigone",
+      "spot": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC5S/USDT",
+        "id": "BTC5S-USDT",
+        "base": "BTC5S",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "binancecoinm": {
+      "exchange": "binancecoinm",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD:BTC",
+        "id": "BTCUSD_PERP",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USD:BTC",
+        "id": "BTCUSD_PERP",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USD:BTC",
+        "id": "BTCUSD_PERP",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USD:BTC",
+        "id": "BTCUSD_PERP",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USD:BTC",
+        "id": "BTCUSD_PERP",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      }
+    },
+    "binanceus": {
+      "exchange": "binanceus",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD4",
+        "id": "BTCUSD4",
+        "base": "BTC",
+        "quote": "USD4",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD4",
+        "id": "BTCUSD4",
+        "base": "BTC",
+        "quote": "USD4",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD4",
+        "id": "BTCUSD4",
+        "base": "BTC",
+        "quote": "USD4",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD4",
+        "id": "BTCUSD4",
+        "base": "BTC",
+        "quote": "USD4",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD4",
+        "id": "BTCUSD4",
+        "base": "BTC",
+        "quote": "USD4",
+        "type": "spot"
+      }
+    },
+    "binanceusdm": {
+      "exchange": "binanceusdm",
+      "spot": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      }
+    },
+    "bingx": {
+      "exchange": "bingx",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "PUMPBTC/USDT",
+        "id": "PUMPBTC-USDT",
+        "base": "PUMPBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC-USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "PUMPBTC/USDT",
+        "id": "PUMPBTC-USDT",
+        "base": "PUMPBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bit2c": {
+      "exchange": "bit2c",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "bitbank": {
+      "exchange": "bitbank",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "bitbns": {
+      "exchange": "bitbns",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bitflyer": {
+      "exchange": "bitflyer",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "bitget": {
+      "exchange": "bitget",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/WUSD",
+        "id": "BTCWUSD",
+        "base": "BTC",
+        "quote": "WUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/WUSD",
+        "id": "BTCWUSD",
+        "base": "BTC",
+        "quote": "WUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/WUSD",
+        "id": "BTCWUSD",
+        "base": "BTC",
+        "quote": "WUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/WUSD",
+        "id": "BTCWUSD",
+        "base": "BTC",
+        "quote": "WUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/WUSD",
+        "id": "BTCWUSD",
+        "base": "BTC",
+        "quote": "WUSD",
+        "type": "spot"
+      }
+    },
+    "bithumb": {
+      "exchange": "bithumb",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "USDC/BTC",
+        "id": "USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "USDC/BTC",
+        "id": "USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "USDC/BTC",
+        "id": "USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "USDC/BTC",
+        "id": "USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "USDC/BTC",
+        "id": "USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      }
+    },
+    "bitmart": {
+      "exchange": "bitmart",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bitmex": {
+      "exchange": "bitmex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "XBT_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bitopro": {
+      "exchange": "bitopro",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bitrue": {
+      "exchange": "bitrue",
+      "spot": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTCDOM3S/USDT",
+        "id": "BTCDOM3SUSDT",
+        "base": "BTCDOM3S",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "bitso": {
+      "exchange": "bitso",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "TUSD/BTC",
+        "id": "tusd_btc",
+        "base": "TUSD",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "TUSD/BTC",
+        "id": "tusd_btc",
+        "base": "TUSD",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "TUSD/BTC",
+        "id": "tusd_btc",
+        "base": "TUSD",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "TUSD/BTC",
+        "id": "tusd_btc",
+        "base": "TUSD",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "TUSD/BTC",
+        "id": "tusd_btc",
+        "base": "TUSD",
+        "quote": "BTC",
+        "type": "spot"
+      }
+    },
+    "bitstamp": {
+      "exchange": "bitstamp",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "btcusd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "btcusd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "btcusd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "btcusd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "btcusd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "bitteam": {
+      "exchange": "bitteam",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/BUSD",
+        "id": "btc_busd",
+        "base": "BTC",
+        "quote": "BUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/BUSD",
+        "id": "btc_busd",
+        "base": "BTC",
+        "quote": "BUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/BUSD",
+        "id": "btc_busd",
+        "base": "BTC",
+        "quote": "BUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/BUSD",
+        "id": "btc_busd",
+        "base": "BTC",
+        "quote": "BUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/BUSD",
+        "id": "btc_busd",
+        "base": "BTC",
+        "quote": "BUSD",
+        "type": "spot"
+      }
+    },
+    "bittrade": {
+      "exchange": "bittrade",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "bitvavo": {
+      "exchange": "bitvavo",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "blockchaincom": {
+      "exchange": "blockchaincom",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "blofin": {
+      "exchange": "blofin",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "error": "blofin GET https://openapi.blofin.com/api/v1/market/instruments 403 Forbidden <!DOCTYPE html>\n<html>\n  <head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"https://s2.blofin.com/icons/blofin/favicon-v2.ico\">\n    <link rel=\"icon\" type=\"image/x-icon\" href=\"https://s2.blofin.com/icons/blofin/favicon-v2.ico\">\n    <title>BloFin, where whales are made.</title>\n    <style>\n      * {\n        margin: 0;\n        padding: 0;\n      }\n      html,\n      body {\n        height: 100%;\n      }\n      .main {\n        height: 100%;\n        max-width: 1200px;\n        margin: 0 auto;\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: flex-start;\n        padding: 0 20px;\n      }\n      p {\n        font-size: 18px;\n        margin-top: 30px;\n        font-weight: 400;\n      }\n      .text-warpper {\n        margin-top: 30px;\n      }\n      a {\n        color: #2f54eb;\n        text-decoration: none;\n      }\n    </style>\n  \n</head>\n  <body>\n    <span style=\"display: none\">::CLOUDFLARE_ERROR_1000S_BOX::</span>\n    <div class=\"main\">\n      <svg width=\"153\" height=\"37\" viewBox=\"0 0 153 37\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n        <path d=\"M124.412 36.1305V12.0449H131.792L132.353 15.1259C134.408 12.84 137.211 11.7648 141.087 11.7648C148.468 11.7648 152.625 16.1514 152.625 23.9465V36.1305H144.544V24.6467C144.544 20.4002 142.629 18.2046 138.845 18.2046C134.781 18.2046 132.493 20.3527 132.493 24.1791V36.1282H124.412V36.1305Z\" fill=\"black\"/>\n        <path d=\"M112.459 36.1304V12.0449H120.872V36.1304H112.459ZM116.641 9.89673C114.166 9.89673 112.251 8.12358 112.251 5.7428C112.251 3.36203 114.164 1.58887 116.641 1.58887C119.119 1.58887 121.031 3.36203 121.031 5.7428C121.031 8.12358 119.117 9.89673 116.641 9.89673Z\" fill=\"black\"/>\n        <path d=\"M82.8613 36.1305V1.4635H108.832V8.74587H91.4557V14.6278H106.124V21.4426H91.4557V36.1305H82.8613Z\" fill=\"black\"/>\n        <path d=\"M64.1946 36.116C55.0396 36.116 48.9204 31.2144 48.9204 23.7943C48.9204 16.3741 55.0396 11.4725 64.1946 11.4725C73.3496 11.4725 79.4236 16.4193 79.4236 23.7943C79.4236 31.1693 73.3044 36.116 64.1946 36.116ZM64.1946 29.6762C68.5393 29.6762 71.2021 27.4355 71.2021 23.7943C71.2021 20.1531 68.5393 17.9124 64.1946 17.9124C59.8499 17.9124 57.1418 20.1531 57.1418 23.7943C57.1418 27.4355 59.8047 29.6762 64.1946 29.6762Z\" fill=\"black\"/>\n        <path d=\"M37.1392 36.1961V1.5166H45.4357V36.1939H37.1392V36.1961Z\" fill=\"black\"/>\n        <path d=\"M29.8536 5.15784L22.5475 10.6533L13.6089 17.2129V24.3625L31.8711 10.772C31.8711 10.7451 31.8755 10.7205 31.8755 10.6936C31.8755 8.44975 31.2016 6.60672 29.8536 5.16008V5.15784Z\" fill=\"#FF8800\"/>\n        <path d=\"M32.3949 22.3407C31.7814 21.2165 30.8545 20.3163 29.6118 19.6378C29.1819 19.4026 28.7072 19.2011 28.1967 19.0242L22.7982 23.0551C22.7982 23.0551 22.8049 23.0596 22.8072 23.0618C23.6177 23.6754 24.0252 24.5577 24.0252 25.7132C24.0252 26.8688 23.6289 27.7959 22.8318 28.3893C22.0369 28.985 20.8457 29.2828 19.256 29.2828H9.10704V8.40945H18.7074C19.9658 8.40945 20.951 8.71625 21.663 9.32761C22.0817 9.68591 22.3728 10.1293 22.5452 10.6511L29.8513 5.15562C29.4125 4.68534 28.9042 4.25538 28.322 3.8702C25.9553 2.30263 22.5004 1.5166 17.964 1.5166H0.624512V36.2272H17.814C22.8497 36.2272 26.6897 35.3829 29.3408 33.6989C31.9897 32.0127 33.3152 29.5672 33.3152 26.3604C33.3152 24.8063 33.0085 23.4694 32.3949 22.343V22.3407Z\" fill=\"black\"/>\n        </svg>\n      <div class=\"text-warpper\">\n        <p>\n          We noticed that your IP address is from one of BloFin's restricted\n          countries or regions. Unfortunately, BloFin is not able to provide\n          service to users in these regions under our Terms and Conditions.\n          Please email us at\n          <a href=\"/cdn-cgi/l/email-protection#7c0f090c0c130e083c1e10131a1512521f1311\"><span class=\"__cf_email__\" data-cfemail=\"374442474758454377555b58515e591954585a\">[email&#160;protected]</span></a> or contact\n          our Support Center if you have any questions.\n        </p>\n      </div>\n    </div>\n  <script data-cfasync=\"false\">!function(){\"use strict\";function e(e){try{if(\"undefined\"==typeof console)return;\"error\"in console?console.error(e):console.log(e)}catch(e){}}function t(e){return d.innerHTML='<a href=\"'+e.replace(/\"/g,\"&quot;\")+'\"></a>',d.childNodes[0].getAttribute(\"href\")||\"\"}function r(e,t){var r=e.substr(t,2);return parseInt(r,16)}function n(n,c){for(var o=\"\",a=r(n,c),i=c+2;i<n.length;i+=2){var l=r(n,i)^a;o+=String.fromCharCode(l)}try{o=decodeURIComponent(escape(o))}catch(u){e(u)}return t(o)}function c(t){for(var r=t.querySelectorAll(\"a\"),c=0;c<r.length;c++)try{var o=r[c],a=o.href.indexOf(l);a>-1&&(o.href=\"mailto:\"+n(o.href,a+l.length))}catch(i){e(i)}}function o(t){for(var r=t.querySelectorAll(u),c=0;c<r.length;c++)try{var o=r[c],a=o.parentNode,i=o.getAttribute(f);if(i){var l=n(i,0),d=document.createTextNode(l);a.replaceChild(d,o)}}catch(h){e(h)}}function a(t){for(var r=t.querySelectorAll(\"template\"),n=0;n<r.length;n++)try{i(r[n].content)}catch(c){e(c)}}function i(t){try{c(t),o(t),a(t)}catch(r){e(r)}}var l=\"/cdn-cgi/l/email-protection#\",u=\".__cf_email__\",f=\"data-cfemail\",d=document.createElement(\"div\");i(document),function(){var e=document.currentScript||document.scripts[document.scripts.length-1];e.parentNode.removeChild(e)}()}();\n</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML=\"window.__CF$cv$params={r:'98a4ae352abe04be',t:'MTc1OTc0ODY5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);\";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>\n</html>"
+    },
+    "btcalpha": {
+      "exchange": "btcalpha",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "btcbox": {
+      "exchange": "btcbox",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "btcmarkets": {
+      "exchange": "btcmarkets",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "btcturk": {
+      "exchange": "btcturk",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "cex": {
+      "exchange": "cex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "coinbaseadvanced": {
+      "exchange": "coinbaseadvanced",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "coinbaseexchange": {
+      "exchange": "coinbaseexchange",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "WBTC/USD",
+        "id": "WBTC-USD",
+        "base": "WBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "WBTC/USD",
+        "id": "WBTC-USD",
+        "base": "WBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "WBTC/USD",
+        "id": "WBTC-USD",
+        "base": "WBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "WBTC/USD",
+        "id": "WBTC-USD",
+        "base": "WBTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USD",
+        "id": "WBTC-USD",
+        "base": "WBTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "coinbaseinternational": {
+      "exchange": "coinbaseinternational",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "coincatch": {
+      "exchange": "coincatch",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT_SPBL",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "coincheck": {
+      "exchange": "coincheck",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "coinex": {
+      "exchange": "coinex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTCH/USDT",
+        "id": "BTCHUSDT",
+        "base": "BTCH",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "PUMPBTC/USDT",
+        "id": "PUMPBTCUSDT",
+        "base": "PUMPBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "coinmate": {
+      "exchange": "coinmate",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "error": "coinmate GET https://coinmate.io/api/tradingPairs 403 Forbidden <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\"><meta name=\"robots\" content=\"noindex,nofollow\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style>*{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,\"Noto Sans\",sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\",\"Noto Color Emoji\"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width <= 720px){.main-content{margin-top:4rem}}.h2{line-height:2.25rem;font-size:1.5rem;font-weight:500}@media (width <= 720px){.h2{line-height:1.5rem;font-size:1.25rem}}#challenge-error-text{background-image:url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI0IyMEYwMyIgZD0iTTE2IDNhMTMgMTMgMCAxIDAgMTMgMTNBMTMuMDE1IDEzLjAxNSAwIDAgMCAxNiAzbTAgMjRhMTEgMTEgMCAxIDEgMTEtMTEgMTEuMDEgMTEuMDEgMCAwIDEtMTEgMTEiLz48cGF0aCBmaWxsPSIjQjIwRjAzIiBkPSJNMTcuMDM4IDE4LjYxNUgxNC44N0wxNC41NjMgOS41aDIuNzgzem0tMS4wODQgMS40MjdxLjY2IDAgMS4wNTcuMzg4LjQwNy4zODkuNDA3Ljk5NCAwIC41OTYtLjQwNy45ODQtLjM5Ny4zOS0xLjA1Ny4zODktLjY1IDAtMS4wNTYtLjM4OS0uMzk4LS4zODktLjM5OC0uOTg0IDAtLjU5Ny4zOTgtLjk4NS40MDYtLjM5NyAxLjA1Ni0uMzk3Ii8+PC9zdmc+\");background-repeat:no-repeat;background-size:contain;padding-left:34px}@media (prefers-color-scheme: dark){body{background-color:#222;color:#d9d9d9}}</style><meta http-equiv=\"refresh\" content=\"360\"></head><body><div class=\"main-wrapper\" role=\"main\"><div class=\"main-content\"><noscript><div class=\"h2\"><span id=\"challenge-error-text\">Enable JavaScript and cookies to continue</span></div></noscript></div></div><script>(function(){window._cf_chl_opt = {cvId: '3',cZone: 'coinmate.io',cType: 'interactive',cRay: '98a4b0222ca36e45',cH: 'xFai6Qjiyud4qQ6C957T20I6ElenTDNHQg908WMaR2k-1759748772-1.2.1.1-uz_PSrrq4cn6xFoXmPOKbml4aHRgSKPZ3qpRRXwshsFfrUCvKw9psBVW31rnlJnl',cUPMDTk:\"\\/api\\/tradingPairs?__cf_chl_tk=Y4O1SBDrBiCL9yGo4JsyvLyZ.559mqkXRwEy7jIzSBY-1759748772-1.0.1.1-cUhutf5OHMjtnI03YQRVU6oDhNn3hza2wPRG1KsuZME\",cFPWv: 'b',cITimeS: '1759748772',cTplC:0,cTplV:5,cTplB: 'cf',fa:\"\\/api\\/tradingPairs?__cf_chl_f_tk=Y4O1SBDrBiCL9yGo4JsyvLyZ.559mqkXRwEy7jIzSBY-1759748772-1.0.1.1-cUhutf5OHMjtnI03YQRVU6oDhNn3hza2wPRG1KsuZME\",md: 'MPiQ_GCDnCePqaMx6DEzALYP7kn.5X7h0UewOYQ2YJU-1759748772-1.2.1.1-se1UpyEZ7ecOKBqoP..qRt1gTCb8K.33vxuMzUsrKr9l8sWU75EFOiuIJDjHNIimZDj4l8kIBrIyFlzAsN69CfYT4EdIyw8qkY3pZxovpDuYGO4Y1ojs.hjbinkQliBPNH178SQ3cgBkcTPLU.PFvzwYQztGZN129A06afYsb15DTXOhnfqGFC1thy5aJCvLt5SLTZlG5HtjDxxNbILOCuZIbYcSlOqBysqXKhcO5xWmgA5QUOKSoCpysNv54BiX01iKRBF1DO0zGT6PU8TxJc8R.5vnz69p7dTa3vHInMhtRqxLhdVkRwYHCb8qwAUYmcAezOnmCGLYQyjPki2rtP.IRXbomrEdTo7WuAp.ADDgMpd7HVY8brFCGI9tZvzdgE0q8GcrIqEdfXFOxGf1NF8dYDKJlKxmzInWTLcj3pDc2fe.NOUiyveYpCOMmGiVt46B3kAerjS2mBAOxeXIo1ZrabgzPtCj5fND9zJxECPWXX.ZqNKFcGLH2TRBm8gwlDq7olMoDkQOn28QCHbvpFxHwPrPMcnUW6u0MBJ.0dxFCGp56ASmFPxp8J3hPNbPyrPjM5AUy5VQ5al4IJGtPjSzWdoEEJR4Hwq17LCJXithFimjWZBOd7vZPnpdW1F3ovqcZptnMse694OuNF1yIvxS0wCqGIMjXuzGrglFGrbyXKEvyOe.AQNFSS_hmIsesVIy0_NorkkP0EjRUXJqgeJ90f6qjBcdq487BdMkg3Yc8kheZ0TpmDiIE5rCbClsuh5b4d0X25JTeMQVI4DFSY_giwB1w.WKotLNKKY1cLGUW8O9MABt3wha95Pl_JZ7qKlI27V54W2gHHtFqL97M5OxzERAQrw60lp7TGN1bvxbcBX9ka4qd3zWXCw8bX8Iyj7M7KF7g4AvmwKFs0cRkR78QWke0lrbgCDNv9qsHQCfihGpMO.olCp4VphJOTt3',mdrd: 'l.Mj0nIp4_aYNbElZTJ.BC5gRJ9vadipUmI_JcDNFcc-1759748772-1.2.1.1-BzRCu6J5yL.Nmp8CU2FQp2F96_oWM22Wd7OoMNzcqbyYuC3cRUCjufqKxC7QDtT55S7K.WAV6wmyEJTatygelpMe65feQKLy7.d1Q8R5vzFoRlO3n8cElqNiMsHp16uim_jvr5SkPLITug1gVf4QAnEBkmmt.ABYVrhpbPy2Nk6IWmKq1bn8Lj1D9IUXklPMzfwpTF5G9EPXqki8iwhrsjZuEH4Uwg2kP6t7QQdFUiS1sDZgor72b1rgT9YLiOcT.tqyM3rf4hZ31CzuHNAOJTHYSChcvusuV4qvXmcN.pv_7FW2Cwi.u0KwXdGmPFeGS8ABtZZ7Ggw1l3tJfQFlB9hO3NIyTmfWgsdFeedrtdfLfdvjVFt7iSzMzBpa7LnxxmIyXQ35YcRcWE7YlqlPKiI0yy2WbslvlX0ofjTE7WOu5ZWRQRDma9W1hKLAmoaBRFndKfTPUWNu4Lu_2ao3.75a_ISa0cj1huCDqaOga6pHMrB7cR_SWVOVCFa2o71BoAvY.VWaDezOyPwqOEu_4ALDP39Pynr_6ufIq8y3KC5WQ9pjcuqk8N3JnoYOEuc0tx3a0LR6HG7egpSXlYEsbUEG6RwlLbypG38_L6g1uZSU4kDyBcxvjOPBsuQavNjYidXLWpaNHzsmdASAgNO29Up0PWavIrB4wU8c2gmUgz57OeM55zT8uhZzP6DJGOFx0RwoNk37YIAj5Lk5dauTFnR91k3tz3BXDxQiQB32oBFWWWVZx6N9_IGVD4oolbW6m2OiAguhBlPsgUmhN4bBqAR7AjsjAuxWdCWSZntQvSjpw4nwbOncLcVYttj5dKgbAc_pRmf8wcnIl4oaX9K3aB9J2tzRBz9cKeuy3tTJM1PvPVFBIWHa5hKqDrq76dBOEIM8QzeaUb88F.Ug8jiYC_XmzFdm3P6xCBuRq8O_Jxi9kGXTs7wsrAGjAeeVLUuueqx2GCAXo.smHdnICx6kNxzrH5WWXYh.QwBRVyndCGcinXUAtsSX39eP8Up1x92kUmGiOCgiUZc5idDXkGYcFre2Si74y4er2bb752en64sR5L8tAk92KfVOlbBaE4ht2PO5gbsK5PUYNG1k_yj28kKKuc8I3f7zrctr_N2_O3lon05kh3cHwl3YrgLc3H4O7XPXpUbmb6KC94psvIFWz0Nl3_rWP3u0a8.Z99Qmzjm6iqdb_AFZYZlk2jtPc2gMlrwrJ3PjxtYdGfZhBghffB24LROSmyiCNHL9qySjMBYVu5sZiuPBp6YRO2ksRqZiD3JBAM7kud3y5U_GdhTnSq93UaL.xD285l_aaLbB.NV391WL3Jh3yh3lN79GDEoeRc0_dXLKCcyo5T.mxuUB5s1Zrl4owZCYg2347DIx1lnBwc8eVSyOfnb35q5e5fQY87rko9_D1DegAl1_iFAJEu6fa22AQUD2fm_v.i0d0ClsmXWoB9paQMhnroUAQq7fJEhB4GgVqH7ow22cSmYhSxU8HHvCRnG7aVUlIJsTYq4LM0lcGZfHD69gLavcmLOqUhWOJEju0C1ZN0c4vAzhAO7n340kTk2YuC3RD.t3iMSQbvek8GVDbF7xLumQOgip6BJptAHPhJdN6fsgfcLHcR81wonqH72MYqqWrmK5Ez1pfiAflPC7X7d1Nc3dn.lX0KGRljRI3s2IZkx4_JjnpWv1k083VTdAdyQkTj6jMupeBGslvbkR9ZjMltIXvq0D2.MhnrsDncJpeQ0dRmtCItKZxQzqG_bcu_KvVS0Hage3TqlvH7BU8Ek5QL9M2eDlofclJ.k4VmPIw5pyrAKHL56Ys9wwPFXcRhaSPZlo0bTBRQygM8L5mYdC7b63bKbHVTncqG1scHyveORyUTZnqXsk7B2DQr.e8FDm_gGAp6Jls7fMjde_rpQvnqEHshfhIDjQFSpXA9s.DYGPWyPm7EzYKVjLuC2wj8EkA6yTEAjLAFSfrU6QuKOqVtKdhsc070uszAbnKOMlUXVdSBlPS9ox06rKKaJPwfkPy._mWr0P.Uas6uBH7WkWPwUOkoVzk8QWySXTO7NJSHz5Jo3Vlb.F.dAm6wPdp2jrZ9InbxZLqed997H3pyRyJ.s8uhVWUcaokNSEGnlX_RzUSXue7Z2RtHTrBGBcpvnq9ck0KLBbIAxTgmByjqOH7lwiZmn.9YEtgCw.ECgj7JgGOkjHKbVdbjtc07zAmlv7aOcGKKlj0OsR4ojBzbFRw7IbZHDYm2z0MpfL2FWFQMo6QLPr_jBJ0RY_oVeo8pAMR9wqvDJPxs26_z_qAyuiv7eTgqGe',};var a = document.createElement('script');a.src = '/cdn-cgi/challenge-platform/h/b/orchestrate/chl_page/v1?ray=98a4b0222ca36e45';window._cf_chl_opt.cOgUHash = location.hash === '' && location.href.indexOf('#') !== -1 ? '#' : location.hash;window._cf_chl_opt.cOgUQuery = location.search === '' && location.href.slice(0, location.href.length - window._cf_chl_opt.cOgUHash.length).indexOf('?') !== -1 ? '?' : location.search;if (window.history && window.history.replaceState) {var ogU = location.pathname + window._cf_chl_opt.cOgUQuery + window._cf_chl_opt.cOgUHash;history.replaceState(null, null,\"\\/api\\/tradingPairs?__cf_chl_rt_tk=Y4O1SBDrBiCL9yGo4JsyvLyZ.559mqkXRwEy7jIzSBY-1759748772-1.0.1.1-cUhutf5OHMjtnI03YQRVU6oDhNn3hza2wPRG1KsuZME\"+ window._cf_chl_opt.cOgUHash);a.onload = function() {history.replaceState(null, null, ogU);}}document.getElementsByTagName('head')[0].appendChild(a);}());</script></body></html>"
+    },
+    "coinmetro": {
+      "exchange": "coinmetro",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "coinone": {
+      "exchange": "coinone",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "coinsph": {
+      "exchange": "coinsph",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTCUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "coinspot": {
+      "exchange": "coinspot",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "cryptomus": {
+      "exchange": "cryptomus",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "defx": {
+      "exchange": "defx",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      }
+    },
+    "delta": {
+      "exchange": "delta",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "deribit": {
+      "exchange": "deribit",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "derive": {
+      "exchange": "derive",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "SOLVBTC/USDC",
+        "id": "SOLVBTC-USDC",
+        "base": "SOLVBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "SOLVBTC/USDC",
+        "id": "SOLVBTC-USDC",
+        "base": "SOLVBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "SOLVBTC/USDC",
+        "id": "SOLVBTC-USDC",
+        "base": "SOLVBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "SOLVBTC/USDC",
+        "id": "SOLVBTC-USDC",
+        "base": "SOLVBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "SOLVBTC/USDC",
+        "id": "SOLVBTC-USDC",
+        "base": "SOLVBTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "digifinex": {
+      "exchange": "digifinex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "exmo": {
+      "exchange": "exmo",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "fmfwio": {
+      "exchange": "fmfwio",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTCUSDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "foxbit": {
+      "exchange": "foxbit",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "gateio": {
+      "exchange": "gateio",
+      "spot": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "RBTC/USDT",
+        "id": "RBTC_USDT",
+        "base": "RBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "gemini": {
+      "exchange": "gemini",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/GUSD",
+        "id": "btcgusd",
+        "base": "BTC",
+        "quote": "GUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/GUSD",
+        "id": "btcgusd",
+        "base": "BTC",
+        "quote": "GUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/GUSD",
+        "id": "btcgusd",
+        "base": "BTC",
+        "quote": "GUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/GUSD",
+        "id": "btcgusd",
+        "base": "BTC",
+        "quote": "GUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/GUSD",
+        "id": "btcgusd",
+        "base": "BTC",
+        "quote": "GUSD",
+        "type": "spot"
+      }
+    },
+    "hashkey": {
+      "exchange": "hashkey",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "hibachi": {
+      "exchange": "hibachi",
+      "spot": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "BTC/USDT-P",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      }
+    },
+    "hitbtc": {
+      "exchange": "hitbtc",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTCUSDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "hollaex": {
+      "exchange": "hollaex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btc-usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "htx": {
+      "exchange": "htx",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/TUSD",
+        "id": "btctusd",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      }
+    },
+    "hyperliquid": {
+      "exchange": "hyperliquid",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "UBTC/USDC",
+        "id": "@142",
+        "base": "UBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "UBTC/USDC",
+        "id": "@142",
+        "base": "UBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "UBTC/USDC",
+        "id": "@142",
+        "base": "UBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "UBTC/USDC",
+        "id": "@142",
+        "base": "UBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "UBTC/USDC",
+        "id": "@142",
+        "base": "UBTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "independentreserve": {
+      "exchange": "independentreserve",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "Xbt/Usd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "Xbt/Usd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "Xbt/Usd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "Xbt/Usd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "Xbt/Usd",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "indodax": {
+      "exchange": "indodax",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "krakenfutures": {
+      "exchange": "krakenfutures",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD:BTC",
+        "id": "PI_XBTUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USD:BTC",
+        "id": "PI_XBTUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USD:BTC",
+        "id": "PI_XBTUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USD:BTC",
+        "id": "PI_XBTUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USD:BTC",
+        "id": "PI_XBTUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      }
+    },
+    "kucoinfutures": {
+      "exchange": "kucoinfutures",
+      "spot": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT:USDT",
+        "id": "XBTUSDTM",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "swap"
+      }
+    },
+    "latoken": {
+      "exchange": "latoken",
+      "spot": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTCST/USDT",
+        "id": "a6a32694-39d1-4685-8c1e-18a18cd0a981",
+        "base": "BTCST",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "lbank": {
+      "exchange": "lbank",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "luno": {
+      "exchange": "luno",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "XBTUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "XBTUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "XBTUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "XBTUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "XBTUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "XBTUSDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "mercado": {
+      "exchange": "mercado",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "mexc": {
+      "exchange": "mexc",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTCUSDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USDC",
+        "id": "WBTCUSDC",
+        "base": "WBTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "modetrade": {
+      "exchange": "modetrade",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      }
+    },
+    "myokx": {
+      "exchange": "myokx",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "ndax": {
+      "exchange": "ndax",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "82",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "74",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "74",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "74",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "74",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "74",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "novadax": {
+      "exchange": "novadax",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "oceanex": {
+      "exchange": "oceanex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btcusdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "okcoin": {
+      "exchange": "okcoin",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "error": "okcoin GET https://www.okcoin.com/api/v5/public/instruments?instType=SPOT 502 Bad Gateway <!DOCTYPE html>\n<!--[if lt IE 7]> <html class=\"no-js ie6 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 7]>    <html class=\"no-js ie7 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if IE 8]>    <html class=\"no-js ie8 oldie\" lang=\"en-US\"> <![endif]-->\n<!--[if gt IE 8]><!--> <html class=\"no-js\" lang=\"en-US\"> <!--<![endif]-->\n<head>\n\n\n<title>www.okcoin.com | 502: Bad gateway</title>\n<meta charset=\"UTF-8\" />\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge\" />\n<meta name=\"robots\" content=\"noindex, nofollow\" />\n<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\" />\n<link rel=\"stylesheet\" id=\"cf_styles-css\" href=\"/cdn-cgi/styles/main.css\" />\n\n\n</head>\n<body>\n<div id=\"cf-wrapper\">\n    <div id=\"cf-error-details\" class=\"p-0\">\n        <header class=\"mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8\">\n            <h1 class=\"inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2\">\n              <span class=\"inline-block\">Bad gateway</span>\n              <span class=\"code-label\">Error code 502</span>\n            </h1>\n            <div>\n               Visit <a href=\"https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=www.okcoin.com\" target=\"_blank\" rel=\"noopener noreferrer\">cloudflare.com</a> for more information.\n            </div>\n            <div class=\"mt-3\">2025-10-06 11:09:56 UTC</div>\n        </header>\n        <div class=\"my-8 bg-gradient-gray\">\n            <div class=\"w-240 lg:w-full mx-auto\">\n                <div class=\"clearfix md:px-8\">\n                  \n<div id=\"cf-browser-status\" class=\" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center\">\n  <div class=\"relative mb-10 md:m-0\">\n    \n    <span class=\"cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat\"></span>\n    <span class=\"cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4\"></span>\n    \n  </div>\n  <span class=\"md:block w-full truncate\">You</span>\n  <h3 class=\"md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3\">\n    \n    Browser\n    \n  </h3>\n  <span class=\"leading-1.3 text-2xl text-green-success\">Working</span>\n</div>\n\n<div id=\"cf-cloudflare-status\" class=\" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center\">\n  <div class=\"relative mb-10 md:m-0\">\n    <a href=\"https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=www.okcoin.com\" target=\"_blank\" rel=\"noopener noreferrer\">\n    <span class=\"cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat\"></span>\n    <span class=\"cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4\"></span>\n    </a>\n  </div>\n  <span class=\"md:block w-full truncate\">Hong Kong</span>\n  <h3 class=\"md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3\">\n    <a href=\"https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=www.okcoin.com\" target=\"_blank\" rel=\"noopener noreferrer\">\n    Cloudflare\n    </a>\n  </h3>\n  <span class=\"leading-1.3 text-2xl text-green-success\">Working</span>\n</div>\n\n<div id=\"cf-host-status\" class=\"cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center\">\n  <div class=\"relative mb-10 md:m-0\">\n    \n    <span class=\"cf-icon-server block md:hidden h-20 bg-center bg-no-repeat\"></span>\n    <span class=\"cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4\"></span>\n    \n  </div>\n  <span class=\"md:block w-full truncate\">www.okcoin.com</span>\n  <h3 class=\"md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3\">\n    \n    Host\n    \n  </h3>\n  <span class=\"leading-1.3 text-2xl text-red-error\">Error</span>\n</div>\n\n                </div>\n            </div>\n        </div>\n\n        <div class=\"w-240 lg:w-full mx-auto mb-8 lg:px-8\">\n            <div class=\"clearfix\">\n                <div class=\"w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed\">\n                    <h2 class=\"text-3xl font-normal leading-1.3 mb-4\">What happened?</h2>\n                    <p>The web server reported a bad gateway error.</p>\n                </div>\n                <div class=\"w-1/2 md:w-full float-left leading-relaxed\">\n                    <h2 class=\"text-3xl font-normal leading-1.3 mb-4\">What can I do?</h2>\n                    <p class=\"mb-6\">Please try again in a few minutes.</p>\n                </div>\n            </div>\n        </div>\n\n        <div class=\"cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300\">\n  <p class=\"text-13\">\n    <span class=\"cf-footer-item sm:block sm:mb-1\">Cloudflare Ray ID: <strong class=\"font-semibold\">98a4b59a4f920f30</strong></span>\n    <span class=\"cf-footer-separator sm:hidden\">&bull;</span>\n    <span id=\"cf-footer-item-ip\" class=\"cf-footer-item hidden sm:block sm:mb-1\">\n      Your IP:\n      <button type=\"button\" id=\"cf-footer-ip-reveal\" class=\"cf-footer-ip-reveal-btn\">Click to reveal</button>\n      <span class=\"hidden\" id=\"cf-footer-ip\">16.163.163.204</span>\n      <span class=\"cf-footer-separator sm:hidden\">&bull;</span>\n    </span>\n    <span class=\"cf-footer-item sm:block sm:mb-1\"><span>Performance &amp; security by</span> <a rel=\"noopener noreferrer\" href=\"https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=www.okcoin.com\" id=\"brand_link\" target=\"_blank\">Cloudflare</a></span>\n    \n  </p>\n  <script>(function(){function d(){var b=a.getElementById(\"cf-footer-item-ip\"),c=a.getElementById(\"cf-footer-ip-reveal\");b&&\"classList\"in b&&(b.classList.remove(\"hidden\"),c.addEventListener(\"click\",function(){c.classList.add(\"hidden\");a.getElementById(\"cf-footer-ip\").classList.remove(\"hidden\")}))}var a=document;document.addEventListener&&a.addEventListener(\"DOMContentLoaded\",d)})();</script>\n</div><!-- /.error-footer -->\n\n\n    </div>\n</div>\n</body>\n</html>"
+    },
+    "okxus": {
+      "exchange": "okxus",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC-USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC-USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "onetrading": {
+      "exchange": "onetrading",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "oxfun": {
+      "exchange": "oxfun",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD:OX",
+        "id": "BTC-USD-SWAP-LIN",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USD:OX",
+        "id": "BTC-USD-SWAP-LIN",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USD:OX",
+        "id": "BTC-USD-SWAP-LIN",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USD:OX",
+        "id": "BTC-USD-SWAP-LIN",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USD:OX",
+        "id": "BTC-USD-SWAP-LIN",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "swap"
+      }
+    },
+    "p2b": {
+      "exchange": "p2b",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "USDQ/BTC",
+        "id": "USDQ_BTC",
+        "base": "USDQ",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "USDQ/BTC",
+        "id": "USDQ_BTC",
+        "base": "USDQ",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "USDQ/BTC",
+        "id": "USDQ_BTC",
+        "base": "USDQ",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "USDQ/BTC",
+        "id": "USDQ_BTC",
+        "base": "USDQ",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "USDQ/BTC",
+        "id": "USDQ_BTC",
+        "base": "USDQ",
+        "quote": "BTC",
+        "type": "spot"
+      }
+    },
+    "paradex": {
+      "exchange": "paradex",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USD:USDC-105000-P",
+        "id": "BTC-USD-105000-P",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "option"
+      },
+      "swap": {
+        "symbol": "BTC/USD:USDC-116000-P",
+        "id": "BTC-USD-116000-P",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "option"
+      },
+      "delivery": {
+        "symbol": "BTC/USD:USDC-112000-P",
+        "id": "BTC-USD-112000-P",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "option"
+      },
+      "linear": {
+        "symbol": "BTC/USD:USDC-116000-P",
+        "id": "BTC-USD-116000-P",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "option"
+      },
+      "inverse": {
+        "symbol": "BTC/USD:USDC-123000-C",
+        "id": "BTC-USD-123000-C",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "option"
+      }
+    },
+    "paymium": {
+      "exchange": "paymium",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "phemex": {
+      "exchange": "phemex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "sBTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "poloniex": {
+      "exchange": "poloniex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "probit": {
+      "exchange": "probit",
+      "spot": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "WBTC/USDT",
+        "id": "WBTC-USDT",
+        "base": "WBTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "timex": {
+      "exchange": "timex",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTCUSD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "tokocrypto": {
+      "exchange": "tokocrypto",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/TUSD",
+        "id": "BTC_TUSD",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/TUSD",
+        "id": "BTC_TUSD",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/TUSD",
+        "id": "BTC_TUSD",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/TUSD",
+        "id": "BTC_TUSD",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/TUSD",
+        "id": "BTC_TUSD",
+        "base": "BTC",
+        "quote": "TUSD",
+        "type": "spot"
+      }
+    },
+    "toobit": {
+      "exchange": "toobit",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "BTCUSDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "upbit": {
+      "exchange": "upbit",
+      "spot": {
+        "symbol": "USDT/BTC",
+        "id": "BTC-USDT",
+        "base": "USDT",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "USDC/BTC",
+        "id": "BTC-USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "USDC/BTC",
+        "id": "BTC-USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "USDC/BTC",
+        "id": "BTC-USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "USDC/BTC",
+        "id": "BTC-USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "USDC/BTC",
+        "id": "BTC-USDC",
+        "base": "USDC",
+        "quote": "BTC",
+        "type": "spot"
+      }
+    },
+    "wavesexchange": {
+      "exchange": "wavesexchange",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "whitebit": {
+      "exchange": "whitebit",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [
+        "❌ 现货和合约符号格式不同"
+      ],
+      "future": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USD",
+        "id": "BTC_USD",
+        "base": "BTC",
+        "quote": "USD",
+        "type": "spot"
+      }
+    },
+    "woo": {
+      "exchange": "woo",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "SPOT_BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "SPOT_BTC_USDT",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "SPOT_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "SPOT_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "SPOT_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "SPOT_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    },
+    "woofipro": {
+      "exchange": "woofipro",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "swap": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "linear": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC:USDC",
+        "id": "PERP_BTC_USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "swap"
+      }
+    },
+    "xt": {
+      "exchange": "xt",
+      "spot": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": true,
+      "notes": [
+        "✅ 现货和合约使用相同的符号格式"
+      ],
+      "future": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDT",
+        "id": "btc_usdt",
+        "base": "BTC",
+        "quote": "USDT",
+        "type": "spot"
+      }
+    },
+    "yobit": {
+      "exchange": "yobit",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "error": "yobit GET https://yobit.net/api/3/info 403 Forbidden <!doctype html><html><head><title>DDoS-Guard</title><meta charset=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"/><link rel=\"stylesheet\" href=\"/.well-known/ddos-guard/js-challenge/index.css\"><script defer=\"defer\" src=\"/.well-known/ddos-guard/js-challenge/view.js\"></script><script defer=\"defer\" src=\"/.well-known/ddos-guard/js-challenge/index.js\"></script><script src=\"https://check.ddos-guard.net/check.js\"></script></head><body data-ddg-origin=\"true\" data-ddg-l10n=\"true\"><div class=\"container\"><div class=\"top\"><h1 id=\"ddg-l10n-title\">Checking your browser before accessing <span class=\"ddg-origin\"></span></h1><p id=\"ddg-l10n-description\">Please wait a few seconds. Once this check is complete, the website will open automatically</p><img id=\"ddg-img-loading\" src=\"\" alt=\"loading\"/></div><div class=\"bottom\"><span id=\"request-info\"></span></div></div></body></html>"
+    },
+    "zaif": {
+      "exchange": "zaif",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": []
+    },
+    "zonda": {
+      "exchange": "zonda",
+      "spot": {},
+      "futures": {},
+      "perpetual_swap": {},
+      "unified": false,
+      "notes": [],
+      "future": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "swap": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "delivery": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "linear": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      },
+      "inverse": {
+        "symbol": "BTC/USDC",
+        "id": "BTC-USDC",
+        "base": "BTC",
+        "quote": "USDC",
+        "type": "spot"
+      }
+    }
+  }

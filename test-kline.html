@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KlineChart Test</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script>
+        const { useState, useEffect, useRef } = React;
+        
+        function KlineChart({ dataA = [], dataB = [], labelA = "Exchange A", labelB = "Exchange B", upper = 0.003, lower = -0.002 }) {
+            const chartRef = useRef(null);
+            const instanceRef = useRef(null);
+
+            useEffect(() => {
+                if (!chartRef.current) return;
+                
+                if (!instanceRef.current) {
+                    instanceRef.current = echarts.init(chartRef.current);
+                }
+                const chart = instanceRef.current;
+
+                // 如果没有数据，显示空图表
+                if (!dataA || dataA.length === 0) {
+                    const option = {
+                        title: { text: "暂无数据", left: "center", top: "center" },
+                        xAxis: { type: "category", data: [] },
+                        yAxis: { type: "value" },
+                        series: []
+                    };
+                    chart.setOption(option);
+                    return;
+                }
+
+                // x 轴
+                const times = dataA.map((d) =>
+                    typeof d.time === "number"
+                        ? new Date(d.time).toLocaleString()
+                        : d.time
+                );
+
+                const pricesA = dataA.map((d) => d.close);
+                const pricesB = dataB.map((d) => d.close);
+
+                // 差值序列
+                const diff = pricesA.map((p, i) => {
+                    if (!pricesB[i]) return null;
+                    return (p - pricesB[i]) / pricesB[i];
+                });
+
+                // 找出机会点
+                const markPoints = [];
+                diff.forEach((d, i) => {
+                    if (d == null) return;
+                    if (d > upper || d < lower) {
+                        markPoints.push({
+                            coord: [times[i], pricesA[i]],
+                            value: (d * 100).toFixed(2) + "%",
+                            itemStyle: { color: d > 0 ? "red" : "green" },
+                        });
+                    }
+                });
+
+                const option = {
+                    tooltip: {
+                        trigger: "axis",
+                    },
+                    legend: {
+                        data: [labelA, labelB],
+                    },
+                    xAxis: {
+                        type: "category",
+                        data: times,
+                        axisLabel: { showMaxLabel: true },
+                    },
+                    yAxis: {
+                        type: "value",
+                        scale: true,
+                    },
+                    series: [
+                        {
+                            name: labelA,
+                            type: "line",
+                            data: pricesA,
+                            smooth: true,
+                            symbolSize: 6,
+                            lineStyle: { width: 2 },
+                            markPoint: {
+                                data: markPoints,
+                            },
+                        },
+                        {
+                            name: labelB,
+                            type: "line",
+                            data: pricesB,
+                            smooth: true,
+                            symbolSize: 6,
+                            lineStyle: { width: 2 },
+                        },
+                    ],
+                };
+
+                chart.setOption(option);
+                chart.resize();
+
+                const handleResize = () => chart.resize();
+                window.addEventListener("resize", handleResize);
+                return () => {
+                    window.removeEventListener("resize", handleResize);
+                };
+            }, [dataA, dataB, labelA, labelB, upper, lower]);
+
+            // 清理函数
+            useEffect(() => {
+                return () => {
+                    if (instanceRef.current) {
+                        instanceRef.current.dispose();
+                        instanceRef.current = null;
+                    }
+                };
+            }, []);
+
+            return React.createElement('div', { ref: chartRef, style: { width: "100%", height: "500px" } });
+        }
+
+        function TestApp() {
+            const [dataA, setDataA] = useState([]);
+            const [dataB, setDataB] = useState([]);
+
+            useEffect(() => {
+                // 生成测试数据
+                const generateMockData = (basePrice = 50000) => {
+                    const data = [];
+                    const now = Date.now();
+                    const intervalMs = 15 * 60 * 1000; // 15分钟
+                    
+                    for (let i = 100; i >= 0; i--) {
+                        const time = now - (i * intervalMs);
+                        const randomChange = (Math.random() - 0.5) * 0.02;
+                        const price = basePrice * (1 + randomChange);
+                        
+                        data.push({
+                            time: time,
+                            open: price * (1 + (Math.random() - 0.5) * 0.001),
+                            high: price * (1 + Math.random() * 0.002),
+                            low: price * (1 - Math.random() * 0.002),
+                            close: price
+                        });
+                    }
+                    return data;
+                };
+
+                setDataA(generateMockData(50000));
+                setDataB(generateMockData(50000 * 1.001)); // 添加0.1%的差异
+            }, []);
+
+            return React.createElement('div', { style: { padding: '20px' } },
+                React.createElement('h1', null, 'KlineChart 测试'),
+                React.createElement(KlineChart, {
+                    dataA: dataA,
+                    dataB: dataB,
+                    labelA: "Binance BTC/USDT",
+                    labelB: "Bybit BTC/USDT",
+                    upper: 0.003,
+                    lower: -0.002
+                })
+            );
+        }
+
+        ReactDOM.render(React.createElement(TestApp), document.getElementById('root'));
+    </script>
+</body>
+</html>
+
+
