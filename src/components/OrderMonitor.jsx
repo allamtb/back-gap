@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Table, Tag, Space, Button, Select, DatePicker, Card, Input, message, Switch, Statistic, Drawer, Checkbox, Divider } from "antd";
 import { ReloadOutlined, SearchOutlined, PauseCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { getExchangeCredentials, getExchangeConfig } from "../utils/configManager";
-import { readWatchlist, getAllByExchange, getEnabledByExchange, setEnabledForExchange, getQueriesFromEnabled } from "../utils/symbolWatchlist";
+import { readWatchlist, getAllSymbols, getEnabledSymbols, setEnabledSymbols, getSymbolsForQuery } from "../utils/symbolWatchlist";
 
 const { RangePicker } = DatePicker;
 const { Countdown } = Statistic;
@@ -14,7 +14,7 @@ export default function OrderMonitor() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [watchDrawerOpen, setWatchDrawerOpen] = useState(false);
-  const [enabledDraft, setEnabledDraft] = useState({}); // { exchangeId: string[] }
+  const [enabledDraft, setEnabledDraft] = useState([]); // string[] - 币种列表
   const [filters, setFilters] = useState({
     exchange: "all",
     type: "all",
@@ -37,7 +37,7 @@ export default function OrderMonitor() {
   // 初始加载
   useEffect(() => {
     // 初始化 enabledDraft（若无 enabled 则回退 all）
-    const initEnabled = getEnabledByExchange(true);
+    const initEnabled = getEnabledSymbols(true);
     setEnabledDraft(initEnabled);
     fetchOrders();
   }, []);
@@ -111,12 +111,17 @@ export default function OrderMonitor() {
       fetchingRef.current = true;
       setLoading(true);
 
-      // 生成基于本地 enabled 的查询
-      const queries = getQueriesFromEnabled();
-      if (queries.length === 0) {
+      // 生成基于本地 enabled 的币种列表
+      const symbols = getSymbolsForQuery();
+      
+      // 🔍 调试：打印查询参数
+      console.log('📡 查询币种列表:', symbols);
+      console.log('📡 交易所凭证数量:', credentials.length);
+      
+      if (symbols.length === 0) {
         console.warn('⚠️ 本地未配置关注币种，返回空列表');
         setOrders([]);
-        message.info('未选择关注币种，请在“币种筛选”中选择');
+        message.info('未选择关注币种，请在"币种筛选"中选择');
         return;
       }
 
@@ -126,7 +131,7 @@ export default function OrderMonitor() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ queries, credentials }),
+        body: JSON.stringify({ symbols, credentials }),
       });
 
       if (!response.ok) {
@@ -134,6 +139,18 @@ export default function OrderMonitor() {
       }
 
       const data = await response.json();
+      
+      // 🔍 调试：打印后端返回的数据
+      console.log('📦 后端返回数据:', {
+        success: data.success,
+        total: data.total,
+        订单数量: data.data?.length,
+        交易所分布: data.data?.reduce((acc, o) => {
+          acc[o.exchange] = (acc[o.exchange] || 0) + 1;
+          return acc;
+        }, {}),
+        首个订单示例: data.data?.[0]
+      });
 
       if (data.success) {
         const apiOrders = data.data;
@@ -155,6 +172,16 @@ export default function OrderMonitor() {
           orderTime: order.orderTime,
           fillTime: order.fillTime,
         }));
+        
+        // 🔍 调试：打印格式化后的订单
+        console.log('✅ 格式化后的订单数据:', {
+          总数: formattedOrders.length,
+          交易所分布: formattedOrders.reduce((acc, o) => {
+            acc[o.exchange] = (acc[o.exchange] || 0) + 1;
+            return acc;
+          }, {}),
+          前3条订单: formattedOrders.slice(0, 3)
+        });
 
         setOrders(formattedOrders);
         
@@ -207,30 +234,25 @@ export default function OrderMonitor() {
 
   // 币种筛选抽屉
   const openWatchDrawer = () => {
-    const enabled = getEnabledByExchange(true);
+    const enabled = getEnabledSymbols(true);
     setEnabledDraft(enabled);
     setWatchDrawerOpen(true);
   };
 
-  const handleToggleAllForExchange = (exId, checked, allList) => {
-    setEnabledDraft(prev => ({
-      ...prev,
-      [exId]: checked ? [...allList] : []
-    }));
+  const handleToggleAll = (checked, allList) => {
+    setEnabledDraft(checked ? [...allList] : []);
   };
 
-  const handleToggleOne = (exId, base, checked) => {
+  const handleToggleOne = (symbol, checked) => {
     setEnabledDraft(prev => {
-      const current = new Set(prev[exId] || []);
-      if (checked) current.add(base); else current.delete(base);
-      return { ...prev, [exId]: Array.from(current) };
+      const current = new Set(prev);
+      if (checked) current.add(symbol); else current.delete(symbol);
+      return Array.from(current);
     });
   };
 
   const saveWatchlist = () => {
-    Object.keys(enabledDraft).forEach(exId => {
-      setEnabledForExchange(exId, enabledDraft[exId] || []);
-    });
+    setEnabledSymbols(enabledDraft);
     message.success('已保存关注币种');
     setWatchDrawerOpen(false);
     // 保存后立即刷新
@@ -572,42 +594,37 @@ export default function OrderMonitor() {
         }
       >
         {(() => {
-          const allMap = getAllByExchange();
-          const exIds = Object.keys(allMap);
-          if (exIds.length === 0) {
+          const allSymbols = getAllSymbols();
+          if (allSymbols.length === 0) {
             return <div style={{ color: '#999' }}>暂无可选币种，请先在资金/持仓监控获取数据</div>;
           }
+          
+          const allChecked = allSymbols.length > 0 && enabledDraft.length === allSymbols.length;
+          const indeterminate = enabledDraft.length > 0 && enabledDraft.length < allSymbols.length;
+          
           return (
             <Space direction="vertical" style={{ width: '100%' }}>
-              {exIds.map(exId => {
-                const allList = allMap[exId] || [];
-                const enabledList = enabledDraft[exId] || [];
-                const allChecked = allList.length > 0 && enabledList.length === allList.length;
-                const indeterminate = enabledList.length > 0 && enabledList.length < allList.length;
-                return (
-                  <Card key={exId} size="small" title={<span>{exId}</span>}>
+              <Card size="small">
+                <Checkbox
+                  indeterminate={indeterminate}
+                  checked={allChecked}
+                  onChange={(e) => handleToggleAll(e.target.checked, allSymbols)}
+                >
+                  全选（共 {allSymbols.length} 个币种）
+                </Checkbox>
+                <Divider style={{ margin: '8px 0' }} />
+                <Space wrap>
+                  {allSymbols.map(symbol => (
                     <Checkbox
-                      indeterminate={indeterminate}
-                      checked={allChecked}
-                      onChange={(e) => handleToggleAllForExchange(exId, e.target.checked, allList)}
+                      key={symbol}
+                      checked={enabledDraft.includes(symbol)}
+                      onChange={(e) => handleToggleOne(symbol, e.target.checked)}
                     >
-                      全选
+                      {symbol}
                     </Checkbox>
-                    <Divider style={{ margin: '8px 0' }} />
-                    <Space wrap>
-                      {allList.map(base => (
-                        <Checkbox
-                          key={base}
-                          checked={(enabledDraft[exId] || []).includes(base)}
-                          onChange={(e) => handleToggleOne(exId, base, e.target.checked)}
-                        >
-                          {base}
-                        </Checkbox>
-                      ))}
-                    </Space>
-                  </Card>
-                );
-              })}
+                  ))}
+                </Space>
+              </Card>
             </Space>
           );
         })()}

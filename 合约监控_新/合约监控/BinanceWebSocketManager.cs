@@ -158,6 +158,8 @@ namespace FuturesTradeViewer
         {
             try
             {
+                lastLiquidationDataTime = DateTime.Now; // 重置心跳时间
+                
                 // 初始化爆仓监控器
                 if (liquidationMonitor == null)
                 {
@@ -219,6 +221,15 @@ namespace FuturesTradeViewer
                                 OnError?.Invoke($"订单簿流心跳超时({(now - lastOrderBookDataTime).TotalSeconds:F1}秒)，触发重连");
                                 await wsOrderBookStream.CloseAsync(WebSocketCloseStatus.NormalClosure, "Heartbeat timeout", CancellationToken.None);
                             }
+                        }
+
+                        // 检查爆仓流（仅检查连接状态，不检查数据超时，因为爆仓流可能长时间无数据）
+                        if (wsLiquidationStream != null && 
+                            wsLiquidationStream.State != WebSocketState.Open && 
+                            wsLiquidationStream.State != WebSocketState.Connecting)
+                        {
+                            OnError?.Invoke($"爆仓流连接异常(状态: {wsLiquidationStream.State})，触发重连");
+                            _ = Task.Run(() => AttemptReconnectLiquidationStreamAsync(CancellationToken.None));
                         }
                     }
                     catch (OperationCanceledException)
@@ -551,10 +562,69 @@ namespace FuturesTradeViewer
             }
             catch (Exception ex)
             {
-                if (!cancellationToken.IsCancellationRequested)
+                if (!cancellationToken.IsCancellationRequested && !isManualDisconnect)
                 {
                     OnError?.Invoke($"爆仓流接收错误: {ex.Message}");
+                    await AttemptReconnectLiquidationStreamAsync(cancellationToken);
                 }
+            }
+        }
+
+        /// <summary>
+        /// 尝试重连爆仓流
+        /// </summary>
+        private async Task AttemptReconnectLiquidationStreamAsync(CancellationToken cancellationToken)
+        {
+            if (string.IsNullOrEmpty(currentSymbol) || isManualDisconnect || cancellationToken.IsCancellationRequested)
+            {
+                return;
+            }
+
+            try
+            {
+                // 等待5秒后重连
+                await Task.Delay(5000, cancellationToken);
+
+                if (cancellationToken.IsCancellationRequested || isManualDisconnect)
+                {
+                    return;
+                }
+
+                reconnectCount++;
+                lastReconnectTime = DateTime.Now;
+                OnReconnecting?.Invoke(reconnectCount, lastReconnectTime.Value);
+
+                // 清理旧连接
+                wsLiquidationStream?.Dispose();
+
+                // 重新连接
+                wsLiquidationStream = new ClientWebSocket();
+                ConfigureWebSocket(wsLiquidationStream);
+
+                string url = $"{Constants.BinanceWebSocketBaseUrl}/{currentSymbol}@forceOrder";
+                await wsLiquidationStream.ConnectAsync(new Uri(url), cancellationToken);
+                
+                // 重置心跳时间
+                lastLiquidationDataTime = DateTime.Now;
+
+                // 检查连接状态
+                if (wsLiquidationStream.State == WebSocketState.Open)
+                {
+                    OnError?.Invoke($"爆仓流重连成功（第 {reconnectCount} 次）");
+                    OnReconnected?.Invoke(reconnectCount); // 触发重连成功事件
+                    
+                    // 继续接收数据
+                    _ = Task.Run(() => ReceiveLiquidationStreamAsync(cancellationToken));
+                }
+                else
+                {
+                    OnError?.Invoke($"爆仓流重连失败: 状态为 {wsLiquidationStream.State}");
+                }
+            }
+            catch (Exception ex)
+            {
+                OnError?.Invoke($"爆仓流重连异常: {ex.Message}");
+                await AttemptReconnectLiquidationStreamAsync(cancellationToken);
             }
         }
 
@@ -789,6 +859,58 @@ namespace FuturesTradeViewer
                 System.Diagnostics.Debug.WriteLine($"释放资源错误: {ex.Message}");
             }
         }
+
+        #region 连接测试
+
+        /// <summary>
+        /// 测试爆仓流连接状态
+        /// </summary>
+        public async Task<(bool isConnected, string message)> TestLiquidationConnectionAsync()
+        {
+            try
+            {
+                if (wsLiquidationStream == null)
+                {
+                    return (false, "爆仓流未初始化");
+                }
+
+                var state = wsLiquidationStream.State;
+                
+                switch (state)
+                {
+                    case WebSocketState.Open:
+                        // 尝试发送一个空操作来测试连接
+                        try
+                        {
+                            // 检查是否可以读取状态（间接测试连接）
+                            var subState = wsLiquidationStream.SubProtocol;
+                            return (true, $"✓ 连接正常\n交易对: {currentSymbol}\n状态: 已连接\n最后数据: {(DateTime.Now - lastLiquidationDataTime).TotalSeconds:F0}秒前");
+                        }
+                        catch
+                        {
+                            return (false, $"✗ 连接异常\n状态: Open (但无法访问)");
+                        }
+                    
+                    case WebSocketState.Connecting:
+                        return (false, $"⏳ 正在连接中...\n交易对: {currentSymbol}");
+                    
+                    case WebSocketState.Closed:
+                        return (false, $"✗ 连接已关闭\n交易对: {currentSymbol}");
+                    
+                    case WebSocketState.Aborted:
+                        return (false, $"✗ 连接已中断\n交易对: {currentSymbol}");
+                    
+                    default:
+                        return (false, $"✗ 未知状态: {state}");
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"✗ 测试失败: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

@@ -51,6 +51,9 @@ namespace FuturesTradeViewer
 
         /// <summary>
         /// 爆仓数量（使用累计成交数量）
+        /// 注意：这个数量是包含杠杆的合约数量，不是保证金数量
+        /// 例如：用户用1000 USDT保证金开10倍杠杆，这里显示的是10000 USDT的合约数量
+        /// 实际爆仓损失的是保证金（1000 USDT），而不是这个合约数量（10000 USDT）
         /// </summary>
         public decimal Quantity
         {
@@ -84,6 +87,9 @@ namespace FuturesTradeViewer
 
         /// <summary>
         /// 爆仓金额（USDT）= 价格 × 数量
+        /// 注意：这是合约的名义价值（包含杠杆），不是实际损失的保证金
+        /// 实际损失的保证金 = 爆仓金额 / 杠杆倍数
+        /// 由于币安API不直接返回杠杆倍数，所以这里只显示合约名义价值
         /// </summary>
         public decimal LiquidationValue
         {

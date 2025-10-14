@@ -12,6 +12,8 @@ namespace FuturesTradeViewer
         private System.Windows.Forms.Timer statsUpdateTimer;
         private BinanceApiClient? apiClient;
         private OrderBookData? latestOrderBookData = null; // 缓存最新的订单簿数据
+        private LiquidationLogger? liquidationLogger; // 爆仓日志记录器
+        private AbnormalTradeLogger? abnormalTradeLogger; // 异常大单日志记录器
 
         public MainForm()
         {
@@ -25,6 +27,9 @@ namespace FuturesTradeViewer
         /// </summary>
         private void InitializeAbnormalMonitor()
         {
+            // 设置默认时间窗口：索引2 = 5分钟
+            windowComboBox.SelectedIndex = 2;
+
             // 创建检测器实例
             abnormalDetector = new AbnormalTradeDetector
             {
@@ -50,6 +55,12 @@ namespace FuturesTradeViewer
 
             // 初始化爆仓监控参数
             InitializeLiquidationMonitor();
+
+            // 初始化爆仓日志记录器
+            liquidationLogger = new LiquidationLogger();
+
+            // 初始化异常大单日志记录器
+            abnormalTradeLogger = new AbnormalTradeLogger();
 
             // 创建统计更新定时器
             statsUpdateTimer = new System.Windows.Forms.Timer
@@ -494,6 +505,9 @@ namespace FuturesTradeViewer
                         abnormalTrade,
                         Constants.MaxAbnormalGridRows
                     );
+
+                    // 记录异常大单到日志文件
+                    abnormalTradeLogger?.LogAbnormalTrade(abnormalTrade);
                 }
             });
         }
@@ -529,6 +543,9 @@ namespace FuturesTradeViewer
         /// </summary>
         private void OnLiquidationReceived(LiquidationData liquidationData)
         {
+            // 记录爆仓日志（在后台线程执行）
+            liquidationLogger?.LogLiquidation(liquidationData);
+
             UIThreadHelper.SafeBeginInvoke(this, () =>
             {
                 // 添加到爆仓列表
@@ -689,8 +706,14 @@ namespace FuturesTradeViewer
         {
             try
             {
-                string logDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "AbnormalTradeLogs");
-                string todayLogFile = Path.Combine(logDirectory, $"abnormal_trades_{DateTime.Now:yyyyMMdd}.csv");
+                if (abnormalTradeLogger == null)
+                {
+                    MessageBox.Show("异常大单日志记录器未初始化", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                string todayLogFile = abnormalTradeLogger.GetTodayLogFilePath();
+                string logDirectory = abnormalTradeLogger.GetLogDirectory();
 
                 // 如果今天的日志文件存在，直接打开
                 if (File.Exists(todayLogFile))
@@ -701,24 +724,115 @@ namespace FuturesTradeViewer
                         UseShellExecute = true
                     });
                 }
-                // 如果今天没有日志，打开日志目录
-                else if (Directory.Exists(logDirectory))
-                {
-                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
-                    {
-                        FileName = logDirectory,
-                        UseShellExecute = true
-                    });
-                }
+                // 如果今天没有日志，询问是否打开日志目录
                 else
                 {
-                    MessageBox.Show("还没有异常大单记录。\n\n异常大单会在检测到时自动记录到日志文件中。",
-                        "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var result = MessageBox.Show(
+                        "今天还没有异常大单记录。\n\n是否打开日志目录查看历史记录？",
+                        "提示",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes && Directory.Exists(logDirectory))
+                    {
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = logDirectory,
+                            UseShellExecute = true
+                        });
+                    }
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"打开异常大单日志失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 查看爆仓监控明细
+        /// </summary>
+        private void ViewLiquidationDetailButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (liquidationLogger != null)
+                {
+                    string logDirectory = liquidationLogger.GetLogDirectory();
+                    string todayLogFile = liquidationLogger.GetTodayLogFilePath();
+
+                    // 如果今天的日志文件存在，直接打开
+                    if (File.Exists(todayLogFile))
+                    {
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = todayLogFile,
+                            UseShellExecute = true
+                        });
+                    }
+                    // 如果今天没有日志，打开日志目录
+                    else if (Directory.Exists(logDirectory))
+                    {
+                        System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                        {
+                            FileName = logDirectory,
+                            UseShellExecute = true
+                        });
+                    }
+                    else
+                    {
+                        MessageBox.Show("还没有爆仓记录。\n\n爆仓事件会在检测到时自动记录到日志文件中。",
+                            "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("爆仓日志记录器未初始化。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"打开爆仓日志失败: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 测试爆仓流连接状态
+        /// </summary>
+        private async void TestLiquidationConnectionButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (webSocketManager == null)
+                {
+                    MessageBox.Show("WebSocket 管理器未初始化，请先连接交易对。", 
+                        "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // 禁用按钮，防止重复点击
+                testLiquidationConnectionButton.Enabled = false;
+                testLiquidationConnectionButton.Text = "测试中...";
+                
+                // 测试连接
+                var (isConnected, message) = await webSocketManager.TestLiquidationConnectionAsync();
+                
+                // 显示结果
+                MessageBox.Show(message, 
+                    isConnected ? "连接测试 - 成功" : "连接测试 - 失败", 
+                    MessageBoxButtons.OK, 
+                    isConnected ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"测试失败: {ex.Message}", 
+                    "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // 恢复按钮状态
+                testLiquidationConnectionButton.Enabled = true;
+                testLiquidationConnectionButton.Text = "测试连接";
             }
         }
 

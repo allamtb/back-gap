@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Table, Card, Statistic, Row, Col, Space, Tag, Button, Select, Switch, message } from "antd";
 import { WalletOutlined, RiseOutlined, FallOutlined, ReloadOutlined, PlayCircleOutlined, PauseCircleOutlined } from "@ant-design/icons";
 import { getExchangeCredentials, getExchangeConfig } from "../utils/configManager";
-import { setAllForExchange } from "../utils/symbolWatchlist";
+import { setAllSymbols } from "../utils/symbolWatchlist";
 
 const { Countdown } = Statistic;
 
@@ -181,19 +181,14 @@ export default function PositionMonitor() {
         // 获取价格数据（用于计算 USDT 等值）
         await fetchPrices(formattedPositions);
 
-        // 同步币种列表到本地（按交易所）
+        // 同步币种列表到本地（不再按交易所分组）
         try {
-          const exchangeToSymbols = new Map();
+          const allSymbols = new Set();
           formattedPositions.forEach(item => {
-            const exId = item.exchangeId;
-            const base = item.symbol;
-            if (!exchangeToSymbols.has(exId)) exchangeToSymbols.set(exId, new Set());
-            exchangeToSymbols.get(exId).add(base);
+            allSymbols.add(item.symbol);
           });
-          exchangeToSymbols.forEach((set, exId) => {
-            setAllForExchange(exId, Array.from(set));
-          });
-          console.log('📝 已写入本地关注币种（all）:', Array.from(exchangeToSymbols.keys()));
+          setAllSymbols(Array.from(allSymbols));
+          console.log('📝 已写入本地关注币种:', Array.from(allSymbols));
         } catch (e) {
           console.warn('⚠️ 写入本地币种列表失败:', e);
         }

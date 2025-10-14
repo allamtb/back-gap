@@ -19,6 +19,7 @@
         private Button viewStatisticsButton; // 查看市价比统计文件按钮
         private Button viewLargeOrderStatisticsButton; // 查看大单统计文件按钮
         private Button viewAbnormalDetailButton; // 查看异常大单监控明细按钮
+        private Button viewLiquidationDetailButton; // 查看爆仓监控明细按钮
         private ComboBox priceTickComboBox; // 价格精度选择器
         
         // 异常大单监控控件
@@ -63,6 +64,7 @@
         private NumericUpDown liquidationThresholdNumeric;
         private Label liquidationWindowLabel;
         private ComboBox liquidationWindowComboBox;
+        private Button testLiquidationConnectionButton; // 测试爆仓流连接按钮
         private Panel liquidationStatsPanel;
         private Label liquidationLongCountLabel;
         private Label liquidationLongVolumeLabel;
@@ -139,6 +141,7 @@
             liquidationThresholdNumeric = new NumericUpDown();
             liquidationWindowLabel = new Label();
             liquidationWindowComboBox = new ComboBox();
+            testLiquidationConnectionButton = new Button();
             liquidationStatsPanel = new Panel();
             liquidationLongCountLabel = new Label();
             liquidationLongVolumeLabel = new Label();
@@ -150,6 +153,7 @@
             viewStatisticsButton = new Button();
             viewLargeOrderStatisticsButton = new Button();
             viewAbnormalDetailButton = new Button();
+            viewLiquidationDetailButton = new Button();
             priceTickComboBox = new ComboBox();
             ((System.ComponentModel.ISupportInitialize)tradeGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)buyGrid).BeginInit();
@@ -678,6 +682,7 @@
             liquidationGroupBox.Controls.Add(liquidationThresholdNumeric);
             liquidationGroupBox.Controls.Add(liquidationWindowLabel);
             liquidationGroupBox.Controls.Add(liquidationWindowComboBox);
+            liquidationGroupBox.Controls.Add(testLiquidationConnectionButton);
             liquidationGroupBox.Controls.Add(liquidationStatsPanel);
             liquidationGroupBox.Controls.Add(liquidationGrid);
             liquidationGroupBox.Font = new Font("Microsoft YaHei UI", 10F, FontStyle.Bold);
@@ -702,15 +707,16 @@
             // 
             // liquidationThresholdNumeric
             // 
-            liquidationThresholdNumeric.DecimalPlaces = 2;
+            liquidationThresholdNumeric.DecimalPlaces = 3;
             liquidationThresholdNumeric.Font = new Font("Microsoft YaHei UI", 9F);
-            liquidationThresholdNumeric.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
+            liquidationThresholdNumeric.Increment = new decimal(new int[] { 1, 0, 0, 196608 });
             liquidationThresholdNumeric.Location = new Point(131, 33);
-            liquidationThresholdNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 131072 });
+            liquidationThresholdNumeric.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            liquidationThresholdNumeric.Minimum = new decimal(new int[] { 1, 0, 0, 196608 });
             liquidationThresholdNumeric.Name = "liquidationThresholdNumeric";
             liquidationThresholdNumeric.Size = new Size(90, 23);
             liquidationThresholdNumeric.TabIndex = 1;
-            liquidationThresholdNumeric.Value = new decimal(new int[] { 1, 0, 0, 131072 });
+            liquidationThresholdNumeric.Value = new decimal(new int[] { 1, 0, 0, 196608 });
             // 
             // liquidationWindowLabel
             // 
@@ -733,6 +739,20 @@
             liquidationWindowComboBox.Name = "liquidationWindowComboBox";
             liquidationWindowComboBox.Size = new Size(90, 25);
             liquidationWindowComboBox.TabIndex = 3;
+            // 
+            // testLiquidationConnectionButton
+            // 
+            testLiquidationConnectionButton.BackColor = Color.FromArgb(70, 130, 180);
+            testLiquidationConnectionButton.FlatStyle = FlatStyle.Flat;
+            testLiquidationConnectionButton.Font = new Font("Microsoft YaHei UI", 9F, FontStyle.Bold);
+            testLiquidationConnectionButton.ForeColor = Color.White;
+            testLiquidationConnectionButton.Location = new Point(440, 30);
+            testLiquidationConnectionButton.Name = "testLiquidationConnectionButton";
+            testLiquidationConnectionButton.Size = new Size(90, 28);
+            testLiquidationConnectionButton.TabIndex = 8;
+            testLiquidationConnectionButton.Text = "测试连接";
+            testLiquidationConnectionButton.UseVisualStyleBackColor = false;
+            testLiquidationConnectionButton.Click += TestLiquidationConnectionButton_Click;
             // 
             // liquidationStatsPanel
             // 
@@ -862,6 +882,17 @@
             viewAbnormalDetailButton.UseVisualStyleBackColor = true;
             viewAbnormalDetailButton.Click += ViewAbnormalDetailButton_Click;
             // 
+            // viewLiquidationDetailButton
+            // 
+            viewLiquidationDetailButton.Font = new Font("Microsoft YaHei UI", 9F);
+            viewLiquidationDetailButton.Location = new Point(1314, 52);
+            viewLiquidationDetailButton.Name = "viewLiquidationDetailButton";
+            viewLiquidationDetailButton.Size = new Size(143, 30);
+            viewLiquidationDetailButton.TabIndex = 107;
+            viewLiquidationDetailButton.Text = "爆仓监控明细";
+            viewLiquidationDetailButton.UseVisualStyleBackColor = true;
+            viewLiquidationDetailButton.Click += ViewLiquidationDetailButton_Click;
+            // 
             // priceTickComboBox
             // 
             priceTickComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -886,6 +917,7 @@
             Controls.Add(viewStatisticsButton);
             Controls.Add(viewLargeOrderStatisticsButton);
             Controls.Add(viewAbnormalDetailButton);
+            Controls.Add(viewLiquidationDetailButton);
             Controls.Add(priceTickComboBox);
             Controls.Add(tradeTitleLabel);
             Controls.Add(tradeGrid);
