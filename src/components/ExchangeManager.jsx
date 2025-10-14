@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Space, Select, Tag, Input, Row, Col, Divider } from "antd";
+import { Card, Button, Space, Select, Tag, Input, Row, Col, Divider, AutoComplete } from "antd";
 import { PlusOutlined, DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 
 /**
@@ -16,9 +16,13 @@ export default function ExchangeManager({ exchanges = [], onChange }) {
   const [selectedSymbol, setSelectedSymbol] = useState('BTC/USDT');
   // 当前选择的交易所（多个）
   const [selectedExchanges, setSelectedExchanges] = useState([]);
+  // 从后端获取的币种列表
+  const [availableSymbols, setAvailableSymbols] = useState([]);
+  // 币种加载状态
+  const [symbolsLoading, setSymbolsLoading] = useState(false);
   
-  // 常用币种列表（可以输入或选择）
-  const commonSymbols = [
+  // 默认币种列表（作为后备）
+  const defaultSymbols = [
     'BTC/USDT', 'ETH/USDT', 'SOL/USDT', 'XRP/USDT',
     'BNB/USDT', 'ADA/USDT', 'DOGE/USDT', 'AVAX/USDT'
   ];
@@ -42,8 +46,33 @@ export default function ExchangeManager({ exchanges = [], onChange }) {
     }
   };
 
+  // 从后端加载币种列表（基于币安）
+  const loadSymbols = async () => {
+    setSymbolsLoading(true);
+    try {
+      // 获取币安的 USDT 交易对（限制200个）
+      const res = await fetch("/api/symbols?exchange=binance&quote=USDT&limit=200");
+      if (!res.ok) throw new Error("http " + res.status);
+      const data = await res.json();
+      
+      if (data.success && Array.isArray(data.data?.symbols)) {
+        setAvailableSymbols(data.data.symbols);
+        console.log(`✅ 加载了 ${data.data.symbols.length} 个币种`);
+      } else {
+        throw new Error("Invalid response format");
+      }
+    } catch (e) {
+      console.error("Failed to load symbols:", e);
+      // 降级到默认币种列表
+      setAvailableSymbols(defaultSymbols);
+    } finally {
+      setSymbolsLoading(false);
+    }
+  };
+
   useEffect(() => {
     loadExchanges();
+    loadSymbols();
   }, []);
 
   // 添加币对（当前选择的币种 + 选择的所有交易所）
@@ -76,8 +105,8 @@ export default function ExchangeManager({ exchanges = [], onChange }) {
 
   // 删除单个币对
   const handleRemove = (index) => {
-    const newExchanges = exchanges.filter((_, i) => i !== index);
-    onChange(newExchanges);
+    // 使用函数式更新，确保基于最新的 exchanges 状态
+    onChange(prevExchanges => prevExchanges.filter((_, i) => i !== index));
   };
 
   return (
@@ -94,27 +123,30 @@ export default function ExchangeManager({ exchanges = [], onChange }) {
                 <span style={{ fontSize: '12px', color: '#666' }}>币种:</span>
               </Col>
               <Col span={18}>
-                <Input.Group compact style={{ display: 'flex' }}>
-                  <Select
-                    showSearch
-                    size="small"
-                    value={selectedSymbol}
-                    onChange={(value) => setSelectedSymbol(value)}
-                    placeholder="选择常用币种"
-                    style={{ width: '60%' }}
-                    options={commonSymbols.map(s => ({ label: s, value: s }))}
-                    filterOption={(input, option) =>
-                      (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+                <AutoComplete
+                  size="small"
+                  value={selectedSymbol}
+                  onChange={setSelectedSymbol}
+                  onSelect={(value) => setSelectedSymbol(value)}
+                  onBlur={(e) => {
+                    const value = e.target.value;
+                    if (value) {
+                      setSelectedSymbol(value.toUpperCase());
                     }
-                  />
-                  <Input
-                    size="small"
-                    value={selectedSymbol}
-                    onChange={(e) => setSelectedSymbol(e.target.value.toUpperCase())}
-                    placeholder="或输入币种"
-                    style={{ width: '40%' }}
-                  />
-                </Input.Group>
+                  }}
+                  options={(availableSymbols.length > 0 ? availableSymbols : defaultSymbols).map(s => ({ 
+                    label: s, 
+                    value: s 
+                  }))}
+                  placeholder={symbolsLoading ? "正在加载币种..." : "输入或选择币种 (如: BTC/USDT)"}
+                  style={{ width: '100%' }}
+                  filterOption={(inputValue, option) =>
+                    option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
+                  }
+                  allowClear
+                  disabled={symbolsLoading}
+                  notFoundContent={symbolsLoading ? "加载中..." : "未找到匹配币种"}
+                />
               </Col>
             </Row>
 
@@ -163,7 +195,7 @@ export default function ExchangeManager({ exchanges = [], onChange }) {
             <Space wrap size="small">
               {exchanges.map((config, index) => (
                 <Tag
-                  key={index}
+                  key={`${config.exchange}-${config.symbol}-${index}`}
                   color={config.color}
                   closable
                   onClose={() => handleRemove(index)}

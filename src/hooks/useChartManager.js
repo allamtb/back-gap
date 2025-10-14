@@ -125,6 +125,38 @@ export const useChartManager = (chartContainerRef, height) => {
   };
 
   /**
+   * 更新实时 K 线数据
+   * 
+   * @param {string} exchange - 交易所名称
+   * @param {string} symbol - 交易对
+   * @param {Object} kline - K 线数据 { time, open, high, low, close, volume }
+   */
+  const updateLiveKline = (exchange, symbol, kline) => {
+    if (!chartRef.current) return;
+
+    // 构造配置对象以获取 key
+    const config = { exchange, symbol };
+    const key = getExchangeKey(config);
+    const series = lineSeriesMapRef.current.get(key);
+
+    if (series && kline) {
+      // 将时间戳转换为秒（lightweight-charts 使用秒）
+      const timeInSeconds = Math.floor(kline.time / 1000);
+      
+      // 使用收盘价作为 value（因为是 LineSeries）
+      const dataPoint = {
+        time: timeInSeconds,
+        value: parseFloat(kline.close)
+      };
+
+      // update() 方法会：
+      // - 如果时间相同，更新最后一个点
+      // - 如果时间不同，追加新点
+      series.update(dataPoint);
+    }
+  };
+
+  /**
    * 清空所有线条的标记
    */
   const clearAllMarkers = (exchanges) => {
@@ -142,6 +174,7 @@ export const useChartManager = (chartContainerRef, height) => {
     addLineSeries,
     removeLineSeries,
     updateSeriesData,
+    updateLiveKline,
     getLineSeries,
     clearAllMarkers,
   };

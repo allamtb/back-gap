@@ -263,6 +263,71 @@ namespace FuturesTradeViewer
                 System.Diagnostics.Debug.WriteLine($"更新连续大单历史表格错误: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// 初始化爆仓列表表格
+        /// </summary>
+        public static void InitializeLiquidationGrid(DataGridView grid)
+        {
+            var columns = new List<ColumnConfig>
+            {
+                new ColumnConfig { Name = Constants.LiquidationTimeColumn, HeaderText = "时间", Width = 100 },
+                new ColumnConfig { Name = Constants.LiquidationPriceColumn, HeaderText = "价格", Width = 100 },
+                new ColumnConfig { Name = Constants.LiquidationQuantityColumn, HeaderText = "数量", Width = 100 },
+                new ColumnConfig { Name = Constants.LiquidationValueColumn, HeaderText = "金额(USDT)", Width = 110 },
+                new ColumnConfig { Name = Constants.LiquidationDirectionColumn, HeaderText = "方向", Width = 100 }
+            };
+
+            InitializeGrid(grid, columns);
+        }
+
+        /// <summary>
+        /// 添加爆仓数据行到表格顶部
+        /// </summary>
+        public static void AddLiquidationRow(DataGridView grid, LiquidationData data, int maxRows)
+        {
+            try
+            {
+                // 插入到顶部
+                grid.Rows.Insert(0, 1);
+                DataGridViewRow row = grid.Rows[0];
+
+                // 设置数据
+                row.Cells[Constants.LiquidationTimeColumn].Value = data.Time.ToString("HH:mm:ss");
+                row.Cells[Constants.LiquidationPriceColumn].Value = data.Price.ToString("F2");
+                row.Cells[Constants.LiquidationQuantityColumn].Value = data.Quantity.ToString("F4");
+                row.Cells[Constants.LiquidationValueColumn].Value = data.LiquidationValue.ToString("F2");
+                row.Cells[Constants.LiquidationDirectionColumn].Value = data.Direction;
+
+                // 设置颜色
+                if (data.IsLongLiquidation)
+                {
+                    // 多头爆仓 - 红色
+                    row.DefaultCellStyle.BackColor = Constants.LongLiquidationBackgroundColor;
+                    row.DefaultCellStyle.ForeColor = Constants.LongLiquidationForegroundColor;
+                }
+                else
+                {
+                    // 空头爆仓 - 绿色
+                    row.DefaultCellStyle.BackColor = Constants.ShortLiquidationBackgroundColor;
+                    row.DefaultCellStyle.ForeColor = Constants.ShortLiquidationForegroundColor;
+                }
+
+                // 大额爆仓加粗显示（> 100,000 USDT）
+                if (data.LiquidationValue > 100000)
+                {
+                    row.DefaultCellStyle.Font = new Font(grid.DefaultCellStyle.Font, FontStyle.Bold);
+                }
+
+                // 限制最大行数
+                if (grid.Rows.Count > maxRows)
+                    grid.Rows.RemoveAt(grid.Rows.Count - 1);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"添加爆仓行错误: {ex.Message}");
+            }
+        }
     }
 }
 

@@ -1,10 +1,11 @@
-import React, { useRef, useState, useEffect } from "react";
-import { Spin, Alert, Card, Select, InputNumber, Space, Row, Col, Slider, Switch, Button, Checkbox } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
+import React, { useRef, useState, useEffect, useCallback } from "react";
+import { Spin, Alert, Card, Select, InputNumber, Space, Row, Col, Slider, Switch, Button, Checkbox, Badge } from "antd";
+import { ReloadOutlined, ApiOutlined } from "@ant-design/icons";
 import { useExchangeData } from "../hooks/useExchangeData";
 import { useChartManager } from "../hooks/useChartManager";
 import { usePriceMarkers } from "../hooks/usePriceMarkers";
 import { useExchangeManager } from "../hooks/useExchangeManager";
+import { useWebSocketKline } from "../hooks/useWebSocketKline";
 
 /**
  * MultiExchangeChart - 多交易所价格曲线对比组件（重构版）
@@ -30,6 +31,9 @@ export default function MultiExchangeChart({
   
   // 选中的交易所（用于价差比对）
   const [selectedExchanges, setSelectedExchanges] = useState([]);
+  
+  // 实时数据开关
+  const [enableRealtime, setEnableRealtime] = useState(true);
 
   // ==================== 数据获取 ====================
   const {
@@ -47,6 +51,7 @@ export default function MultiExchangeChart({
     addLineSeries,
     removeLineSeries,
     updateSeriesData,
+    updateLiveKline,
     getLineSeries,
     clearAllMarkers,
   } = useChartManager(chartContainerRef, height);
@@ -61,6 +66,20 @@ export default function MultiExchangeChart({
     removeData,
     interval,
     limit
+  );
+
+  // ==================== 实时数据 WebSocket ====================
+  // K 线更新回调
+  const handleKlineUpdate = useCallback((exchange, symbol, kline) => {
+    updateLiveKline(exchange, symbol, kline);
+  }, [updateLiveKline]);
+
+  // WebSocket 连接
+  const { connected, error: wsError, reconnect } = useWebSocketKline(
+    exchanges,
+    interval,
+    handleKlineUpdate,
+    enableRealtime
   );
 
   // ==================== 交易所选择处理 ====================
@@ -127,7 +146,7 @@ export default function MultiExchangeChart({
         style={{ marginBottom: 16, backgroundColor: '#fafafa' }}
         bodyStyle={{ padding: '12px' }}
       >
-        {/* 第一行：周期和数据条数 */}
+        {/* 第一行：周期、数据条数、实时数据 */}
         <Row gutter={16} align="middle" style={{ marginBottom: 12 }}>
           <Col flex="auto">
             <Space size="large">
@@ -161,12 +180,46 @@ export default function MultiExchangeChart({
                   style={{ width: 100 }}
                 />
               </Space>
+
+              <Space>
+                <span style={{ color: '#666' }}>实时数据:</span>
+                <Switch 
+                  checked={enableRealtime}
+                  onChange={setEnableRealtime}
+                  size="small"
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                />
+                <Badge 
+                  status={connected ? "success" : "error"} 
+                  text={
+                    <span style={{ fontSize: '12px', color: connected ? '#52c41a' : '#999' }}>
+                      {connected ? "已连接" : "未连接"}
+                    </span>
+                  }
+                />
+                {!connected && (
+                  <Button 
+                    size="small" 
+                    type="link" 
+                    onClick={reconnect}
+                    icon={<ApiOutlined />}
+                  >
+                    重连
+                  </Button>
+                )}
+                {wsError && (
+                  <span style={{ fontSize: '12px', color: '#ff4d4f' }}>
+                    {wsError}
+                  </span>
+                )}
+              </Space>
             </Space>
           </Col>
           
           <Col>
             <span style={{ fontSize: '12px', color: '#999' }}>
-              当前配置: {interval} / {limit}条
+              {interval} / {limit}条 {enableRealtime && connected ? '/ 实时更新' : ''}
             </span>
           </Col>
         </Row>
@@ -322,3 +375,4 @@ export default function MultiExchangeChart({
   );
 }
 
+56

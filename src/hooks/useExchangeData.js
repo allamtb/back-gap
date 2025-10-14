@@ -21,7 +21,8 @@ export const useExchangeData = () => {
       limit: limit.toString(),
     });
 
-    const response = await fetch(`http://localhost:8000/api/klines?${params}`);
+    // 使用相对路径，让 Vite 代理处理请求
+    const response = await fetch(`/api/klines?${params}`);
     
     if (!response.ok) {
       throw new Error(`获取${exchange}数据失败: HTTP ${response.status}`);

@@ -178,6 +178,46 @@ namespace FuturesTradeViewer
         public const string ConsecutiveMaxRatioColumn = "MaxRatio";
         public const string ConsecutiveWindowDurationColumn = "WindowDuration";
 
+        // 爆仓列表表格列名
+        public const string LiquidationTimeColumn = "Time";
+        public const string LiquidationPriceColumn = "Price";
+        public const string LiquidationQuantityColumn = "Quantity";
+        public const string LiquidationValueColumn = "Value";
+        public const string LiquidationDirectionColumn = "Direction";
+
+        #endregion
+
+        #region 爆仓颜色配置
+
+        /// <summary>
+        /// 多头爆仓背景色（卖单强平）- 浅红色
+        /// </summary>
+        public static readonly Color LongLiquidationBackgroundColor = Color.LightCoral;
+
+        /// <summary>
+        /// 多头爆仓前景色 - 深红色
+        /// </summary>
+        public static readonly Color LongLiquidationForegroundColor = Color.DarkRed;
+
+        /// <summary>
+        /// 空头爆仓背景色（买单强平）- 浅绿色
+        /// </summary>
+        public static readonly Color ShortLiquidationBackgroundColor = Color.LightGreen;
+
+        /// <summary>
+        /// 空头爆仓前景色 - 深绿色
+        /// </summary>
+        public static readonly Color ShortLiquidationForegroundColor = Color.DarkGreen;
+
+        #endregion
+
+        #region 爆仓监控配置
+
+        /// <summary>
+        /// 爆仓列表表格最大行数
+        /// </summary>
+        public const int MaxLiquidationGridRows = 100;
+
         #endregion
     }
 }

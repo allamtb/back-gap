@@ -60,7 +60,13 @@ export default function MultiExchangeComparisonPage() {
                   • 在图表控制面板调整周期和数据条数
                 </Text>
                 <Text style={{ fontSize: '12px' }}>
+                  • 开启"实时数据"开关可接收 WebSocket 推送
+                </Text>
+                <Text style={{ fontSize: '12px' }}>
                   • 可启用差异标注功能，标记价格差异超过阈值的点
+                </Text>
+                <Text style={{ fontSize: '12px' }}>
+                  • 选择2个交易所可进行价差比对
                 </Text>
                 <Text style={{ fontSize: '12px' }}>
                   • 图表支持缩放和拖拽查看
@@ -127,9 +133,10 @@ export default function MultiExchangeComparisonPage() {
               <Col span={8}>
                 <Text strong>数据说明</Text>
                 <div style={{ marginTop: 8, fontSize: '12px' }}>
-                  <div>• 使用开盘价生成曲线</div>
+                  <div>• 使用收盘价生成曲线</div>
                   <div>• 自动按时间排序</div>
-                  <div>• 支持实时数据更新</div>
+                  <div>• WebSocket 实时推送更新</div>
+                  <div>• 周期一致（历史+实时）</div>
                   <div>• 差异标注显示价格偏离</div>
                 </div>
               </Col>

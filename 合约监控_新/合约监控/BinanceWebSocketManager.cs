@@ -18,6 +18,7 @@ namespace FuturesTradeViewer
     {
         private ClientWebSocket? wsTradeStream;
         private ClientWebSocket? wsOrderBookStream;
+        private ClientWebSocket? wsLiquidationStream; // 爆仓流
         private CancellationTokenSource? cancellationTokenSource;
         private readonly string? proxyUrl;
         private string? currentSymbol; // 保存当前交易对，用于重连
@@ -26,8 +27,10 @@ namespace FuturesTradeViewer
         private bool isManualDisconnect = false; // 是否手动断开
         private DateTime lastTradeStreamDataTime = DateTime.Now; // 最后收到交易流数据的时间
         private DateTime lastOrderBookDataTime = DateTime.Now; // 最后收到订单簿数据的时间
+        private DateTime lastLiquidationDataTime = DateTime.Now; // 最后收到爆仓数据的时间
         private TradeStatisticsManager? statisticsManager; // 市价比统计管理器
         private LargeOrderStatisticsManager? largeOrderStatisticsManager; // 大单统计管理器
+        private LiquidationMonitor? liquidationMonitor; // 爆仓监控器
         private decimal largeOrderThreshold = 0.05M; // 大单阈值（默认0.05 BTC）
 
         /// <summary>
@@ -54,6 +57,11 @@ namespace FuturesTradeViewer
         /// 重连成功事件（参数：重连次数）
         /// </summary>
         public event Action<int>? OnReconnected;
+
+        /// <summary>
+        /// 爆仓数据接收事件
+        /// </summary>
+        public event Action<LiquidationData>? OnLiquidationReceived;
 
         /// <summary>
         /// 构造函数
@@ -138,6 +146,37 @@ namespace FuturesTradeViewer
             catch (Exception ex)
             {
                 OnError?.Invoke($"连接订单簿流失败: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 连接爆仓订单流
+        /// </summary>
+        /// <param name="symbol">交易对（小写，例如：btcusdt）</param>
+        public async Task ConnectLiquidationStreamAsync(string symbol)
+        {
+            try
+            {
+                // 初始化爆仓监控器
+                if (liquidationMonitor == null)
+                {
+                    liquidationMonitor = new LiquidationMonitor();
+                }
+
+                wsLiquidationStream = new ClientWebSocket();
+                ConfigureWebSocket(wsLiquidationStream);
+
+                // 订阅指定交易对的爆仓流
+                string url = $"{Constants.BinanceWebSocketBaseUrl}/{symbol}@forceOrder";
+                await wsLiquidationStream.ConnectAsync(new Uri(url), cancellationTokenSource.Token);
+
+                // 启动接收任务
+                _ = Task.Run(() => ReceiveLiquidationStreamAsync(cancellationTokenSource.Token));
+            }
+            catch (Exception ex)
+            {
+                OnError?.Invoke($"连接爆仓流失败: {ex.Message}");
                 throw;
             }
         }
@@ -460,6 +499,122 @@ namespace FuturesTradeViewer
         }
 
         /// <summary>
+        /// 接收爆仓流数据
+        /// </summary>
+        private async Task ReceiveLiquidationStreamAsync(CancellationToken cancellationToken)
+        {
+            var buffer = new byte[8192];
+            var messageBuilder = new StringBuilder();
+
+            try
+            {
+                while (wsLiquidationStream != null && wsLiquidationStream.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+                {
+                    var result = await wsLiquidationStream.ReceiveAsync(new ArraySegment<byte>(buffer), cancellationToken);
+
+                    if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        await wsLiquidationStream.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, cancellationToken);
+                        break;
+                    }
+
+                    if (result.MessageType == WebSocketMessageType.Text)
+                    {
+                        messageBuilder.Append(Encoding.UTF8.GetString(buffer, 0, result.Count));
+
+                        if (result.EndOfMessage)
+                        {
+                            // 更新心跳时间
+                            lastLiquidationDataTime = DateTime.Now;
+                            
+                            string msg = messageBuilder.ToString();
+                            messageBuilder.Clear();
+
+                            // 解析并触发事件
+                            var liquidationData = ParseLiquidationMessage(msg);
+                            if (liquidationData != null)
+                            {
+                                // 添加到监控器（会自动过滤）
+                                var filtered = liquidationMonitor?.AddLiquidation(liquidationData);
+                                if (filtered != null)
+                                {
+                                    OnLiquidationReceived?.Invoke(filtered);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // 正常取消，不处理
+            }
+            catch (Exception ex)
+            {
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    OnError?.Invoke($"爆仓流接收错误: {ex.Message}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 解析爆仓消息
+        /// </summary>
+        private LiquidationData? ParseLiquidationMessage(string message)
+        {
+            try
+            {
+                using var doc = JsonDocument.Parse(message);
+                var root = doc.RootElement;
+                
+                // 爆仓流返回的数据格式：{"o": {...}}
+                if (!root.TryGetProperty("o", out var orderData))
+                    return null;
+
+                // 使用事件时间 E（毫秒时间戳）
+                var timestamp = root.GetProperty("E").GetInt64();
+                var time = DateTimeOffset.FromUnixTimeMilliseconds(timestamp).ToLocalTime().DateTime;
+
+                // 解析价格和数量
+                // 优先使用平均价格 ap，如果不存在则使用订单价格 p
+                string priceStr;
+                if (orderData.TryGetProperty("ap", out var apElement) && !string.IsNullOrEmpty(apElement.GetString()))
+                {
+                    priceStr = apElement.GetString() ?? "0";
+                }
+                else
+                {
+                    priceStr = orderData.GetProperty("p").GetString() ?? "0";
+                }
+                
+                var quantityStr = orderData.GetProperty("q").GetString() ?? "0";
+                var symbol = orderData.GetProperty("s").GetString() ?? "";
+                var side = orderData.GetProperty("S").GetString() ?? "";
+                var orderType = orderData.GetProperty("o").GetString() ?? "";
+                var orderStatus = orderData.GetProperty("X").GetString() ?? "";
+                var lastFilledQtyStr = orderData.GetProperty("z").GetString() ?? "0";
+
+                return new LiquidationData
+                {
+                    Time = time,
+                    Symbol = symbol,
+                    Side = side,
+                    OrderType = orderType,
+                    Price = decimal.Parse(priceStr),
+                    Quantity = decimal.Parse(quantityStr),
+                    LastFilledQty = decimal.Parse(lastFilledQtyStr),
+                    OrderStatus = orderStatus
+                };
+            }
+            catch (Exception ex)
+            {
+                OnError?.Invoke($"解析爆仓消息失败: {ex.Message}");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 解析交易消息
         /// </summary>
         private TradeStreamData? ParseTradeMessage(string message)
@@ -543,6 +698,11 @@ namespace FuturesTradeViewer
                 {
                     await wsOrderBookStream.CloseAsync(WebSocketCloseStatus.NormalClosure, "关闭连接", CancellationToken.None);
                 }
+
+                if (wsLiquidationStream != null && wsLiquidationStream.State == WebSocketState.Open)
+                {
+                    await wsLiquidationStream.CloseAsync(WebSocketCloseStatus.NormalClosure, "关闭连接", CancellationToken.None);
+                }
             }
             catch (Exception ex)
             {
@@ -576,6 +736,34 @@ namespace FuturesTradeViewer
         }
 
         /// <summary>
+        /// 获取爆仓监控器
+        /// </summary>
+        public LiquidationMonitor? GetLiquidationMonitor()
+        {
+            return liquidationMonitor;
+        }
+
+        /// <summary>
+        /// 获取爆仓统计
+        /// </summary>
+        public LiquidationStatistics? GetLiquidationStatistics()
+        {
+            return liquidationMonitor?.GetStatistics();
+        }
+
+        /// <summary>
+        /// 更新爆仓监控参数
+        /// </summary>
+        public void UpdateLiquidationMonitorParams(int timeWindowMinutes, decimal minThreshold)
+        {
+            if (liquidationMonitor != null)
+            {
+                liquidationMonitor.TimeWindowMinutes = timeWindowMinutes;
+                liquidationMonitor.MinLiquidationThreshold = minThreshold;
+            }
+        }
+
+        /// <summary>
         /// 释放资源
         /// </summary>
         public void Dispose()
@@ -594,6 +782,7 @@ namespace FuturesTradeViewer
                 cancellationTokenSource?.Dispose();
                 wsTradeStream?.Dispose();
                 wsOrderBookStream?.Dispose();
+                wsLiquidationStream?.Dispose();
             }
             catch (Exception ex)
             {

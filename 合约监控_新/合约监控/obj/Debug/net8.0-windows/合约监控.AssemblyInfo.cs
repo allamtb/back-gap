@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("合约监控")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cef6e36cfc16d3a8029e13803042a0035aafc91d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1d2fa9d168755908529a749727dbe3a81718b195")]
 [assembly: System.Reflection.AssemblyProductAttribute("合约监控")]
 [assembly: System.Reflection.AssemblyTitleAttribute("合约监控")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

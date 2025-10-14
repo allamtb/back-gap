@@ -1,184 +1,144 @@
 import React, { useEffect, useState } from "react";
-import { Card, Form, Input, Select, Button, message, Spin, Space, List, Modal, Popconfirm } from "antd";
-import { SaveOutlined, ReloadOutlined, PlusOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Card, Form, Input, AutoComplete, Button, message, Space, Modal, Popconfirm, Spin, Tooltip, Alert } from "antd";
+import { PlusOutlined, DeleteOutlined, EditOutlined, ApiOutlined } from "@ant-design/icons";
+import { getExchangeConfig, saveExchangeConfig } from "../utils/configManager";
 
-function fetchWithTimeout(url, opts = {}, timeout = 3000) {
-  return Promise.race([
-    fetch(url, opts),
-    new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), timeout)),
-  ]);
-}
+const TEST_RESULTS_KEY = 'exchangeTestResults'; // 测试结果存储key
+
+// 默认交易所列表（作为后备）
+const DEFAULT_EXCHANGES = [
+  'binance',
+  'okx',
+  'gate',
+  'bybit',
+  'huobi',
+  'kucoin',
+  'bitget',
+  'htx',
+];
+
+// 格式化时间显示（如："5分钟前"）
+const formatTimeAgo = (timestamp) => {
+  if (!timestamp) return '';
+  
+  const now = Date.now();
+  const diff = now - timestamp;
+  
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  
+  if (days > 0) return `${days}天前`;
+  if (hours > 0) return `${hours}小时前`;
+  if (minutes > 0) return `${minutes}分钟前`;
+  if (seconds > 10) return `${seconds}秒前`;
+  return '刚刚';
+};
 
 export default function ConfigPage() {
-  const [form] = Form.useForm();
   const [exchangeForm] = Form.useForm();
   
-  // 可用交易所列表
+  // 交易所配置列表
   const [exchanges, setExchanges] = useState([]);
   
-  // 配置数据：账户列表
-  const [accounts, setAccounts] = useState([]);
-  
-  // 当前选中的账户
-  const [selectedAccount, setSelectedAccount] = useState(null);
+  // 从后端获取的交易所列表
+  const [availableExchanges, setAvailableExchanges] = useState([]);
   
   // 弹窗状态
-  const [isAccountModalOpen, setIsAccountModalOpen] = useState(false);
   const [isExchangeModalOpen, setIsExchangeModalOpen] = useState(false);
-  const [editingAccountIndex, setEditingAccountIndex] = useState(null);
   const [editingExchangeIndex, setEditingExchangeIndex] = useState(null);
   
-  // 加载状态
-  const [loading, setLoading] = useState(false);
-  const [saving, setSaving] = useState(false);
+  // 测试连接状态 (记录哪个交易所正在测试)
+  const [testingExchangeIndex, setTestingExchangeIndex] = useState(null);
+  const [testResults, setTestResults] = useState({}); // 存储测试结果 {index: {success, data/error}}
 
-  // 加载交易所列表
-  const loadExchanges = async () => {
+  // 从后端加载交易所列表
+  const loadAvailableExchanges = async () => {
     try {
-      const res = await fetchWithTimeout("/api/exchanges", {}, 2500);
+      const res = await fetch("/api/exchanges", { timeout: 2500 });
       if (!res.ok) throw new Error("http " + res.status);
       const data = await res.json();
-      setExchanges(Array.isArray(data) ? data : []);
+      setAvailableExchanges(Array.isArray(data) ? data : []);
+      console.log("✅ 从后端加载交易所列表成功");
     } catch (e) {
-      console.error("加载交易所列表失败:", e);
-      message.error("加载交易所列表失败");
-      setExchanges([]);
+      console.error("从后端加载交易所列表失败:", e);
+      // 降级到默认交易所列表
+      setAvailableExchanges(DEFAULT_EXCHANGES);
     }
   };
 
-  // 加载现有配置
-  const loadConfig = async () => {
-    setLoading(true);
+  // 从 localStorage 加载配置
+  const loadConfig = () => {
     try {
-      const res = await fetchWithTimeout("/api/config", {}, 2500);
-      if (!res.ok) {
-        if (res.status === 404) {
-          console.log("暂无配置");
-          return;
-        }
-        throw new Error("http " + res.status);
-      }
-      const data = await res.json();
-      
-      // 数据结构: { accounts: [{ name: "账户1", exchanges: [{exchange: "binance", apiKey: "...", apiSecret: "..."}] }] }
-      if (data.accounts && Array.isArray(data.accounts)) {
-        setAccounts(data.accounts);
-        if (data.accounts.length > 0) {
-          setSelectedAccount(0);
-        }
+      const exchangesData = getExchangeConfig();
+      setExchanges(exchangesData);
+      if (exchangesData.length > 0) {
+        console.log("✅ 配置已从 localStorage 加载");
+      } else {
+        console.log("暂无保存的配置");
       }
     } catch (e) {
       console.error("加载配置失败:", e);
-    } finally {
-      setLoading(false);
+      message.error("加载配置失败");
     }
   };
 
-  // 保存配置到后端
-  const handleSave = async () => {
-    setSaving(true);
+  // 从 localStorage 加载测试结果
+  const loadTestResults = () => {
     try {
-      const res = await fetchWithTimeout(
-        "/api/config",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ accounts }),
-        },
-        5000
-      );
-
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.message || "保存失败");
+      const saved = localStorage.getItem(TEST_RESULTS_KEY);
+      if (saved) {
+        const data = JSON.parse(saved);
+        setTestResults(data);
+        console.log("✅ 测试结果已从 localStorage 加载");
       }
+    } catch (e) {
+      console.error("加载测试结果失败:", e);
+    }
+  };
 
-      message.success("配置保存成功！");
+  // 保存测试结果到 localStorage
+  const saveTestResults = (results) => {
+    try {
+      localStorage.setItem(TEST_RESULTS_KEY, JSON.stringify(results));
+    } catch (e) {
+      console.error("保存测试结果失败:", e);
+    }
+  };
+
+  // 保存配置到 localStorage
+  const saveConfig = (exchangeList) => {
+    try {
+      const success = saveExchangeConfig(exchangeList);
+      if (success) {
+        message.success("配置已自动保存！");
+      } else {
+        throw new Error("保存失败");
+      }
     } catch (e) {
       console.error("保存配置失败:", e);
       message.error("保存配置失败: " + e.message);
-    } finally {
-      setSaving(false);
     }
-  };
-
-  // 重新加载配置
-  const handleReload = async () => {
-    await Promise.all([loadExchanges(), loadConfig()]);
-    message.success("配置已刷新");
   };
 
   // 初始加载
   useEffect(() => {
-    loadExchanges();
+    loadAvailableExchanges();
     loadConfig();
+    loadTestResults();
   }, []);
-
-  // ===== 账户管理 =====
-  
-  const openAddAccountModal = () => {
-    setEditingAccountIndex(null);
-    form.resetFields();
-    setIsAccountModalOpen(true);
-  };
-
-  const openEditAccountModal = (index) => {
-    setEditingAccountIndex(index);
-    form.setFieldsValue({ accountName: accounts[index].name });
-    setIsAccountModalOpen(true);
-  };
-
-  const handleAccountModalOk = () => {
-    form.validateFields().then((values) => {
-      const newAccounts = [...accounts];
-      
-      if (editingAccountIndex !== null) {
-        // 编辑
-        newAccounts[editingAccountIndex].name = values.accountName;
-      } else {
-        // 新增
-        newAccounts.push({
-          name: values.accountName,
-          exchanges: []
-        });
-        setSelectedAccount(newAccounts.length - 1);
-      }
-      
-      setAccounts(newAccounts);
-      setIsAccountModalOpen(false);
-      form.resetFields();
-    });
-  };
-
-  const handleDeleteAccount = (index) => {
-    const newAccounts = accounts.filter((_, i) => i !== index);
-    setAccounts(newAccounts);
-    
-    if (selectedAccount === index) {
-      setSelectedAccount(newAccounts.length > 0 ? 0 : null);
-    } else if (selectedAccount > index) {
-      setSelectedAccount(selectedAccount - 1);
-    }
-    
-    message.success("账户已删除");
-  };
 
   // ===== 交易所管理 =====
   
   const openAddExchangeModal = () => {
-    if (selectedAccount === null) {
-      message.warning("请先选择一个账户");
-      return;
-    }
     setEditingExchangeIndex(null);
     exchangeForm.resetFields();
     setIsExchangeModalOpen(true);
   };
 
   const openEditExchangeModal = (index) => {
-    const exchange = accounts[selectedAccount].exchanges[index];
+    const exchange = exchanges[index];
     setEditingExchangeIndex(index);
     exchangeForm.setFieldsValue(exchange);
     setIsExchangeModalOpen(true);
@@ -186,218 +146,297 @@ export default function ConfigPage() {
 
   const handleExchangeModalOk = () => {
     exchangeForm.validateFields().then((values) => {
-      const newAccounts = [...accounts];
-      const currentExchanges = [...newAccounts[selectedAccount].exchanges];
+      const newExchanges = [...exchanges];
       
       if (editingExchangeIndex !== null) {
         // 编辑
-        currentExchanges[editingExchangeIndex] = values;
+        newExchanges[editingExchangeIndex] = values;
       } else {
         // 新增
-        currentExchanges.push(values);
+        newExchanges.push(values);
       }
       
-      newAccounts[selectedAccount].exchanges = currentExchanges;
-      setAccounts(newAccounts);
+      setExchanges(newExchanges);
+      saveConfig(newExchanges);
       setIsExchangeModalOpen(false);
       exchangeForm.resetFields();
     });
   };
 
   const handleDeleteExchange = (index) => {
-    const newAccounts = [...accounts];
-    newAccounts[selectedAccount].exchanges = newAccounts[selectedAccount].exchanges.filter((_, i) => i !== index);
-    setAccounts(newAccounts);
+    const newExchanges = exchanges.filter((_, i) => i !== index);
+    setExchanges(newExchanges);
+    saveConfig(newExchanges);
+    // 清除该交易所的测试结果
+    const newTestResults = { ...testResults };
+    delete newTestResults[index];
+    setTestResults(newTestResults);
+    saveTestResults(newTestResults); // 持久化保存
     message.success("交易所配置已删除");
   };
 
-  const exchangeOptions = exchanges.map((ex) => ({
+  // 测试交易所连接
+  const handleTestConnection = async (index) => {
+    const exchange = exchanges[index];
+    if (!exchange) return;
+
+    setTestingExchangeIndex(index);
+    
+    try {
+      const response = await fetch('/api/test-exchange', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          exchange: exchange.exchange,
+          apiKey: exchange.apiKey,
+          apiSecret: exchange.apiSecret,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // 测试成功
+        const newResults = {
+          ...testResults,
+          [index]: {
+            success: true,
+            data: result.data,
+            timestamp: Date.now(), // 保存测试时间戳
+          },
+        };
+        setTestResults(newResults);
+        saveTestResults(newResults); // 持久化保存
+        message.success(`${exchange.exchange} 连接测试成功！`);
+      } else {
+        // 测试失败
+        const newResults = {
+          ...testResults,
+          [index]: {
+            success: false,
+            error: result.error || '未知错误',
+            timestamp: Date.now(), // 保存测试时间戳
+          },
+        };
+        setTestResults(newResults);
+        saveTestResults(newResults); // 持久化保存
+        message.error(`${exchange.exchange} 连接测试失败: ${result.error || '未知错误'}`);
+      }
+    } catch (error) {
+      console.error('测试连接失败:', error);
+      const newResults = {
+        ...testResults,
+        [index]: {
+          success: false,
+          error: error.message || '网络请求失败',
+          timestamp: Date.now(), // 保存测试时间戳
+        },
+      };
+      setTestResults(newResults);
+      saveTestResults(newResults); // 持久化保存
+      message.error(`${exchange.exchange} 连接测试失败: ${error.message}`);
+    } finally {
+      setTestingExchangeIndex(null);
+    }
+  };
+
+  // 使用从后端获取的交易所列表，如果为空则使用默认列表
+  const exchangeOptions = (availableExchanges.length > 0 ? availableExchanges : DEFAULT_EXCHANGES).map((ex) => ({
     label: ex,
     value: ex,
   }));
 
-  const currentAccount = selectedAccount !== null ? accounts[selectedAccount] : null;
-
   return (
-    <div style={{ display: "flex", gap: 16, height: "calc(100vh - 100px)" }}>
-      {/* 左侧：账户列表 */}
+    <div style={{ padding: 24, maxWidth: 1200, margin: "0 auto" }}>
       <Card 
-        title="账户列表" 
-        style={{ width: 280, overflowY: "auto" }}
+        title="交易所配置管理" 
         extra={
           <Button 
-            type="text" 
+            type="primary"
             icon={<PlusOutlined />} 
-            onClick={openAddAccountModal}
-            size="small"
-          />
+            onClick={openAddExchangeModal}
+          >
+            添加交易所
+          </Button>
         }
       >
-        <Spin spinning={loading}>
-          {accounts.length === 0 ? (
-            <div style={{ textAlign: "center", color: "#999", padding: "20px 0" }}>
-              暂无账户，点击 + 添加
-            </div>
-          ) : (
-            <List
-              dataSource={accounts}
-              renderItem={(account, index) => (
-                <List.Item
-                  onClick={() => setSelectedAccount(index)}
-                  style={{
-                    cursor: "pointer",
-                    background: selectedAccount === index ? "#e6f7ff" : "transparent",
-                    padding: "12px",
+        <Alert
+          message="数据存储说明"
+          description="交易所配置信息仅存储于浏览器本地缓存（LocalStorage），服务器端不进行持久化存储。清除浏览器缓存将导致所有配置数据丢失，请谨慎操作。"
+          type="info"
+          showIcon
+          style={{ marginBottom: 16 }}
+        />
+        {exchanges.length === 0 ? (
+          <div style={{ textAlign: "center", color: "#999", padding: "40px 0" }}>
+            暂无交易所配置，点击右上角按钮添加
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {exchanges.map((ex, index) => (
+              <div
+                key={index}
+                style={{
+                  border: '1px solid #d9d9d9',
+                  borderRadius: 8,
+                  padding: '12px 16px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 16,
+                  backgroundColor: '#fff',
+                  transition: 'all 0.3s',
+                  ...(testResults[index] && {
+                    borderColor: testResults[index].success ? '#52c41a' : '#ff4d4f',
+                    backgroundColor: testResults[index].success ? '#f6ffed' : '#fff2f0',
+                  }),
+                }}
+                onMouseEnter={(e) => {
+                  if (!testResults[index]) {
+                    e.currentTarget.style.borderColor = '#40a9ff';
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!testResults[index]) {
+                    e.currentTarget.style.borderColor = '#d9d9d9';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }
+                }}
+              >
+                {/* 交易所名称 - 固定宽度 */}
+                <div style={{ 
+                  minWidth: 100, 
+                  fontWeight: 600, 
+                  fontSize: 15,
+                  textTransform: 'uppercase',
+                  color: '#1890ff'
+                }}>
+                  {ex.exchange}
+                </div>
+
+                {/* API 信息 - 弹性增长 */}
+                <div style={{ 
+                  flex: 1, 
+                  fontSize: 12, 
+                  color: '#666',
+                  display: 'flex',
+                  gap: 16,
+                  alignItems: 'center'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ color: '#999' }}>Key:</span>
+                    <code style={{ 
+                      background: '#f0f0f0', 
+                      padding: '2px 6px', 
+                      borderRadius: 3,
+                      fontFamily: 'monospace'
+                    }}>
+                      {ex.apiKey?.slice(0, 8)}...{ex.apiKey?.slice(-4)}
+                    </code>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ color: '#999' }}>Secret:</span>
+                    <code style={{ 
+                      background: '#f0f0f0', 
+                      padding: '2px 6px', 
+                      borderRadius: 3 
+                    }}>
+                      ********
+                    </code>
+                  </div>
+                </div>
+
+                {/* 测试结果状态 - 紧凑显示 */}
+                {testResults[index] && (
+                  <div style={{ 
+                    fontSize: 12,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '4px 12px',
                     borderRadius: 4,
-                    marginBottom: 4,
-                  }}
-                  actions={[
+                    backgroundColor: testResults[index].success ? '#d9f7be' : '#ffccc7',
+                    color: testResults[index].success ? '#389e0d' : '#cf1322',
+                    fontWeight: 500,
+                  }}>
+                    {testResults[index].success ? (
+                      <>
+                        <span>✅ 已连接</span>
+                        {testResults[index].data?.balance && Object.keys(testResults[index].data.balance).length > 0 && (
+                          <Tooltip 
+                            title={
+                              <div style={{ maxHeight: 200, overflowY: 'auto' }}>
+                                {Object.entries(testResults[index].data.balance).map(([currency, amount]) => (
+                                  <div key={currency}>{currency}: {parseFloat(amount).toFixed(8)}</div>
+                                ))}
+                              </div>
+                            }
+                          >
+                            <span style={{ 
+                              cursor: 'pointer',
+                              padding: '2px 6px',
+                              backgroundColor: '#fff',
+                              borderRadius: 3,
+                              color: '#1890ff'
+                            }}>
+                              {Object.keys(testResults[index].data.balance).length} 币种
+                            </span>
+                          </Tooltip>
+                        )}
+                      </>
+                    ) : (
+                      <Tooltip title={testResults[index].error}>
+                        <span style={{ cursor: 'pointer' }}>❌ 连接失败</span>
+                      </Tooltip>
+                    )}
+                    {testResults[index].timestamp && (
+                      <span style={{ 
+                        fontSize: 11,
+                        opacity: 0.7,
+                        marginLeft: 4
+                      }}>
+                        ({formatTimeAgo(testResults[index].timestamp)})
+                      </span>
+                    )}
+                  </div>
+                )}
+
+                {/* 操作按钮组 */}
+                <Space size="small">
+                  <Button
+                    type={testResults[index] ? 'default' : 'primary'}
+                    size="small"
+                    icon={<ApiOutlined />}
+                    onClick={() => handleTestConnection(index)}
+                    loading={testingExchangeIndex === index}
+                  >
+                    {testingExchangeIndex === index ? '测试中' : '测试'}
+                  </Button>
+                  <Button
+                    type="text"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={() => openEditExchangeModal(index)}
+                  />
+                  <Popconfirm
+                    title="确定删除此交易所配置？"
+                    onConfirm={() => handleDeleteExchange(index)}
+                  >
                     <Button
                       type="text"
                       size="small"
-                      icon={<EditOutlined />}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openEditAccountModal(index);
-                      }}
-                    />,
-                    <Popconfirm
-                      title="确定删除此账户？"
-                      onConfirm={(e) => {
-                        e.stopPropagation();
-                        handleDeleteAccount(index);
-                      }}
-                      onCancel={(e) => e.stopPropagation()}
-                    >
-                      <Button
-                        type="text"
-                        size="small"
-                        danger
-                        icon={<DeleteOutlined />}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    </Popconfirm>
-                  ]}
-                >
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: 500 }}>{account.name}</div>
-                    <div style={{ fontSize: 12, color: "#999" }}>
-                      {account.exchanges.length} 个交易所
-                    </div>
-                  </div>
-                </List.Item>
-              )}
-            />
-          )}
-        </Spin>
-      </Card>
-
-      {/* 右侧：交易所配置 */}
-      <Card 
-        title={currentAccount ? `${currentAccount.name} - 交易所配置` : "交易所配置"}
-        style={{ flex: 1, overflowY: "auto" }}
-        extra={
-          <Space>
-            <Button 
-              icon={<ReloadOutlined />} 
-              onClick={handleReload}
-              disabled={loading}
-            >
-              刷新
-            </Button>
-            <Button 
-              type="primary"
-              icon={<SaveOutlined />}
-              onClick={handleSave}
-              loading={saving}
-            >
-              保存全部配置
-            </Button>
-          </Space>
-        }
-      >
-        {currentAccount ? (
-          <>
-            <Button
-              type="dashed"
-              icon={<PlusOutlined />}
-              onClick={openAddExchangeModal}
-              block
-              style={{ marginBottom: 16 }}
-            >
-              添加交易所
-            </Button>
-
-            {currentAccount.exchanges.length === 0 ? (
-              <div style={{ textAlign: "center", color: "#999", padding: "40px 0" }}>
-                暂无交易所配置，点击上方按钮添加
+                      danger
+                      icon={<DeleteOutlined />}
+                    />
+                  </Popconfirm>
+                </Space>
               </div>
-            ) : (
-              <Space direction="vertical" style={{ width: "100%" }} size="middle">
-                {currentAccount.exchanges.map((ex, index) => (
-                  <Card
-                    key={index}
-                    size="small"
-                    title={
-                      <Space>
-                        <span style={{ fontWeight: 600 }}>{ex.exchange}</span>
-                      </Space>
-                    }
-                    extra={
-                      <Space>
-                        <Button
-                          type="text"
-                          size="small"
-                          icon={<EditOutlined />}
-                          onClick={() => openEditExchangeModal(index)}
-                        />
-                        <Popconfirm
-                          title="确定删除此交易所配置？"
-                          onConfirm={() => handleDeleteExchange(index)}
-                        >
-                          <Button
-                            type="text"
-                            size="small"
-                            danger
-                            icon={<DeleteOutlined />}
-                          />
-                        </Popconfirm>
-                      </Space>
-                    }
-                  >
-                    <div style={{ fontSize: 12, color: "#666" }}>
-                      <div>API Key: {ex.apiKey?.slice(0, 8)}...{ex.apiKey?.slice(-4)}</div>
-                      <div>API Secret: ********</div>
-                    </div>
-                  </Card>
-                ))}
-              </Space>
-            )}
-          </>
-        ) : (
-          <div style={{ textAlign: "center", color: "#999", padding: "40px 0" }}>
-            请先在左侧选择或添加账户
+            ))}
           </div>
         )}
       </Card>
-
-      {/* 账户弹窗 */}
-      <Modal
-        title={editingAccountIndex !== null ? "编辑账户" : "添加账户"}
-        open={isAccountModalOpen}
-        onOk={handleAccountModalOk}
-        onCancel={() => setIsAccountModalOpen(false)}
-      >
-        <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
-          <Form.Item
-            label="账户名称"
-            name="accountName"
-            rules={[{ required: true, message: "请输入账户名称" }]}
-          >
-            <Input placeholder="例如：主账户、备用账户" />
-          </Form.Item>
-        </Form>
-      </Modal>
 
       {/* 交易所弹窗 */}
       <Modal
@@ -411,12 +450,21 @@ export default function ConfigPage() {
           <Form.Item
             label="交易所"
             name="exchange"
-            rules={[{ required: true, message: "请选择交易所" }]}
+            rules={[{ required: true, message: "请输入或选择交易所" }]}
           >
-            <Select
+            <AutoComplete
               options={exchangeOptions}
-              placeholder="选择交易所"
-              loading={exchanges.length === 0}
+              placeholder="输入或选择交易所 (如: binance)"
+              filterOption={(inputValue, option) =>
+                option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
+              }
+              onBlur={(e) => {
+                const value = e.target.value;
+                if (value) {
+                  exchangeForm.setFieldsValue({ exchange: value.toLowerCase() });
+                }
+              }}
+              allowClear
             />
           </Form.Item>
 

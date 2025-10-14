@@ -43,9 +43,13 @@ namespace FuturesTradeViewer
             // 初始化表格
             DataGridViewHelper.InitializeAbnormalGrid(abnormalGrid);
             DataGridViewHelper.InitializeConsecutiveHistoryGrid(consecutiveHistoryGrid);
+            DataGridViewHelper.InitializeLiquidationGrid(liquidationGrid);
 
             // 设置参数控件事件
             SetupParameterEventHandlers();
+
+            // 初始化爆仓监控参数
+            InitializeLiquidationMonitor();
 
             // 创建统计更新定时器
             statsUpdateTimer = new System.Windows.Forms.Timer
@@ -63,6 +67,45 @@ namespace FuturesTradeViewer
         {
             // 默认选中 50（索引 5）
             priceTickComboBox.SelectedIndex = 5;
+        }
+
+        /// <summary>
+        /// 初始化爆仓监控
+        /// </summary>
+        private void InitializeLiquidationMonitor()
+        {
+            // 默认选中15分钟窗口
+            liquidationWindowComboBox.SelectedIndex = 2;
+
+            // 设置事件处理器
+            liquidationThresholdNumeric.ValueChanged += (s, e) =>
+            {
+                webSocketManager?.UpdateLiquidationMonitorParams(
+                    GetLiquidationWindowMinutes(),
+                    liquidationThresholdNumeric.Value);
+            };
+
+            liquidationWindowComboBox.SelectedIndexChanged += (s, e) =>
+            {
+                webSocketManager?.UpdateLiquidationMonitorParams(
+                    GetLiquidationWindowMinutes(),
+                    liquidationThresholdNumeric.Value);
+            };
+        }
+
+        /// <summary>
+        /// 获取爆仓统计时间窗口（分钟）
+        /// </summary>
+        private int GetLiquidationWindowMinutes()
+        {
+            return liquidationWindowComboBox.SelectedIndex switch
+            {
+                0 => 1,
+                1 => 5,
+                2 => 15,
+                3 => 30,
+                _ => 15
+            };
         }
 
         /// <summary>
@@ -250,6 +293,9 @@ namespace FuturesTradeViewer
                     // 更新连续大单历史列表
                     UpdateConsecutiveHistoryGrid();
                 }
+
+                // 更新爆仓统计
+                UpdateLiquidationStatistics();
             }
             catch (Exception ex)
             {
@@ -324,6 +370,36 @@ namespace FuturesTradeViewer
         }
 
         /// <summary>
+        /// 更新爆仓统计
+        /// </summary>
+        private void UpdateLiquidationStatistics()
+        {
+            var stats = webSocketManager?.GetLiquidationStatistics();
+            if (stats == null) return;
+
+            UIThreadHelper.SafeBeginInvoke(this, () =>
+            {
+                liquidationLongCountLabel.Text = $"多头爆仓: {stats.LongLiquidationCount} 笔 / {stats.TotalLongQuantity:F4} 币";
+                liquidationLongVolumeLabel.Text = $"多头金额: ${stats.TotalLongValue:F2}";
+                liquidationShortCountLabel.Text = $"空头爆仓: {stats.ShortLiquidationCount} 笔 / {stats.TotalShortQuantity:F4} 币";
+                liquidationShortVolumeLabel.Text = $"空头金额: ${stats.TotalShortValue:F2}";
+                
+                // 显示最大爆仓，带方向标识和颜色
+                if (stats.LargestLiquidationValue > 0)
+                {
+                    string direction = stats.IsLargestLongLiquidation ? "多头 🔴" : "空头 🟢";
+                    liquidationLargestLabel.Text = $"最大爆仓: {stats.LargestLiquidationQuantity:F4} / ${stats.LargestLiquidationValue:F2} ({direction})";
+                    liquidationLargestLabel.ForeColor = stats.IsLargestLongLiquidation ? Color.DarkRed : Color.DarkGreen;
+                }
+                else
+                {
+                    liquidationLargestLabel.Text = "最大爆仓: 0.0000 / $0.00";
+                    liquidationLargestLabel.ForeColor = Color.Black;
+                }
+            });
+        }
+
+        /// <summary>
         /// 连接按钮点击事件
         /// </summary>
         private async void ConnectButton_Click(object sender, EventArgs e)
@@ -341,6 +417,7 @@ namespace FuturesTradeViewer
             DataGridViewHelper.InitializeAbnormalGrid(abnormalGrid);
             DataGridViewHelper.InitializeOrderBookGrid(sellGrid, isBuyOrder: false);
             DataGridViewHelper.InitializeOrderBookGrid(buyGrid, isBuyOrder: true);
+            DataGridViewHelper.InitializeLiquidationGrid(liquidationGrid);
 
             connectButton.Enabled = false;
             connectButton.Text = "连接中...";
@@ -358,6 +435,7 @@ namespace FuturesTradeViewer
                 // 订阅事件
                 webSocketManager.OnTradeReceived += OnTradeReceived;
                 webSocketManager.OnOrderBookReceived += OnOrderBookReceived;
+                webSocketManager.OnLiquidationReceived += OnLiquidationReceived;
                 webSocketManager.OnError += OnWebSocketError;
                 webSocketManager.OnReconnecting += OnWebSocketReconnecting;
                 webSocketManager.OnReconnected += OnWebSocketReconnected;
@@ -365,6 +443,7 @@ namespace FuturesTradeViewer
                 // 连接 WebSocket 流
                 await webSocketManager.ConnectTradeStreamAsync(symbol);
                 await webSocketManager.ConnectOrderBookStreamAsync(symbol);
+                await webSocketManager.ConnectLiquidationStreamAsync(symbol);
 
                 connectButton.Text = "已连接";
                 UpdateConnectionStatus("已连接", Color.DarkGreen);
@@ -443,6 +522,21 @@ namespace FuturesTradeViewer
 
             // 使用聚合后的数据更新订单簿显示
             RefreshOrderBookDisplay();
+        }
+
+        /// <summary>
+        /// 处理爆仓数据
+        /// </summary>
+        private void OnLiquidationReceived(LiquidationData liquidationData)
+        {
+            UIThreadHelper.SafeBeginInvoke(this, () =>
+            {
+                // 添加到爆仓列表
+                DataGridViewHelper.AddLiquidationRow(
+                    liquidationGrid,
+                    liquidationData,
+                    Constants.MaxLiquidationGridRows);
+            });
         }
 
         /// <summary>
@@ -636,11 +730,6 @@ namespace FuturesTradeViewer
         }
 
         private void statsDirectionLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void orderTitleLabel_Click(object sender, EventArgs e)
         {
 
         }

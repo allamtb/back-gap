@@ -7,15 +7,15 @@ export default defineConfig({
   server: {
     proxy: {
       '/health': {
-        target: 'http://localhost:8000',
+        target: 'http://16.163.163.204:8000',
         changeOrigin: true,
       },
       '/api': {
-        target: 'http://localhost:8000',
+        target: 'http://16.163.163.204:8000',
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://localhost:8000',
+        target: 'ws://16.163.163.204:8000',
         ws: true,
         changeOrigin: true,
       }
