@@ -1,26 +1,22 @@
-fastapi==0.104.1
+﻿fastapi==0.104.1
 uvicorn[standard]==0.24.0
 python-binance==1.0.19
 websockets==12.0
-websocket-client==1.6.4  # 用于Binance用户数据流WebSocket
+websocket-client==1.6.4
 pydantic==2.5.0
 python-multipart==0.0.6
 python-dotenv==1.0.0
 aiofiles==23.2.1
 httpx==0.25.2
-# 数据库依赖（Cookie 数据存储）
 sqlalchemy==2.0.23
-# aiohttp 必须使用 3.8.x 版本，3.9+ 版本移除了 parse_frame 导致 ccxt 不兼容
+# aiohttp 3.8.x required, 3.9+ removed parse_frame causing ccxt incompatibility
 #aiohttp==3.8.6
-# ccxt 包含 ccxt.pro，用于实时 WebSocket 订阅
+# ccxt includes ccxt.pro for real-time WebSocket subscriptions
 #ccxt==4.1.77
-# Backpack 适配器依赖（ED25519 签名，官方推荐）
+# Backpack adapter dependency (ED25519 signature, official recommendation)
 cryptography>=41.0.0
-# Nitter监控工具依赖
 requests==2.31.0
 beautifulsoup4==4.12.2
 playwright==1.40.0
-# 特朗普情绪分析依赖
 feedparser==6.0.10
 zai==0.1.0
-
