@@ -22,7 +22,10 @@ export const convertDataToChartFormat = (data) => {
  * @param {Object} config - 交易所配置对象
  * @returns {string} 唯一标识符
  */
-export const getExchangeKey = (config) => `${config.exchange}-${config.symbol}`;
+export const getExchangeKey = (config) => {
+  const marketType = config.market_type || 'spot';
+  return `${config.exchange}-${config.symbol}-${marketType}`;
+};
 
 /**
  * 获取所有时间点的最小值和最大值

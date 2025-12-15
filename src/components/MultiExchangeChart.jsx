@@ -27,13 +27,13 @@ export default function MultiExchangeChart({
   
   // 差异标注状态
   const [enableMarkers, setEnableMarkers] = useState(true);
-  const [threshold, setThreshold] = useState(50);
+  const [threshold, setThreshold] = useState(0.5); // 默认0.5%
   
   // 选中的交易所（用于价差比对）
   const [selectedExchanges, setSelectedExchanges] = useState([]);
   
-  // 实时数据开关
-  const [enableRealtime, setEnableRealtime] = useState(true);
+  // 实时数据开关（只在有交易所配置时才默认启用）
+  const [enableRealtime, setEnableRealtime] = useState(exchanges.length > 0);
 
   // ==================== 数据获取 ====================
   const {
@@ -70,16 +70,16 @@ export default function MultiExchangeChart({
 
   // ==================== 实时数据 WebSocket ====================
   // K 线更新回调
-  const handleKlineUpdate = useCallback((exchange, symbol, kline) => {
-    updateLiveKline(exchange, symbol, kline);
+  const handleKlineUpdate = useCallback((exchange, symbol, kline, marketType) => {
+    updateLiveKline(exchange, symbol, kline, marketType);
   }, [updateLiveKline]);
 
-  // WebSocket 连接
+  // WebSocket 连接（只在有交易所配置且用户启用时才连接）
   const { connected, error: wsError, reconnect } = useWebSocketKline(
     exchanges,
     interval,
     handleKlineUpdate,
-    enableRealtime
+    enableRealtime && exchanges.length > 0
   );
 
   // ==================== 交易所选择处理 ====================
@@ -139,7 +139,7 @@ export default function MultiExchangeChart({
 
   // ==================== UI 渲染 ====================
   return (
-    <div className="multi-exchange-chart">
+    <div className="multi-exchange-chart" style={{ width: '100%', overflow: 'visible' }}>
       {/* 控制面板 */}
       <Card 
         size="small" 
@@ -280,27 +280,31 @@ export default function MultiExchangeChart({
               </Space>
 
               {enableMarkers && (
-                <Space style={{ flex: 1, maxWidth: 500 }}>
+                <Space style={{ flex: 1, maxWidth: 600 }}>
                   <span style={{ color: '#666' }}>阈值:</span>
                   <Slider
                     value={threshold}
                     onChange={setThreshold}
-                    min={1}
-                    max={500}
-                    step={1}
+                    min={0.01}
+                    max={5}
+                    step={0.01}
                     style={{ width: 200, minWidth: 150 }}
                     tooltip={{ 
-                      formatter: (value) => `≥ ${value}`,
+                      formatter: (value) => `≥ ${value.toFixed(2)}%`,
                     }}
                   />
-                  <span style={{ 
-                    fontSize: '12px', 
-                    color: '#1890ff',
-                    fontWeight: 500,
-                    minWidth: 60
-                  }}>
-                    ≥ {threshold}
-                  </span>
+                  <InputNumber
+                    value={threshold}
+                    onChange={setThreshold}
+                    min={0.01}
+                    max={5}
+                    step={0.01}
+                    precision={2}
+                    size="small"
+                    style={{ width: 90 }}
+                    formatter={(value) => `${value}%`}
+                    parser={(value) => value.replace('%', '')}
+                  />
                 </Space>
               )}
             </Space>
@@ -308,7 +312,7 @@ export default function MultiExchangeChart({
           
           <Col>
             <span style={{ fontSize: '12px', color: '#999' }}>
-              {enableMarkers ? `标注差异 ≥ ${threshold} 的点` : '标注已关闭'}
+              {enableMarkers ? `标注差异 ≥ ${threshold.toFixed(2)}% 的点` : '标注已关闭'}
             </span>
           </Col>
         </Row>

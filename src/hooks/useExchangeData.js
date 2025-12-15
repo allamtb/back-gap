@@ -13,12 +13,13 @@ export const useExchangeData = () => {
   /**
    * 获取单个交易所的K线数据
    */
-  const fetchExchangeData = async (exchange, symbol, interval, limit) => {
+  const fetchExchangeData = async (exchange, symbol, interval, limit, marketType = 'spot') => {
     const params = new URLSearchParams({
       exchange,
       symbol,
       interval,
       limit: limit.toString(),
+      market_type: marketType,
     });
 
     // 使用相对路径，让 Vite 代理处理请求
@@ -54,7 +55,13 @@ export const useExchangeData = () => {
       // 并行获取所有交易所数据
       const dataPromises = exchanges.map(async (config) => {
         try {
-          const data = await fetchExchangeData(config.exchange, config.symbol, interval, limit);
+          const data = await fetchExchangeData(
+            config.exchange, 
+            config.symbol, 
+            interval, 
+            limit, 
+            config.market_type || 'spot'
+          );
           return { key: getExchangeKey(config), data, success: true };
         } catch (err) {
           return { 
@@ -113,7 +120,13 @@ export const useExchangeData = () => {
       // 并行获取新增交易所数据
       const dataPromises = newConfigs.map(async (config) => {
         try {
-          const data = await fetchExchangeData(config.exchange, config.symbol, interval, limit);
+          const data = await fetchExchangeData(
+            config.exchange, 
+            config.symbol, 
+            interval, 
+            limit, 
+            config.market_type || 'spot'
+          );
           return { key: getExchangeKey(config), data, success: true };
         } catch (err) {
           return { 

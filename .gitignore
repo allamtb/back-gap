@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+backend/.venv/
+backend/venv/
+backend/ENV/
+backend/env/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +32,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Backend data and cache (sensitive files)
+backend/data/config.json
+backend/data/backups/
+backend/trump/trump_posts_archive.json
+backend/trump/sentiment_analysis.json

@@ -11,9 +11,44 @@
   box-shadow: 0 2px 8px rgba(0, 21, 41, 0.35);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 24px !important;
   position: relative;
   overflow: hidden;
+}
+
+.app-header-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex: 1;
+}
+
+.app-header-menu {
+  background: transparent !important;
+  border-bottom: none !important;
+  line-height: 64px;
+  flex: 1;
+  min-width: 0;
+}
+
+.app-header-menu .ant-menu-item {
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-bottom: 2px solid transparent !important;
+}
+
+.app-header-menu .ant-menu-item:hover {
+  color: #ffffff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.app-header-menu .ant-menu-item-selected {
+  color: #ffffff !important;
+  border-bottom-color: #1890ff !important;
+}
+
+.app-header-menu .ant-menu-item-icon {
+  margin-right: 8px;
 }
 
 .app-header::before {

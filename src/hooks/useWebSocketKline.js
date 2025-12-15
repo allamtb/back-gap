@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
  * 
  * @param {Array} exchanges - 交易所配置数组
  * @param {string} interval - K 线周期
- * @param {Function} onKlineUpdate - K 线更新回调 (exchange, symbol, kline) => void
+ * @param {Function} onKlineUpdate - K 线更新回调 (exchange, symbol, kline, marketType) => void
  * @param {boolean} enabled - 是否启用实时数据
  * @returns {Object} { connected, error, reconnect }
  */
@@ -35,14 +35,14 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
   /**
    * 订阅交易所数据
    */
-  const subscribe = useCallback((exchange, symbol, intervalParam) => {
+  const subscribe = useCallback((exchange, symbol, intervalParam, marketType = 'spot') => {
     const ws = wsRef.current;
     if (!ws || ws.readyState !== WebSocket.OPEN) {
       console.warn('WebSocket 未连接，无法订阅');
       return;
     }
 
-    const subscriptionKey = `${exchange}_${symbol}_${intervalParam}`;
+    const subscriptionKey = `${exchange}_${symbol}_${intervalParam}_${marketType}`;
     
     // 避免重复订阅
     if (subscriptionsRef.current.has(subscriptionKey)) {
@@ -56,7 +56,8 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
         exchange_a: exchange,
         exchange_b: null,  // 单独订阅
         symbol: symbol,
-        interval: intervalParam
+        interval: intervalParam,
+        market_type: marketType
       }
     };
 
@@ -64,6 +65,40 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
     ws.send(JSON.stringify(message));
     subscriptionsRef.current.add(subscriptionKey);
     console.log(`✅ 订阅成功: ${subscriptionKey}`);
+  }, []);
+
+  /**
+   * 取消订阅交易所数据
+   */
+  const unsubscribe = useCallback((exchange, symbol, intervalParam, marketType = 'spot') => {
+    const ws = wsRef.current;
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      console.warn('WebSocket 未连接，无法取消订阅');
+      return;
+    }
+
+    const subscriptionKey = `${exchange}_${symbol}_${intervalParam}_${marketType}`;
+    
+    // 检查是否已订阅
+    if (!subscriptionsRef.current.has(subscriptionKey)) {
+      console.log(`⚠️ 未订阅该数据: ${subscriptionKey}`);
+      return;
+    }
+
+    const message = {
+      type: 'unsubscribe',
+      data: {
+        exchange_a: exchange,
+        symbol: symbol,
+        interval: intervalParam,
+        market_type: marketType
+      }
+    };
+
+    console.log(`❌ 发送取消订阅请求: ${subscriptionKey}`, message);
+    ws.send(JSON.stringify(message));
+    subscriptionsRef.current.delete(subscriptionKey);
+    console.log(`✅ 取消订阅成功: ${subscriptionKey}`);
   }, []);
 
   /**
@@ -107,8 +142,8 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
         console.log('📋 交易所列表:', currentExchanges);
         
         currentExchanges.forEach((config, index) => {
-          console.log(`[${index}] 正在订阅:`, config.exchange, config.symbol, currentInterval);
-          subscribe(config.exchange, config.symbol, currentInterval);
+          console.log(`[${index}] 正在订阅:`, config.exchange, config.symbol, currentInterval, config.market_type || 'spot');
+          subscribe(config.exchange, config.symbol, currentInterval, config.market_type || 'spot');
         });
         
         console.log('📋 订阅完成，总计:', subscriptionsRef.current.size);
@@ -119,11 +154,24 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
           const message = JSON.parse(event.data);
           
           if (message.type === 'kline_update') {
-            const { exchange, symbol, kline } = message.data;
-            // 使用 ref 来访问最新的回调
-            onKlineUpdateRef.current?.(exchange, symbol, kline);
+            const { exchange, symbol, interval: msgInterval, market_type, kline } = message.data;
+            
+            // ✅ 精确匹配：使用消息中的 interval（如果有）或当前 interval
+            const actualInterval = msgInterval || intervalRef.current;
+            const key = `${exchange}_${symbol}_${actualInterval}_${market_type || 'spot'}`;
+            
+            // ✅ 过滤：只处理已订阅的数据
+            if (!subscriptionsRef.current.has(key)) {
+              console.log(`⏭️ [Kline] 跳过未订阅的数据: ${key} (消息 interval: ${msgInterval})`);
+              return;
+            }
+            
+            // 使用 ref 来访问最新的回调，传递 market_type
+            onKlineUpdateRef.current?.(exchange, symbol, kline, market_type || 'spot');
           } else if (message.type === 'subscription_confirmed') {
             console.log('📡 订阅确认:', message.data);
+          } else if (message.type === 'unsubscription_confirmed') {
+            console.log('📡 取消订阅确认:', message.data);
           }
         } catch (err) {
           console.error('WebSocket 消息解析失败:', err);
@@ -178,25 +226,47 @@ export const useWebSocketKline = (exchanges, interval, onKlineUpdate, enabled = 
   }, [connect]);
 
   /**
-   * 监听交易所列表和周期变化，重新订阅
+   * 监听交易所列表和周期变化，智能订阅/取消订阅
    */
   useEffect(() => {
     if (!connected || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
 
-    // 计算需要订阅的交易所
+    // 计算当前应该订阅的列表
     const currentSubscriptions = new Set(
-      exchanges.map(config => `${config.exchange}_${config.symbol}_${interval}`)
+      exchanges.map(config => `${config.exchange}_${config.symbol}_${interval}_${config.market_type || 'spot'}`)
     );
 
-    // 找出需要新增的订阅
+    // ✅ 找出需要取消的订阅（旧订阅但不在新列表中）
+    const toRemove = Array.from(subscriptionsRef.current).filter(key => !currentSubscriptions.has(key));
+    
+    // ✅ 找出需要新增的订阅（新列表中但未订阅）
     const toAdd = Array.from(currentSubscriptions).filter(key => !subscriptionsRef.current.has(key));
     
-    // 添加新订阅（不需要删除旧的，服务器会自动处理）
-    toAdd.forEach(key => {
-      const [exchange, symbol, intervalParam] = key.split('_');
-      subscribe(exchange, symbol, intervalParam);
+    // ✅ 取消旧订阅（释放后端资源）
+    toRemove.forEach(key => {
+      const parts = key.split('_');
+      // 处理 symbol 可能包含下划线的情况（如 BTC_USDT）
+      const exchange = parts[0];
+      const marketType = parts[parts.length - 1];
+      const intervalParam = parts[parts.length - 2];
+      const symbol = parts.slice(1, parts.length - 2).join('_');
+      
+      console.log(`❌ 取消旧订阅: ${key}`);
+      unsubscribe(exchange, symbol, intervalParam, marketType);
     });
-  }, [exchanges, interval, connected, subscribe]);
+    
+    // ✅ 添加新订阅
+    toAdd.forEach(key => {
+      const parts = key.split('_');
+      const exchange = parts[0];
+      const marketType = parts[parts.length - 1];
+      const intervalParam = parts[parts.length - 2];
+      const symbol = parts.slice(1, parts.length - 2).join('_');
+      
+      console.log(`➕ 添加新订阅: ${key}`);
+      subscribe(exchange, symbol, intervalParam, marketType);
+    });
+  }, [exchanges, interval, connected, subscribe, unsubscribe]);
 
   /**
    * 初始连接 - 只在组件挂载时执行一次

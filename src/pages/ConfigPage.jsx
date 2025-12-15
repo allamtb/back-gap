@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Card, Form, Input, AutoComplete, Button, message, Space, Modal, Popconfirm, Spin, Tooltip, Alert } from "antd";
-import { PlusOutlined, DeleteOutlined, EditOutlined, ApiOutlined } from "@ant-design/icons";
-import { getExchangeConfig, saveExchangeConfig } from "../utils/configManager";
+import { Card, Form, Input, AutoComplete, Button, message, Space, Modal, Popconfirm, Spin, Tooltip, Alert, Switch, Tag } from "antd";
+import { PlusOutlined, DeleteOutlined, EditOutlined, ApiOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { getExchangeConfig, saveExchangeConfig, isUnifiedAccountExchange } from "../utils/configManager";
 
 const TEST_RESULTS_KEY = 'exchangeTestResults'; // 测试结果存储key
 
@@ -134,6 +134,10 @@ export default function ConfigPage() {
   const openAddExchangeModal = () => {
     setEditingExchangeIndex(null);
     exchangeForm.resetFields();
+    // 设置默认值：统一账户根据交易所智能判断
+    exchangeForm.setFieldsValue({
+      unifiedAccount: false, // 默认 false，会在交易所选择时自动更新
+    });
     setIsExchangeModalOpen(true);
   };
 
@@ -198,24 +202,29 @@ export default function ConfigPage() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        // 测试成功
+        // 测试成功（至少有一个市场成功）
         const newResults = {
           ...testResults,
           [index]: {
             success: true,
-            data: result.data,
+            data: result.data, // 包含 spot 和 futures
             timestamp: Date.now(), // 保存测试时间戳
           },
         };
         setTestResults(newResults);
         saveTestResults(newResults); // 持久化保存
-        message.success(`${exchange.exchange} 连接测试成功！`);
+        
+        // 显示成功消息（分别显示现货和合约的状态）
+        const spotStatus = result.data.spot?.success ? '✅ 现货' : '❌ 现货';
+        const futuresStatus = result.data.futures?.success ? '✅ 合约' : '❌ 合约';
+        message.success(`${exchange.exchange} 测试完成: ${spotStatus} ${futuresStatus}`);
       } else {
         // 测试失败
         const newResults = {
           ...testResults,
           [index]: {
             success: false,
+            data: result.data, // 可能包含部分测试结果
             error: result.error || '未知错误',
             timestamp: Date.now(), // 保存测试时间戳
           },
@@ -287,10 +296,27 @@ export default function ConfigPage() {
                   gap: 16,
                   backgroundColor: '#fff',
                   transition: 'all 0.3s',
-                  ...(testResults[index] && {
-                    borderColor: testResults[index].success ? '#52c41a' : '#ff4d4f',
-                    backgroundColor: testResults[index].success ? '#f6ffed' : '#fff2f0',
-                  }),
+                  ...(testResults[index] && (() => {
+                    const spotSuccess = testResults[index].data?.spot?.success;
+                    const futuresSuccess = testResults[index].data?.futures?.success;
+                    const hasAnySuccess = spotSuccess || futuresSuccess;
+                    const hasAnyFailure = (testResults[index].data?.spot && !spotSuccess) || 
+                                         (testResults[index].data?.futures && !futuresSuccess);
+                    
+                    // 如果至少有一个成功，显示绿色；如果全部失败，显示红色
+                    if (hasAnySuccess) {
+                      return {
+                        borderColor: '#52c41a',
+                        backgroundColor: '#f6ffed',
+                      };
+                    } else if (hasAnyFailure) {
+                      return {
+                        borderColor: '#ff4d4f',
+                        backgroundColor: '#fff2f0',
+                      };
+                    }
+                    return {};
+                  })()),
                 }}
                 onMouseEnter={(e) => {
                   if (!testResults[index]) {
@@ -311,9 +337,19 @@ export default function ConfigPage() {
                   fontWeight: 600, 
                   fontSize: 15,
                   textTransform: 'uppercase',
-                  color: '#1890ff'
+                  color: '#1890ff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8
                 }}>
-                  {ex.exchange}
+                  <span>{ex.exchange}</span>
+                  {ex.unifiedAccount && (
+                    <Tooltip title="现货和合约共用同一个账户">
+                      <Tag color="purple" style={{ fontSize: 10, margin: 0, padding: '0 4px' }}>
+                        统一账户
+                      </Tag>
+                    </Tooltip>
+                  )}
                 </div>
 
                 {/* API 信息 - 弹性增长 */}
@@ -348,54 +384,113 @@ export default function ConfigPage() {
                   </div>
                 </div>
 
-                {/* 测试结果状态 - 紧凑显示 */}
+                {/* 测试结果状态 - 分别显示现货和合约 */}
                 {testResults[index] && (
                   <div style={{ 
                     fontSize: 12,
                     display: 'flex',
                     alignItems: 'center',
                     gap: 8,
-                    padding: '4px 12px',
-                    borderRadius: 4,
-                    backgroundColor: testResults[index].success ? '#d9f7be' : '#ffccc7',
-                    color: testResults[index].success ? '#389e0d' : '#cf1322',
-                    fontWeight: 500,
+                    flexWrap: 'wrap'
                   }}>
-                    {testResults[index].success ? (
-                      <>
-                        <span>✅ 已连接</span>
-                        {testResults[index].data?.balance && Object.keys(testResults[index].data.balance).length > 0 && (
-                          <Tooltip 
-                            title={
-                              <div style={{ maxHeight: 200, overflowY: 'auto' }}>
-                                {Object.entries(testResults[index].data.balance).map(([currency, amount]) => (
-                                  <div key={currency}>{currency}: {parseFloat(amount).toFixed(8)}</div>
-                                ))}
-                              </div>
-                            }
-                          >
-                            <span style={{ 
-                              cursor: 'pointer',
-                              padding: '2px 6px',
-                              backgroundColor: '#fff',
-                              borderRadius: 3,
-                              color: '#1890ff'
-                            }}>
-                              {Object.keys(testResults[index].data.balance).length} 币种
-                            </span>
+                    {/* 现货测试结果 */}
+                    {testResults[index].data?.spot && (
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        padding: '4px 12px',
+                        borderRadius: 4,
+                        backgroundColor: testResults[index].data.spot.success ? '#d9f7be' : '#ffccc7',
+                        color: testResults[index].data.spot.success ? '#389e0d' : '#cf1322',
+                        fontWeight: 500,
+                      }}>
+                        {testResults[index].data.spot.success ? (
+                          <>
+                            <span>✅ 现货</span>
+                            {testResults[index].data.spot.balance && Object.keys(testResults[index].data.spot.balance).length > 0 && (
+                              <Tooltip 
+                                title={
+                                  <div style={{ maxHeight: 200, overflowY: 'auto' }}>
+                                    <div style={{ fontWeight: 600, marginBottom: 4 }}>现货余额:</div>
+                                    {Object.entries(testResults[index].data.spot.balance).map(([currency, amount]) => (
+                                      <div key={currency}>{currency}: {parseFloat(amount).toFixed(8)}</div>
+                                    ))}
+                                  </div>
+                                }
+                              >
+                                <span style={{ 
+                                  cursor: 'pointer',
+                                  padding: '2px 6px',
+                                  backgroundColor: '#fff',
+                                  borderRadius: 3,
+                                  color: '#1890ff'
+                                }}>
+                                  {Object.keys(testResults[index].data.spot.balance).length} 币种
+                                </span>
+                              </Tooltip>
+                            )}
+                          </>
+                        ) : (
+                          <Tooltip title={testResults[index].data.spot.error || '现货连接失败'}>
+                            <span style={{ cursor: 'pointer' }}>❌ 现货</span>
                           </Tooltip>
                         )}
-                      </>
-                    ) : (
-                      <Tooltip title={testResults[index].error}>
-                        <span style={{ cursor: 'pointer' }}>❌ 连接失败</span>
-                      </Tooltip>
+                      </div>
                     )}
+                    
+                    {/* 合约测试结果 */}
+                    {testResults[index].data?.futures && (
+                      <div style={{ 
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 6,
+                        padding: '4px 12px',
+                        borderRadius: 4,
+                        backgroundColor: testResults[index].data.futures.success ? '#d9f7be' : '#ffccc7',
+                        color: testResults[index].data.futures.success ? '#389e0d' : '#cf1322',
+                        fontWeight: 500,
+                      }}>
+                        {testResults[index].data.futures.success ? (
+                          <>
+                            <span>✅ 合约</span>
+                            {testResults[index].data.futures.balance && Object.keys(testResults[index].data.futures.balance).length > 0 && (
+                              <Tooltip 
+                                title={
+                                  <div style={{ maxHeight: 200, overflowY: 'auto' }}>
+                                    <div style={{ fontWeight: 600, marginBottom: 4 }}>合约余额:</div>
+                                    {Object.entries(testResults[index].data.futures.balance).map(([currency, amount]) => (
+                                      <div key={currency}>{currency}: {parseFloat(amount).toFixed(8)}</div>
+                                    ))}
+                                  </div>
+                                }
+                              >
+                                <span style={{ 
+                                  cursor: 'pointer',
+                                  padding: '2px 6px',
+                                  backgroundColor: '#fff',
+                                  borderRadius: 3,
+                                  color: '#1890ff'
+                                }}>
+                                  {Object.keys(testResults[index].data.futures.balance).length} 币种
+                                </span>
+                              </Tooltip>
+                            )}
+                          </>
+                        ) : (
+                          <Tooltip title={testResults[index].data.futures.error || '合约连接失败'}>
+                            <span style={{ cursor: 'pointer' }}>❌ 合约</span>
+                          </Tooltip>
+                        )}
+                      </div>
+                    )}
+                    
+                    {/* 显示时间戳 */}
                     {testResults[index].timestamp && (
                       <span style={{ 
                         fontSize: 11,
                         opacity: 0.7,
-                        marginLeft: 4
+                        color: '#666'
                       }}>
                         ({formatTimeAgo(testResults[index].timestamp)})
                       </span>
@@ -458,10 +553,25 @@ export default function ConfigPage() {
               filterOption={(inputValue, option) =>
                 option.value.toLowerCase().indexOf(inputValue.toLowerCase()) !== -1
               }
+              onSelect={(value) => {
+                // 🎯 智能默认：根据交易所名称自动设置统一账户
+                const normalizedValue = value.toLowerCase();
+                const shouldBeUnified = isUnifiedAccountExchange(normalizedValue);
+                exchangeForm.setFieldsValue({ 
+                  exchange: normalizedValue,
+                  unifiedAccount: shouldBeUnified 
+                });
+                console.log(`✨ 自动设置 ${normalizedValue} 统一账户模式为:`, shouldBeUnified);
+              }}
               onBlur={(e) => {
                 const value = e.target.value;
                 if (value) {
-                  exchangeForm.setFieldsValue({ exchange: value.toLowerCase() });
+                  const normalizedValue = value.toLowerCase();
+                  const shouldBeUnified = isUnifiedAccountExchange(normalizedValue);
+                  exchangeForm.setFieldsValue({ 
+                    exchange: normalizedValue,
+                    unifiedAccount: shouldBeUnified 
+                  });
                 }
               }}
               allowClear
@@ -487,6 +597,28 @@ export default function ConfigPage() {
             <Input.Password
               placeholder="输入交易所 API Secret"
               autoComplete="off"
+            />
+          </Form.Item>
+
+          <Form.Item
+            label={
+              <span>
+                统一账户模式{' '}
+                <Tooltip title="开启后，现货和合约将共用同一个账户（如 Backpack）。关闭则现货和合约使用独立账户（如 Binance）。">
+                  <InfoCircleOutlined style={{ color: '#999' }} />
+                </Tooltip>
+              </span>
+            }
+            name="unifiedAccount"
+            valuePropName="checked"
+            initialValue={false}
+          >
+            <Switch 
+              checkedChildren="是" 
+              unCheckedChildren="否"
+              onChange={(checked) => {
+                console.log('统一账户模式:', checked);
+              }}
             />
           </Form.Item>
         </Form>

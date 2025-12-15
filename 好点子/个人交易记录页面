@@ -1,0 +1,173 @@
+# 个人交易记录页面实现计划
+
+## 概述
+
+创建一个新的"个人交易记录"页面，用于记录和管理个人交易决策、执行和盈亏情况。
+
+## 文件结构
+
+### 前端文件
+
+- `src/pages/PersonalTradingPage.jsx` - 主页面组件
+- `src/components/PersonalTradingOrderForm.jsx` - 下单表单组件
+- `src/components/PersonalTradingRecordList.jsx` - 交易记录列表组件
+- `src/components/PersonalTradingRecordModal.jsx` - 交易记录详情/编辑模态框
+
+### 后端文件
+
+- `backend/models.py` - 添加 `PersonalTradingRecord` 数据模型
+- `backend/services/personal_trading_service.py` - 个人交易记录服务层
+- `backend/routers/personal_trading_routes.py` - 个人交易记录API路由
+- `backend/data/personal_trading.db` - SQLite数据库文件（自动创建）
+- `backend/data/personal_trading_images/` - 图片存储目录
+
+## 功能模块
+
+### 1. 下单功能
+
+- 集成现有的 `/api/create-order` API
+- 支持现货和合约交易（marketType: 'spot' 或 'futures'）
+- 支持限价单和市价单
+- 支持买入/卖出
+- 下单成功后自动创建交易记录
+
+### 2. 止盈止损设置
+
+- 在交易记录中设置止盈价格和止损价格
+- 支持实时价格监控（可选，通过WebSocket或定时轮询）
+- 止盈止损触发提醒（前端显示）
+
+### 3. 交易记录功能
+
+- **交易理由**：文字描述 + 图片上传
+- **市场环境**：文字描述 + 图片上传
+- **个人状态**：文字描述 + 图片上传
+- 支持富文本编辑（使用 Ant Design 的 Input.TextArea）
+- 图片上传到后端文件系统（`data/personal_trading_images/`）
+
+### 4. 盈亏展示
+
+- 列表展示所有持仓记录
+- 实时计算盈亏（基于当前价格 vs 开仓价格）
+- 支持多空方向（long/short）
+- 显示盈亏金额和盈亏百分比
+- 汇总统计（总盈亏、总持仓价值等）
+
+## 数据库设计
+
+### PersonalTradingRecord 表结构
+
+```python
+- id: Integer (主键)
+- order_id: String (订单ID，来自交易所)
+- exchange: String (交易所名称)
+- symbol: String (交易对，如 BTC/USDT)
+- market_type: String (spot/futures)
+- side: String (buy/sell)
+- order_type: String (limit/market)
+- amount: Float (数量)
+- price: Float (成交价格)
+- entry_price: Float (开仓价格)
+- current_price: Float (当前价格，定期更新)
+- take_profit_price: Float (止盈价格，可选)
+- stop_loss_price: Float (止损价格，可选)
+- position_side: String (long/short，用于合约)
+- trading_reason: Text (交易理由)
+- market_environment: Text (市场环境)
+- personal_state: Text (个人状态)
+- image_paths: String (JSON格式，存储图片路径列表)
+- status: String (open/closed，持仓状态)
+- pnl: Float (盈亏金额)
+- pnl_percent: Float (盈亏百分比)
+- created_at: DateTime (创建时间)
+- updated_at: DateTime (更新时间)
+- closed_at: DateTime (平仓时间，可选)
+```
+
+## API 接口设计
+
+### 1. 创建交易记录
+
+- `POST /api/personal-trading/records` - 创建新记录（下单成功后调用）
+
+### 2. 更新交易记录
+
+- `PUT /api/personal-trading/records/{id}` - 更新记录（编辑理由、环境、状态等）
+- `PUT /api/personal-trading/records/{id}/prices` - 更新止盈止损价格
+
+### 3. 查询交易记录
+
+- `GET /api/personal-trading/records` - 获取所有记录（支持分页、筛选）
+- `GET /api/personal-trading/records/{id}` - 获取单条记录详情
+
+### 4. 图片上传
+
+- `POST /api/personal-trading/upload-image` - 上传图片，返回图片路径
+
+### 5. 更新当前价格
+
+- `POST /api/personal-trading/update-prices` - 批量更新持仓的当前价格（用于计算盈亏）
+
+### 6. 平仓操作
+
+- `POST /api/personal-trading/records/{id}/close` - 标记持仓为已平仓
+
+## 实现步骤
+
+### 步骤1: 后端数据模型和服务
+
+1. 在 `backend/models.py` 中添加 `PersonalTradingRecord` SQLAlchemy 模型和 Pydantic 模型
+2. 创建 `backend/services/personal_trading_service.py` 服务层
+3. 创建 `backend/routers/personal_trading_routes.py` API路由
+4. 在 `backend/main.py` 中注册新路由
+
+### 步骤2: 前端页面组件
+
+1. 创建 `src/pages/PersonalTradingPage.jsx` 主页面
+2. 创建下单表单组件（集成现有订单API）
+3. 创建交易记录列表组件（展示盈亏）
+4. 创建记录详情/编辑模态框（支持文字和图片）
+
+### 步骤3: 路由集成
+
+1. 在 `src/App.jsx` 中添加新路由和菜单项
+2. 添加页面标题配置
+
+### 步骤4: 图片上传功能
+
+1. 后端实现图片上传接口（保存到 `data/personal_trading_images/`）
+2. 前端实现图片上传组件（使用 Ant Design Upload）
+
+### 步骤5: 价格更新机制
+
+1. 集成现有WebSocket价格数据或定时轮询
+2. 定期更新持仓的当前价格并计算盈亏
+
+## 技术细节
+
+### 图片存储
+
+- 图片保存路径：`backend/data/personal_trading_images/{record_id}/{timestamp}_{filename}`
+- 支持格式：jpg, png, gif, webp
+- 最大文件大小：5MB
+- 返回给前端的路径：相对路径，前端通过 `/api/personal-trading/images/{path}` 访问
+
+### 盈亏计算
+
+- 做多：`pnl = (current_price - entry_price) * amount`
+- 做空：`pnl = (entry_price - current_price) * amount`
+- 盈亏率：`pnl_percent = (pnl / (entry_price * amount)) * 100`
+
+### 价格更新
+
+- 使用现有的WebSocket价格数据（如果可用）
+- 或通过 `/api/market/ticker` 接口定时获取价格
+- 更新频率：每30秒（可配置）
+
+## 注意事项
+
+1. 下单成功后，自动创建交易记录（包含订单信息）
+2. 图片上传需要处理文件大小和格式验证
+3. 盈亏计算需要考虑手续费（可选，后续添加）
+4. 止盈止损触发需要前端或后端监控机制（可选，后续添加）
+5. 数据备份：定期备份 `personal_trading.db` 数据库文件

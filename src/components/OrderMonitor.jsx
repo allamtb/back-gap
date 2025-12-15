@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Table, Tag, Space, Button, Select, DatePicker, Card, Input, message, Switch, Statistic, Drawer, Checkbox, Divider } from "antd";
-import { ReloadOutlined, SearchOutlined, PauseCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import { ReloadOutlined, SearchOutlined, PauseCircleOutlined, PlayCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { getExchangeCredentials, getExchangeConfig } from "../utils/configManager";
-import { readWatchlist, getAllSymbols, getEnabledSymbols, setEnabledSymbols, getSymbolsForQuery } from "../utils/symbolWatchlist";
+import { readWatchlist, getAllSymbols, getEnabledSymbols, setEnabledSymbols, getSymbolsForQuery, mergeAllSymbols } from "../utils/symbolWatchlist";
+import { formatPrice, formatAmount, formatCurrency } from "../utils/formatters";
 
 const { RangePicker } = DatePicker;
 const { Countdown } = Statistic;
@@ -15,6 +16,7 @@ export default function OrderMonitor() {
   const [loading, setLoading] = useState(false);
   const [watchDrawerOpen, setWatchDrawerOpen] = useState(false);
   const [enabledDraft, setEnabledDraft] = useState([]); // string[] - 币种列表
+  const [newSymbolInput, setNewSymbolInput] = useState(""); // 新增币种输入框
   const [filters, setFilters] = useState({
     exchange: "all",
     type: "all",
@@ -75,10 +77,9 @@ export default function OrderMonitor() {
           timerRef.current = null;
         }
       } else {
-        // 页面可见时恢复刷新
-        if (autoRefresh) {
-          fetchOrders();
-        }
+        // 页面可见时恢复刷新（只在自动刷新开启时）
+        // 注意：这里不直接调用 fetchOrders，避免在关闭自动刷新时误触发
+        // 自动刷新的逻辑由 autoRefresh 的 effect 统一管理
       }
     };
     
@@ -87,7 +88,7 @@ export default function OrderMonitor() {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [autoRefresh, refreshInterval]);
+  }, []); // 只在组件挂载时注册一次
 
   const fetchOrders = async () => {
     // 防止重复请求
@@ -99,7 +100,7 @@ export default function OrderMonitor() {
     console.log('🚀 开始获取订单数据...');
     
     try {
-      const credentials = getExchangeCredentials();
+      const credentials = getExchangeCredentials(true); // ✅ 传递 true 以包含 unifiedAccount 字段
       
       if (credentials.length === 0) {
         console.warn('⚠️ 未配置交易所账户');
@@ -108,15 +109,35 @@ export default function OrderMonitor() {
         return;
       }
       
+      // 🎯 统一账户去重：同一个交易所只发送一次请求
+      const deduplicatedCredentials = credentials.reduce((acc, cred) => {
+        if (cred.unifiedAccount) {
+          // 统一账户：检查是否已存在同名交易所
+          const exists = acc.some(c => c.exchange === cred.exchange);
+          if (!exists) {
+            acc.push(cred);
+            console.log(`✅ 统一账户: ${cred.exchange} (只发送一次请求)`);
+          } else {
+            console.log(`⏭️ 跳过重复的统一账户: ${cred.exchange}`);
+          }
+        } else {
+          // 分离账户：正常添加
+          acc.push(cred);
+        }
+        return acc;
+      }, []);
+      
+      console.log(`📤 发送 ${deduplicatedCredentials.length} 个交易所请求 (原始: ${credentials.length})`);
+      
       fetchingRef.current = true;
       setLoading(true);
 
-      // 生成基于本地 enabled 的币种列表
+      // 生成基于本地 enabled 的币种列表（从 localStorage 读取）
       const symbols = getSymbolsForQuery();
       
       // 🔍 调试：打印查询参数
-      console.log('📡 查询币种列表:', symbols);
-      console.log('📡 交易所凭证数量:', credentials.length);
+      console.log('📡 从 localStorage 读取并发送给后端的币种列表:', symbols);
+      console.log('📡 交易所凭证数量:', deduplicatedCredentials.length);
       
       if (symbols.length === 0) {
         console.warn('⚠️ 本地未配置关注币种，返回空列表');
@@ -131,7 +152,7 @@ export default function OrderMonitor() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ symbols, credentials }),
+        body: JSON.stringify({ symbols, credentials: deduplicatedCredentials }),
       });
 
       if (!response.ok) {
@@ -252,11 +273,61 @@ export default function OrderMonitor() {
   };
 
   const saveWatchlist = () => {
+    console.log('💾 保存关注币种到 localStorage:', enabledDraft);
     setEnabledSymbols(enabledDraft);
-    message.success('已保存关注币种');
+    
+    // 验证保存结果
+    const saved = getEnabledSymbols(true);
+    console.log('✅ localStorage 中已保存的关注币种:', saved);
+    
+    message.success(`已保存 ${enabledDraft.length} 个关注币种`);
     setWatchDrawerOpen(false);
+    setNewSymbolInput(""); // 清空输入框
     // 保存后立即刷新
     handleManualRefresh();
+  };
+  
+  // 新增币种
+  const handleAddSymbol = () => {
+    const trimmed = newSymbolInput.trim().toUpperCase();
+    
+    if (!trimmed) {
+      message.warning('请输入币种名称');
+      return;
+    }
+    
+    // 验证格式（只允许字母和数字，通常是 BTC、ETH、USDT 等）
+    if (!/^[A-Z0-9]+$/.test(trimmed)) {
+      message.error('币种名称只能包含大写字母和数字');
+      return;
+    }
+    
+    // 检查是否已存在
+    const allSymbols = getAllSymbols();
+    if (allSymbols.includes(trimmed)) {
+      message.warning(`币种 ${trimmed} 已存在`);
+      // 如果存在但未选中，则自动选中
+      if (!enabledDraft.includes(trimmed)) {
+        setEnabledDraft(prev => [...prev, trimmed]);
+        message.success(`已将 ${trimmed} 添加到关注列表`);
+      }
+      setNewSymbolInput("");
+      return;
+    }
+    
+    // 添加到 all 列表（会立即保存到 localStorage）
+    console.log(`📝 添加新币种到 localStorage: ${trimmed}`);
+    mergeAllSymbols([trimmed]);
+    
+    // 添加到 enabled 列表（在点击保存按钮时才会保存到 localStorage）
+    setEnabledDraft(prev => [...prev, trimmed]);
+    
+    // 验证是否成功保存
+    const updatedAll = getAllSymbols();
+    console.log('✅ 当前 localStorage 中的所有币种:', updatedAll);
+    
+    message.success(`成功添加币种 ${trimmed}`);
+    setNewSymbolInput("");
   };
   
   // 手动刷新（立即刷新）
@@ -377,6 +448,24 @@ export default function OrderMonitor() {
       onFilter: (value, record) => record.exchange === value,
     },
     {
+      title: "订单号",
+      dataIndex: "orderId",
+      key: "orderId",
+      width: 180,
+      render: (text) => (
+        <span 
+          style={{ 
+            fontSize: "12px", 
+            fontFamily: "monospace",
+            color: "#595959"
+          }}
+          title={text}
+        >
+          {text ? (text.length > 20 ? `${text.slice(0, 20)}...` : text) : '-'}
+        </span>
+      ),
+    },
+    {
       title: "类型",
       dataIndex: "type",
       key: "type",
@@ -419,7 +508,7 @@ export default function OrderMonitor() {
       key: "price",
       align: "right",
       width: 130,
-      render: (value) => <span style={{ fontSize: "14px" }}>${value.toFixed(2)}</span>,
+      render: (value) => <span style={{ fontSize: "14px" }}>${formatPrice(value)}</span>,
     },
     {
       title: "数量",
@@ -427,7 +516,7 @@ export default function OrderMonitor() {
       key: "amount",
       align: "right",
       width: 110,
-      render: (value) => <span style={{ fontSize: "14px" }}>{value.toFixed(4)}</span>,
+      render: (value) => <span style={{ fontSize: "14px" }}>{formatAmount(value)}</span>,
     },
     {
       title: "已成交",
@@ -437,7 +526,7 @@ export default function OrderMonitor() {
       width: 110,
       render: (value, record) => (
         <span style={{ color: value === record.amount ? "#52c41a" : "#faad14", fontSize: "14px" }}>
-          {value.toFixed(4)}
+          {formatAmount(value)}
         </span>
       ),
     },
@@ -449,13 +538,11 @@ export default function OrderMonitor() {
       width: 170,
       render: (value, record) => {
         const fee = Number(record.fee || 0);
-        // 根据手续费大小动态调整精度
-        const feeDisplay = fee < 0.01 ? fee.toFixed(8) : fee.toFixed(6);
         return (
           <div style={{ textAlign: "right" }}>
-            <strong style={{ fontSize: "14px" }}>${value.toFixed(2)}</strong>
+            <strong style={{ fontSize: "14px" }}>${formatPrice(value)}</strong>
             <div style={{ fontSize: "12px", color: "#8c8c8c" }}>
-              手续费: {feeDisplay} {record.feeCurrency || ''}
+              手续费: {formatAmount(fee, 6)} {record.feeCurrency || ''}
             </div>
           </div>
         );
@@ -487,14 +574,28 @@ export default function OrderMonitor() {
       dataIndex: "orderTime",
       key: "orderTime",
       width: 170,
-      render: (text) => <span style={{ fontSize: "12px" }}>{text}</span>,
+      render: (text) => (
+        <span style={{ fontSize: "12px", color: "#8c8c8c" }}>
+          {text || '-'}
+        </span>
+      ),
     },
     {
       title: "成交时间",
       dataIndex: "fillTime",
       key: "fillTime",
       width: 170,
-      render: (text) => <span style={{ fontSize: "12px" }}>{text}</span>,
+      render: (text) => (
+        <span 
+          style={{ 
+            fontSize: "12px", 
+            color: text && text !== '-' ? "#52c41a" : "#8c8c8c",
+            fontWeight: text && text !== '-' ? "500" : "normal"
+          }}
+        >
+          {text || '-'}
+        </span>
+      ),
     },
   ];
 
@@ -583,36 +684,75 @@ export default function OrderMonitor() {
       <Drawer
         title="选择关注币种"
         placement="right"
-        width={360}
-        onClose={() => setWatchDrawerOpen(false)}
+        width={420}
+        onClose={() => {
+          setWatchDrawerOpen(false);
+          setNewSymbolInput(""); // 关闭时清空输入框
+        }}
         open={watchDrawerOpen}
         extra={
           <Space>
-            <Button onClick={() => setWatchDrawerOpen(false)}>取消</Button>
+            <Button onClick={() => {
+              setWatchDrawerOpen(false);
+              setNewSymbolInput("");
+            }}>取消</Button>
             <Button type="primary" onClick={saveWatchlist}>保存</Button>
           </Space>
         }
       >
-        {(() => {
-          const allSymbols = getAllSymbols();
-          if (allSymbols.length === 0) {
-            return <div style={{ color: '#999' }}>暂无可选币种，请先在资金/持仓监控获取数据</div>;
-          }
+        <Space direction="vertical" style={{ width: '100%' }} size="large">
+          {/* 新增币种区域 */}
+          <Card size="small" title="新增币种" style={{ background: '#f5f5f5' }}>
+            <Space.Compact style={{ width: '100%' }}>
+              <Input
+                placeholder="输入币种代码（如 BTC、ETH）"
+                value={newSymbolInput}
+                onChange={(e) => setNewSymbolInput(e.target.value)}
+                onPressEnter={handleAddSymbol}
+                style={{ flex: 1 }}
+                allowClear
+              />
+              <Button 
+                type="primary" 
+                icon={<PlusOutlined />}
+                onClick={handleAddSymbol}
+              >
+                添加
+              </Button>
+            </Space.Compact>
+            <div style={{ marginTop: '8px', fontSize: '12px', color: '#8c8c8c' }}>
+              💡 提示：只能输入大写字母和数字，如 BTC、ETH、USDT
+            </div>
+          </Card>
           
-          const allChecked = allSymbols.length > 0 && enabledDraft.length === allSymbols.length;
-          const indeterminate = enabledDraft.length > 0 && enabledDraft.length < allSymbols.length;
-          
-          return (
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <Card size="small">
+          {/* 币种选择区域 */}
+          {(() => {
+            const allSymbols = getAllSymbols();
+            
+            if (allSymbols.length === 0) {
+              return (
+                <Card size="small">
+                  <div style={{ color: '#999', textAlign: 'center', padding: '20px' }}>
+                    暂无币种，请先添加币种或在资金/持仓监控获取数据
+                  </div>
+                </Card>
+              );
+            }
+            
+            const allChecked = allSymbols.length > 0 && enabledDraft.length === allSymbols.length;
+            const indeterminate = enabledDraft.length > 0 && enabledDraft.length < allSymbols.length;
+            
+            return (
+              <Card size="small" title={`币种列表（${allSymbols.length} 个）`}>
                 <Checkbox
                   indeterminate={indeterminate}
                   checked={allChecked}
                   onChange={(e) => handleToggleAll(e.target.checked, allSymbols)}
+                  style={{ marginBottom: '12px' }}
                 >
-                  全选（共 {allSymbols.length} 个币种）
+                  <strong>全选</strong>
                 </Checkbox>
-                <Divider style={{ margin: '8px 0' }} />
+                <Divider style={{ margin: '12px 0' }} />
                 <Space wrap>
                   {allSymbols.map(symbol => (
                     <Checkbox
@@ -625,9 +765,9 @@ export default function OrderMonitor() {
                   ))}
                 </Space>
               </Card>
-            </Space>
-          );
-        })()}
+            );
+          })()}
+        </Space>
       </Drawer>
 
       {/* 筛选器 */}

@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { getExchangeKey, convertDataToChartFormat } from '../utils/chartUtils';
+import { formatPercent } from '../utils/formatters';
 
 /**
  * 价格差异标注 Hook
  * 负责计算和显示不同交易所之间的价格差异
  * 
  * @param {boolean} enableMarkers - 是否启用标注
- * @param {number} threshold - 差异阈值
+ * @param {number} threshold - 差异阈值（百分比）
  * @param {Array} exchanges - 所有交易所配置
  * @param {Map} chartData - 图表数据
  * @param {Function} getLineSeries - 获取线条系列的函数
@@ -90,12 +91,12 @@ const calculatePriceMarkers = (
 };
 
 /**
- * 计算当前点与其他所有交易所的最大差异
+ * 计算当前点与其他所有交易所的最大差异（百分比）
  * @param {Object} point - 当前时间点的数据
  * @param {Array} exchanges - 所有交易所配置
  * @param {number} currentIndex - 当前交易所的索引
  * @param {Map} convertedDataMap - 所有交易所的转换后数据
- * @returns {number} 最大差异值
+ * @returns {number} 最大差异百分比
  */
 const calculateMaxDifference = (
   point,
@@ -103,7 +104,7 @@ const calculateMaxDifference = (
   currentIndex,
   convertedDataMap
 ) => {
-  let maxDiff = 0;
+  let maxDiffPercent = 0;
 
   // 与其他交易所比较
   exchanges.forEach((otherConfig, otherIndex) => {
@@ -116,29 +117,30 @@ const calculateMaxDifference = (
 
     // 查找相同时间点的数据
     const otherPoint = otherData.find(p => p.time === point.time);
-    if (otherPoint) {
-      const diff = Math.abs(point.value - otherPoint.value);
-      if (diff > maxDiff) {
-        maxDiff = diff;
+    if (otherPoint && otherPoint.value !== 0) {
+      // 计算百分比差异：|(当前价格 - 对方价格) / 对方价格| * 100
+      const diffPercent = Math.abs((point.value - otherPoint.value) / otherPoint.value) * 100;
+      if (diffPercent > maxDiffPercent) {
+        maxDiffPercent = diffPercent;
       }
     }
   });
 
-  return maxDiff;
+  return maxDiffPercent;
 };
 
 /**
  * 创建标记对象
  * @param {number} time - 时间戳
- * @param {number} diff - 差异值
+ * @param {number} diffPercent - 差异百分比
  * @returns {Object} 标记对象
  */
-const createMarker = (time, diff) => ({
+const createMarker = (time, diffPercent) => ({
   time,
   position: 'aboveBar',
   color: '#e91e63',
   shape: 'circle',
-  text: `Δ${diff.toFixed(1)}`,
+  text: `${diffPercent.toFixed(2)}%`, // 标记点保留2位小数足够
   size: 0,
 });
 

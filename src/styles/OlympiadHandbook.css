@@ -1,0 +1,224 @@
+/* 奥数备考手册样式 - 横向布局 */
+
+.olympiad-handbook-page {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 屏幕显示时隐藏打印专用内容 */
+.print-only {
+  display: none;
+}
+
+/* 表格样式 */
+.handbook-table-container {
+  overflow-x: auto;
+}
+
+.handbook-table {
+  font-size: 13px;
+}
+
+/* 表格行悬停效果 */
+.handbook-table .ant-table-tbody > tr:hover > td {
+  background-color: #fafafa !important;
+}
+
+/* 每个板块的行颜色 */
+.handbook-table .table-row-1 {
+  border-left: 4px solid #ff4757;
+}
+
+.handbook-table .table-row-2 {
+  border-left: 4px solid #2ecc71;
+}
+
+.handbook-table .table-row-3 {
+  border-left: 4px solid #3498db;
+}
+
+.handbook-table .table-row-4 {
+  border-left: 4px solid #9b59b6;
+}
+
+.handbook-table .table-row-5 {
+  border-left: 4px solid #f39c12;
+}
+
+.handbook-table .table-row-6 {
+  border-left: 4px solid #1abc9c;
+}
+
+/* 打印时显示打印专用内容 */
+@media print {
+  .print-only {
+    display: block !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* 打印样式优化 */
+@media print {
+  /* A3 横向纸张设置 */
+  @page {
+    size: A3 landscape;
+    margin: 1cm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  .olympiad-handbook-page {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  /* 打印头部 */
+  .print-header {
+    margin-bottom: 12px !important;
+    page-break-after: avoid;
+  }
+
+  .print-header h2 {
+    font-size: 18pt !important;
+    margin-bottom: 4px !important;
+  }
+
+  .print-header .ant-typography {
+    font-size: 11pt !important;
+  }
+
+  /* 表格打印优化 */
+  .handbook-table-container {
+    overflow: visible;
+    page-break-inside: avoid;
+  }
+
+  .handbook-table {
+    font-size: 9pt !important;
+    width: 100% !important;
+  }
+
+  /* 确保表格头部和内容在同一页 */
+  .handbook-table .ant-table {
+    page-break-inside: avoid;
+  }
+
+  .handbook-table .ant-table-thead > tr > th {
+    background-color: #f0f0f0 !important;
+    font-weight: bold !important;
+    font-size: 10pt !important;
+    padding: 8px 6px !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    border: 1px solid #d9d9d9 !important;
+  }
+
+  .handbook-table .ant-table-tbody > tr > td {
+    padding: 8px 6px !important;
+    font-size: 8.5pt !important;
+    line-height: 1.4 !important;
+    border: 1px solid #d9d9d9 !important;
+    vertical-align: top !important;
+  }
+
+  /* 保持单元格内容不换页 */
+  .handbook-table .ant-table-tbody > tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 确保颜色正确打印 */
+  .handbook-table .table-row-1,
+  .handbook-table .table-row-2,
+  .handbook-table .table-row-3,
+  .handbook-table .table-row-4,
+  .handbook-table .table-row-5,
+  .handbook-table .table-row-6 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 图标和星星 */
+  .anticon {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* 页脚 */
+  .handbook-footer {
+    page-break-before: avoid;
+    margin-top: 12px !important;
+  }
+
+  .handbook-footer > div {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    padding: 10px 16px !important;
+    font-size: 10pt !important;
+  }
+
+  /* 移除不必要的阴影和动画 */
+  * {
+    box-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* 确保所有颜色都正确打印 */
+  [style*="color"],
+  [style*="background"],
+  [style*="border"] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color-adjust: exact;
+  }
+
+  /* 优化字体 */
+  body, .ant-table {
+    font-family: "Microsoft YaHei", "微软雅黑", Arial, sans-serif !important;
+  }
+}
+
+/* 响应式设计 */
+@media screen and (max-width: 1400px) {
+  .olympiad-handbook-page {
+    padding: 16px;
+  }
+
+  .handbook-table {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .olympiad-handbook-page {
+    padding: 12px;
+  }
+
+  .page-header .ant-space {
+    flex-direction: column;
+    align-items: flex-start !important;
+  }
+
+  .handbook-table {
+    font-size: 11px;
+  }
+}
+
+/* 表格单元格内的列表和文本对齐 */
+.handbook-table td > div {
+  text-align: left;
+}
+
+/* 时间分配列居中 */
+.handbook-table td[colspan] {
+  text-align: center;
+}

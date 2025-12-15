@@ -130,12 +130,13 @@ export const useChartManager = (chartContainerRef, height) => {
    * @param {string} exchange - 交易所名称
    * @param {string} symbol - 交易对
    * @param {Object} kline - K 线数据 { time, open, high, low, close, volume }
+   * @param {string} marketType - 市场类型 ('spot' 或 'futures')
    */
-  const updateLiveKline = (exchange, symbol, kline) => {
+  const updateLiveKline = (exchange, symbol, kline, marketType = 'spot') => {
     if (!chartRef.current) return;
 
-    // 构造配置对象以获取 key
-    const config = { exchange, symbol };
+    // 构造配置对象以获取 key（包含 market_type）
+    const config = { exchange, symbol, market_type: marketType };
     const key = getExchangeKey(config);
     const series = lineSeriesMapRef.current.get(key);
 

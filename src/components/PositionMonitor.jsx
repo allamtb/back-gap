@@ -3,6 +3,7 @@ import { Table, Card, Statistic, Row, Col, Space, Tag, Button, Select, Switch, m
 import { WalletOutlined, RiseOutlined, FallOutlined, ReloadOutlined, PlayCircleOutlined, PauseCircleOutlined } from "@ant-design/icons";
 import { getExchangeCredentials, getExchangeConfig } from "../utils/configManager";
 import { setAllSymbols } from "../utils/symbolWatchlist";
+import { formatPrice, formatAmount, formatCurrency } from "../utils/formatters";
 
 const { Countdown } = Statistic;
 
@@ -85,7 +86,8 @@ export default function PositionMonitor() {
     console.log('🚀 开始获取持仓数据...');
     
     try {
-      const credentials = getExchangeCredentials();
+      // 🎯 获取凭证时包含 unifiedAccount 字段
+      const credentials = getExchangeCredentials(true);
       
       if (credentials.length === 0) {
         console.warn('⚠️ 未配置交易所账户');
@@ -93,6 +95,26 @@ export default function PositionMonitor() {
         message.warning('请先在配置页面添加交易所账户');
         return;
       }
+      
+      // 🎯 统一账户去重：同一个交易所只发送一次请求
+      const deduplicatedCredentials = credentials.reduce((acc, cred) => {
+        // 如果是统一账户，检查是否已经有同名交易所
+        if (cred.unifiedAccount) {
+          const exists = acc.some(c => c.exchange === cred.exchange);
+          if (!exists) {
+            acc.push(cred);
+            console.log(`✅ 统一账户: ${cred.exchange} (只发送一次请求)`);
+          } else {
+            console.log(`⏭️ 跳过重复的统一账户: ${cred.exchange}`);
+          }
+        } else {
+          // 非统一账户，正常添加
+          acc.push(cred);
+        }
+        return acc;
+      }, []);
+      
+      console.log(`📤 发送 ${deduplicatedCredentials.length} 个交易所请求 (原始: ${credentials.length})`);
       
       fetchingRef.current = true;
       setLoading(true);
@@ -103,7 +125,7 @@ export default function PositionMonitor() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(credentials),
+        body: JSON.stringify(deduplicatedCredentials),
       });
 
       if (!response.ok) {
@@ -590,7 +612,7 @@ export default function PositionMonitor() {
             color: value > 0 ? "#52c41a" : "#ff4d4f",
             fontWeight: 'bold'
           }}>
-            {value > 0 ? '+' : ''}${value.toFixed(2)}
+            {value > 0 ? '+' : ''}${formatCurrency(value)}
           </span>
         );
       },
@@ -605,7 +627,7 @@ export default function PositionMonitor() {
         const color = value > 0 ? "#52c41a" : value < 0 ? "#ff4d4f" : "#000";
         return (
           <strong style={{ color }}>
-            {value.toFixed(4)}
+            {formatAmount(value)}
           </strong>
         );
       },
@@ -627,7 +649,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value) => (
         <span style={{ color: "#52c41a", fontWeight: "bold", fontSize: "14px" }}>
-          {value.toFixed(4)}
+          {formatAmount(value)}
         </span>
       ),
     },
@@ -638,7 +660,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value) => (
         <span style={{ color: "#ff4d4f", fontWeight: "bold", fontSize: "14px" }}>
-          {value.toFixed(4)}
+          {formatAmount(value)}
         </span>
       ),
     },
@@ -649,7 +671,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value) => (
         <span style={{ color: "#1890ff", fontWeight: "bold", fontSize: "14px" }}>
-          {value > 0 ? `≈ ${value.toFixed(2)} USDT` : '-'}
+          {value > 0 ? `≈ ${formatPrice(value)} USDT` : '-'}
         </span>
       ),
     },
@@ -675,7 +697,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value) => (
         <span style={{ color: "#52c41a", fontWeight: "bold" }}>
-          {value.toFixed(4)}
+          {formatAmount(value)}
         </span>
       ),
     },
@@ -686,7 +708,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value) => (
         <span style={{ color: "#ff4d4f", fontWeight: "bold" }}>
-          {value.toFixed(4)}
+          {formatAmount(value)}
         </span>
       ),
     },
@@ -699,7 +721,7 @@ export default function PositionMonitor() {
         const color = value > 0 ? "#52c41a" : value < 0 ? "#ff4d4f" : "#000";
         return (
           <strong style={{ color, fontSize: "16px" }}>
-            {value.toFixed(4)}
+            {formatAmount(value)}
           </strong>
         );
       },
@@ -711,7 +733,7 @@ export default function PositionMonitor() {
       align: "right",
       render: (value, record) => (
         <span style={{ color: "#1890ff", fontWeight: "bold" }}>
-          {record.isStable ? value.toFixed(2) : (value > 0 ? `≈ ${value.toFixed(2)}` : '-')}
+          {record.isStable ? formatPrice(value) : (value > 0 ? `≈ ${formatPrice(value)}` : '-')}
         </span>
       ),
     },
@@ -809,7 +831,7 @@ export default function PositionMonitor() {
               prefix={<WalletOutlined />}
             />
             <div style={{ marginTop: 8, fontSize: 12, color: "#999" }}>
-              现货: {grandTotal.stableSpot.toFixed(2)} | 合约: {grandTotal.stableFutures.toFixed(2)}
+              现货: {formatPrice(grandTotal.stableSpot)} | 合约: {formatPrice(grandTotal.stableFutures)}
             </div>
           </Card>
         </Col>
@@ -854,7 +876,7 @@ export default function PositionMonitor() {
               prefix={<WalletOutlined />}
             />
             <div style={{ marginTop: 8, fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>
-              持仓市值: ${grandTotal.totalValue.toFixed(2)}
+              持仓市值: ${formatPrice(grandTotal.totalValue)}
               {grandTotal.totalUnrealizedPnl !== 0 && (
                 <span style={{ 
                   marginLeft: 8, 
@@ -863,7 +885,7 @@ export default function PositionMonitor() {
                   fontSize: 13
                 }}>
                   {grandTotal.totalUnrealizedPnl > 0 ? '+' : ''}
-                  ${grandTotal.totalUnrealizedPnl.toFixed(2)}
+                  ${formatPrice(grandTotal.totalUnrealizedPnl)}
                 </span>
               )}
             </div>
@@ -885,7 +907,7 @@ export default function PositionMonitor() {
             />
             <div style={{ marginTop: 8, fontSize: 13, color: 'rgba(255,255,255,0.95)', fontWeight: 500 }}>
               未实现盈亏: {grandTotal.totalUnrealizedPnl > 0 ? '+' : ''}
-              ${grandTotal.totalUnrealizedPnl.toFixed(2)}
+              ${formatPrice(grandTotal.totalUnrealizedPnl)}
             </div>
           </Card>
         </Col>
@@ -912,28 +934,28 @@ export default function PositionMonitor() {
                     <strong style={{ fontSize: 16 }}>{coin.symbol}</strong>
                     {price > 0 && (
                       <span style={{ marginLeft: 8, color: '#999', fontSize: 12 }}>
-                        @ ${price.toFixed(2)}
+                        @ ${formatPrice(price)}
                       </span>
                     )}
                   </div>
                   
                   <div style={{ fontSize: 12, color: '#52c41a' }}>
-                    现货: {coin.spotAmount.toFixed(4)} 
-                    {coin.spotValue > 0 && ` (≈ $${coin.spotValue.toFixed(2)})`}
+                    现货: {formatAmount(coin.spotAmount)} 
+                    {coin.spotValue > 0 && ` (≈ $${formatPrice(coin.spotValue)})`}
                   </div>
                   
                   {/* 显示净合约持仓 */}
                   <div style={{ fontSize: 12, color: coin.futuresAmount >= 0 ? '#1890ff' : '#ff4d4f' }}>
-                    合约净: {coin.futuresAmount >= 0 ? '+' : ''}{coin.futuresAmount.toFixed(4)}
-                    {Math.abs(coin.futuresValue) > 0 && ` (≈ $${coin.futuresValue.toFixed(2)})`}
+                    合约净: {coin.futuresAmount >= 0 ? '+' : ''}{formatAmount(coin.futuresAmount)}
+                    {Math.abs(coin.futuresValue) > 0 && ` (≈ $${formatPrice(coin.futuresValue)})`}
                   </div>
                   
                   {/* 显示多空仓位明细 */}
                   {(hasLong || hasShort) && (
                     <div style={{ fontSize: 11, color: '#999', marginLeft: 8 }}>
-                      {hasLong && <span style={{ color: '#52c41a' }}>↑{coin.futuresLongAmount.toFixed(4)}</span>}
+                      {hasLong && <span style={{ color: '#52c41a' }}>↑{formatAmount(coin.futuresLongAmount)}</span>}
                       {hasLong && hasShort && ' / '}
-                      {hasShort && <span style={{ color: '#ff4d4f' }}>↓{coin.futuresShortAmount.toFixed(4)}</span>}
+                      {hasShort && <span style={{ color: '#ff4d4f' }}>↓{formatAmount(coin.futuresShortAmount)}</span>}
                     </div>
                   )}
                   
@@ -944,12 +966,12 @@ export default function PositionMonitor() {
                       color: coin.unrealizedPnl > 0 ? '#52c41a' : '#ff4d4f',
                       marginTop: 2
                     }}>
-                      PNL: {coin.unrealizedPnl > 0 ? '+' : ''}${coin.unrealizedPnl.toFixed(2)}
+                      PNL: {coin.unrealizedPnl > 0 ? '+' : ''}${formatPrice(coin.unrealizedPnl)}
                     </div>
                   )}
                   
                   <div style={{ fontSize: 12, fontWeight: 'bold', marginTop: 4, borderTop: '1px solid #f0f0f0', paddingTop: 4 }}>
-                    总值: ≈ ${coin.totalValue.toFixed(2)}
+                    总值: ≈ ${formatPrice(coin.totalValue)}
                   </div>
                 </Card>
               );

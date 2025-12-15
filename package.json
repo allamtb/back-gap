@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite",
+    "dev:local": "cross-env VITE_BACKEND_HOST=localhost vite",
     "build": "vite build",
     "preview": "vite preview"
   },

@@ -1,0 +1,143 @@
+.trump-sentiment-page {
+  padding: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.trump-sentiment-page .page-header {
+  flex-shrink: 0;
+  padding-bottom: 8px;
+}
+
+/* 滚动容器 */
+.posts-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+  min-height: 0; /* 允许 flex 子项缩小 */
+}
+
+/* 自定义滚动条样式 */
+.posts-scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.posts-scroll-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.posts-scroll-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.posts-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* 帖子卡片样式 */
+.post-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.post-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.post-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.post-card-content h3 {
+  color: #262626;
+}
+
+/* Rate 星级样式 */
+.trump-sentiment-page .ant-rate-star {
+  margin-right: 2px;
+  font-size: 14px;
+}
+
+/* 标签样式 */
+.trump-sentiment-page .ant-tag {
+  margin-right: 4px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+}
+
+/* 市场影响卡片动画 */
+.market-impact-card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 市场影响标题高亮效果 */
+.market-impact-title {
+  position: relative;
+  overflow: hidden;
+}
+
+.market-impact-title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(24, 144, 255, 0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Modal 内容区域 */
+.trump-sentiment-page .ant-modal-body {
+  padding: 16px 24px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .trump-sentiment-page .page-header h2 {
+    font-size: 18px;
+  }
+  
+  .post-card {
+    margin-bottom: 12px;
+  }
+  
+  .post-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+

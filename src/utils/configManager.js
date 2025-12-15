@@ -6,6 +6,9 @@
 // 本地存储键名
 const STORAGE_KEY = "exchangeConfig";
 
+// 统一账户交易所列表（现货和合约共用同一个账户）
+const UNIFIED_ACCOUNT_EXCHANGES = ["backpack"];
+
 /**
  * 获取所有交易所配置
  * @returns {Array} 交易所配置数组
@@ -18,7 +21,13 @@ export const getExchangeConfig = () => {
     }
 
     const config = JSON.parse(configStr);
-    return config.exchanges || [];
+    const exchanges = config.exchanges || [];
+    
+    // 🔄 向后兼容：为旧配置添加 unifiedAccount 字段
+    return exchanges.map((ex) => ({
+      ...ex,
+      unifiedAccount: ex.unifiedAccount ?? isUnifiedAccountExchange(ex.exchange),
+    }));
   } catch (error) {
     console.error("读取交易所配置失败:", error);
     return [];
@@ -126,16 +135,26 @@ export const deleteExchange = (exchangeName) => {
 
 /**
  * 获取交易所凭证（用于 API 调用）
+ * @param {boolean} includeUnifiedAccount - 是否包含 unifiedAccount 字段
  * @returns {Array} 交易所凭证数组
  */
-export const getExchangeCredentials = () => {
+export const getExchangeCredentials = (includeUnifiedAccount = false) => {
   const exchanges = getExchangeConfig();
-  return exchanges.map((exchange) => ({
-    exchange: exchange.exchange,
-    apiKey: exchange.apiKey,
-    apiSecret: exchange.apiSecret,
-    password: exchange.password || undefined,
-  }));
+  return exchanges.map((exchange) => {
+    const credentials = {
+      exchange: exchange.exchange,
+      apiKey: exchange.apiKey,
+      apiSecret: exchange.apiSecret,
+      password: exchange.password || undefined,
+    };
+    
+    // 如果需要，包含 unifiedAccount 字段
+    if (includeUnifiedAccount) {
+      credentials.unifiedAccount = exchange.unifiedAccount || false;
+    }
+    
+    return credentials;
+  });
 };
 
 /**
@@ -167,5 +186,34 @@ export const hasConfig = () => {
  */
 export const getExchangeCount = () => {
   return getExchangeConfig().length;
+};
+
+/**
+ * 检查交易所是否已配置
+ * @param {string} exchangeName - 交易所名称
+ * @returns {boolean} 是否已配置
+ */
+export const isExchangeConfigured = (exchangeName) => {
+  if (!exchangeName) return false;
+  const exchanges = getExchangeConfig();
+  return exchanges.some((ex) => ex.exchange === exchangeName);
+};
+
+/**
+ * 判断交易所是否为统一账户模式（现货和合约共用账户）
+ * @param {string} exchangeName - 交易所名称
+ * @returns {boolean} 是否为统一账户
+ */
+export const isUnifiedAccountExchange = (exchangeName) => {
+  if (!exchangeName) return false;
+  return UNIFIED_ACCOUNT_EXCHANGES.includes(exchangeName.toLowerCase());
+};
+
+/**
+ * 获取统一账户交易所列表
+ * @returns {Array} 统一账户交易所名称数组
+ */
+export const getUnifiedAccountExchanges = () => {
+  return [...UNIFIED_ACCOUNT_EXCHANGES];
 };
 
