@@ -1,0 +1,30 @@
+[
+  {
+    "id": "example-1",
+    "name": "币安交易所",
+    "url": "https://www.binance.com",
+    "description": "全球最大的加密货币交易所",
+    "category": "交易所",
+    "createdAt": "2025-10-21T12:00:00.000Z",
+    "updatedAt": "2025-10-21T12:00:00.000Z"
+  },
+  {
+    "id": "example-2",
+    "name": "CoinMarketCap",
+    "url": "https://coinmarketcap.com",
+    "description": "加密货币价格和市值排名",
+    "category": "数据分析",
+    "createdAt": "2025-10-21T12:00:00.000Z",
+    "updatedAt": "2025-10-21T12:00:00.000Z"
+  },
+  {
+    "id": "example-3",
+    "name": "TradingView",
+    "url": "https://www.tradingview.com",
+    "description": "专业图表分析工具",
+    "category": "图表工具",
+    "createdAt": "2025-10-21T12:00:00.000Z",
+    "updatedAt": "2025-10-21T12:00:00.000Z"
+  }
+]
+

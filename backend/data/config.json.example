@@ -1,0 +1,21 @@
+{
+  "accounts": [
+    {
+      "name": "账户名称示例",
+      "exchanges": [
+        {
+          "exchange": "binance",
+          "apiKey": "your_api_key_here",
+          "apiSecret": "your_api_secret_here"
+        },
+        {
+          "exchange": "bybit",
+          "apiKey": "your_api_key_here",
+          "apiSecret": "your_api_secret_here"
+        }
+      ]
+    }
+  ]
+}
+
+
