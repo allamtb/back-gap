@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import { SettingOutlined, DashboardOutlined, BugOutlined, LineChartOutlined, WalletOutlined, TwitterOutlined, GlobalOutlined, TransactionOutlined, DatabaseOutlined, BookOutlined } from "@ant-design/icons";
+import { SettingOutlined, DashboardOutlined, BugOutlined, LineChartOutlined, WalletOutlined, TwitterOutlined, GlobalOutlined, TransactionOutlined, DatabaseOutlined, BookOutlined, RobotOutlined } from "@ant-design/icons";
 import ConfigPage from "./pages/ConfigPage";
 import DashboardPage from "./pages/DashboardPage";
 import TradingOrderPage from "./pages/TradingOrderPage";
@@ -9,6 +9,7 @@ import AccountManagementPage from "./pages/AccountManagementPage";
 import TrumpSentimentPage from "./pages/TrumpSentimentPage";
 import TradingWebsitesPage from "./pages/TradingWebsitesPage";
 import BaiduCookiePage from "./pages/BaiduCookiePage";
+import RobotNavigationPage from "./pages/RobotNavigationPage";
 
 import NetworkStatus from "./components/NetworkStatus";
 import "./styles/global/App.css";
@@ -18,12 +19,14 @@ const { Header, Content } = Layout;
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  const selectedKey = location.pathname === "/" ? "/dashboard" : location.pathname;
+  const selectedKey = location.pathname === "/" ? "/robot-navigation" : location.pathname;
 
   // 根据路径动态设置页面标题
   useEffect(() => {
     const getPageTitle = (pathname) => {
       switch (pathname) {
+        case "/robot-navigation":
+          return "🤖 机器人导航";
         case "/config":
           return "📊 交易所配置";
         case "/account":
@@ -59,6 +62,7 @@ export default function App() {
             onClick={({ key }) => navigate(key)}
             className="app-header-menu"
             items={[
+              { key: "/robot-navigation", icon: <RobotOutlined />, label: "机器人导航" },
               { key: "/config", icon: <SettingOutlined />, label: "交易所配置" },
               { key: "/account", icon: <WalletOutlined />, label: "账户监控-全币种" },
               { key: "/dashboard", icon: <LineChartOutlined />, label: "行情观察" },
@@ -73,7 +77,8 @@ export default function App() {
       </Header>
       <Content style={{ margin: "16px" }}>
         <Routes>
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/" element={<Navigate to="/robot-navigation" replace />} />
+          <Route path="/robot-navigation" element={<RobotNavigationPage />} />
           <Route path="/config" element={<ConfigPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/trading-order" element={<TradingOrderPage />} />
